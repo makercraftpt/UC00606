@@ -74,4 +74,13 @@ Python 3.x  +  PyCharm Community Edition
 
 ---
 
+## 🤖 Sobre este repositório
+
+Este repositório é atualizado semanalmente pelo professor com o apoio do **Claude (Anthropic)**.  
+Os conteúdos são gerados e carregados automaticamente antes de cada aula — sem intervenção manual.
+
+> *"Consegui acrescentar este texto e carregá-lo para o GitHub."* — Claude, Semana 1 ✅
+
+---
+
 <sub>UC00606 · Linguagem Estruturada · ETPS · 2025/2026 · Atualizado semanalmente</sub>
