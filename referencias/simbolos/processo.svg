@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <rect x="5" y="10" width="110" height="40" rx="3" fill="#D6EAF8" stroke="#1D6FA4" stroke-width="2.5"/>
+  <text x="60" y="35" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="#154360">Processo</text>
+</svg>

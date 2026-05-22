@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#444"/>
+    </marker>
+  </defs>
+  <!-- INÍCIO -->
+  <ellipse cx="150" cy="36" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="150" y="41" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">INÍCIO</text>
+  <line x1="150" y1="60" x2="150" y2="90" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- Decisão (losango) -->
+  <polygon points="150,95 230,140 150,185 70,140" fill="#FEF9E7" stroke="#F39C12" stroke-width="2"/>
+  <text x="150" y="136" text-anchor="middle" font-size="11" font-weight="bold" font-family="Arial" fill="#7D6608">nota >= 10?</text>
+  <!-- Sim (esquerda) -->
+  <line x1="70" y1="140" x2="40" y2="140" stroke="#444" stroke-width="2"/>
+  <line x1="40" y1="140" x2="40" y2="230" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="52" y="133" font-size="10" font-family="Arial" fill="#27AE60" font-weight="bold">Sim</text>
+  <polygon points="5,238 100,238 88,268 -8,268" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="46" y="257" text-anchor="middle" font-size="10" font-family="Arial" fill="#1A5276">print("Passou")</text>
+  <!-- Não (direita) -->
+  <line x1="230" y1="140" x2="260" y2="140" stroke="#444" stroke-width="2"/>
+  <line x1="260" y1="140" x2="260" y2="230" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="238" y="133" font-size="10" font-family="Arial" fill="#E74C3C" font-weight="bold">Não</text>
+  <polygon points="205,238 295,238 283,268 193,268" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="244" y="257" text-anchor="middle" font-size="10" font-family="Arial" fill="#1A5276">print("Reprovou")</text>
+  <!-- join -->
+  <line x1="40" y1="268" x2="40" y2="310" stroke="#444" stroke-width="2"/>
+  <line x1="260" y1="268" x2="260" y2="310" stroke="#444" stroke-width="2"/>
+  <line x1="40" y1="310" x2="260" y2="310" stroke="#444" stroke-width="2"/>
+  <line x1="150" y1="310" x2="150" y2="338" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- FIM -->
+  <ellipse cx="150" cy="362" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="150" y="367" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">FIM</text>
+</svg>

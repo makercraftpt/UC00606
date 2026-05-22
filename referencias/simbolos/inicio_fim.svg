@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <ellipse cx="60" cy="30" rx="55" ry="25" fill="#C8F7C5" stroke="#27AE60" stroke-width="2.5"/>
+  <text x="60" y="35" text-anchor="middle" font-family="Arial" font-size="13" font-weight="bold" fill="#1A5C38">Início/Fim</text>
+</svg>

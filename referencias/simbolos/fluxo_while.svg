@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 430" width="300" height="430">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#444"/>
+    </marker>
+    <marker id="b" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0,0 3.5,10 7" fill="#444"/>
+    </marker>
+  </defs>
+  <!-- INÍCIO -->
+  <ellipse cx="130" cy="36" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="130" y="41" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">INÍCIO</text>
+  <line x1="130" y1="60" x2="130" y2="88" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- init -->
+  <rect x="65" y="95" width="130" height="38" rx="3" fill="#D6EAF8" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="130" y="119" text-anchor="middle" font-size="11" font-family="Arial" fill="#154360">tentativas = 0</text>
+  <line x1="130" y1="133" x2="130" y2="158" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- Condição while -->
+  <polygon points="130,163 215,205 130,247 45,205" fill="#FEF9E7" stroke="#F39C12" stroke-width="2"/>
+  <text x="130" y="201" text-anchor="middle" font-size="10" font-weight="bold" font-family="Arial" fill="#7D6608">tentativas &lt; 3?</text>
+  <!-- Não → direita → FIM -->
+  <line x1="215" y1="205" x2="265" y2="205" stroke="#444" stroke-width="2"/>
+  <line x1="265" y1="205" x2="265" y2="390" stroke="#444" stroke-width="2"/>
+  <line x1="265" y1="390" x2="185" y2="390" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="235" y="198" font-size="10" font-family="Arial" fill="#E74C3C" font-weight="bold">Não</text>
+  <!-- Sim → baixo -->
+  <line x1="130" y1="247" x2="130" y2="272" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="138" y="265" font-size="10" font-family="Arial" fill="#27AE60" font-weight="bold">Sim</text>
+  <!-- body: input + increment -->
+  <polygon points="35,279 218,279 206,309 23,309" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="121" y="298" text-anchor="middle" font-size="10" font-family="Arial" fill="#1A5276">password = input(...)</text>
+  <line x1="130" y1="309" x2="130" y2="330" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="65" y="337" width="130" height="34" rx="3" fill="#D6EAF8" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="130" y="358" text-anchor="middle" font-size="11" font-family="Arial" fill="#154360">tentativas += 1</text>
+  <!-- volta ao while -->
+  <line x1="65" y1="354" x2="20" y2="354" stroke="#444" stroke-width="2"/>
+  <line x1="20" y1="354" x2="20" y2="205" stroke="#444" stroke-width="2"/>
+  <line x1="20" y1="205" x2="45" y2="205" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- FIM -->
+  <ellipse cx="130" cy="406" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="130" y="411" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">FIM</text>
+</svg>

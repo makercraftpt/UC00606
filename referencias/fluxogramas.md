@@ -26,34 +26,14 @@ Um **fluxograma** é um diagrama que representa a sequência de passos de um alg
 
 Todos os fluxogramas usam os mesmos símbolos. Aprende estes e consegues ler qualquer fluxograma.
 
-| Símbolo | Forma | Nome | Quando usar |
-|---------|-------|------|-------------|
-| 🟢 Oval / Cápsula | `(   )` | **Início / Fim** | Sempre o primeiro e o último elemento |
-| 🟦 Retângulo | `[   ]` | **Processo** | Operação, cálculo, atribuição de variável |
-| 🔷 Losango | `<   >` | **Decisão** | Condição `if` — tem SEMPRE saída Sim e Não |
-| 🟨 Paralelogramo | `//   //` | **Entrada / Saída** | `input()` e `print()` |
-| ⭕ Círculo pequeno | `( )` | **Conector** | Ligar partes distantes do diagrama |
-| ➡️ Seta | `→` | **Fluxo** | Direção do programa — sempre seguir as setas |
-
-### Representação Visual
-
-```
-  ╭─────────╮        ┌─────────────┐        ╱─────────────╲
-  │  INÍCIO │        │  variável = │        │  input()     │
-  ╰─────────╯        │  cálculo    │        │  print()     │
-   (Oval)            └─────────────┘        ╲─────────────╱
-                      (Retângulo)             (Paralelogramo)
-
-    ◇─────────────◇           ╭───╮
-   ╱               ╲          │ C │
-  ╱  condição        ╲        ╰───╯
-  ╲  verdadeira?     ╱     (Conector)
-   ╲               ╱
-    ◇─────────────◇
-    │Sim        │Não
-    ↓           ↓
-  (Losango — Decisão)
-```
+| Símbolo | Nome | Quando usar |
+|---------|------|-------------|
+| ![Início/Fim](./simbolos/inicio_fim.svg) | **Início / Fim** | Sempre o primeiro e o último elemento |
+| ![Processo](./simbolos/processo.svg) | **Processo** | Operação, cálculo, atribuição de variável |
+| ![Decisão](./simbolos/decisao.svg) | **Decisão** | Condição `if` — tem SEMPRE saída Sim e Não |
+| ![Entrada/Saída](./simbolos/entrada_saida.svg) | **Entrada / Saída** | `input()` e `print()` |
+| ![Conector](./simbolos/conector.svg) | **Conector** | Ligar partes distantes do diagrama |
+| ![Fluxo](./simbolos/fluxo.svg) | **Fluxo** | Direção do programa — sempre seguir as setas |
 
 ---
 
@@ -81,23 +61,7 @@ Todos os fluxogramas usam os mesmos símbolos. Aprende estes e consegues ler qua
 
 ### 1. Sequência (sempre presente)
 
-```
-  ╭────────╮
-  │ INÍCIO │
-  ╰────┬───╯
-       │
-  ┌────┴────────────┐
-  │ nome = input()  │
-  └────┬────────────┘
-       │
-  ┌────┴────────────┐
-  │ print(nome)     │
-  └────┬────────────┘
-       │
-  ╭────┴───╮
-  │  FIM   │
-  ╰────────╯
-```
+![Fluxograma — Sequência](./simbolos/fluxo_sequencia.svg)
 
 ```python
 # Código equivalente
@@ -109,30 +73,7 @@ print("Olá,", nome)
 
 ### 2. Seleção — if / else
 
-```
-       ╭────────╮
-       │ INÍCIO │
-       ╰────┬───╯
-            │
-       ╱────┴────╲
-      ╱  nota >= 10╲
-      ╲             ╱
-       ╲           ╱
-        └───┬───┬──┘
-         Sim│   │Não
-            │   │
-    ┌───────┘   └───────┐
-    │                   │
-┌───┴──────────┐  ┌─────┴──────────┐
-│print("Passou")│  │print("Reprovou")│
-└───┬──────────┘  └─────┬──────────┘
-    │                   │
-    └─────────┬─────────┘
-              │
-         ╭────┴───╮
-         │  FIM   │
-         ╰────────╯
-```
+![Fluxograma — if/else](./simbolos/fluxo_ifelse.svg)
 
 ```python
 # Código equivalente
@@ -147,27 +88,7 @@ else:
 
 ### 3. Seleção Múltipla — if / elif / else
 
-```
-            ╱─────────────╲
-           ╱  nível == 1?  ╲─── Sim ──▶ print("Iniciante")
-           ╲               ╱                    │
-            ╲─────────────╱                     │
-                  │ Não                         │
-                  ▼                             │
-            ╱─────────────╲                    │
-           ╱  nível == 2?  ╲─── Sim ──▶ print("Intermédio")
-           ╲               ╱                    │
-            ╲─────────────╱                     │
-                  │ Não                         │
-                  ▼                             │
-         print("Avançado")                      │
-                  │                             │
-                  └──────────┬─────────────────┘
-                             ▼
-                          ╭─────╮
-                          │ FIM │
-                          ╰─────╯
-```
+![Fluxograma — if/elif/else](./simbolos/fluxo_ifelif.svg)
 
 ```python
 # Código equivalente
@@ -184,37 +105,7 @@ else:
 
 ### 4. Repetição — while (ciclo com condição)
 
-```
-  ╭────────╮
-  │ INÍCIO │
-  ╰────┬───╯
-       │
-  ┌────┴──────────────┐
-  │ tentativas = 0    │   ← inicializar antes do ciclo
-  └────┬──────────────┘
-       │
-  ╱────┴─────────────╲
- ╱ tentativas < 3?    ╲────── Não ──▶ print("Bloqueado")
- ╲                    ╱                      │
-  ╲──────────────────╱                       │
-         │ Sim                               │
-         ▼                                  │
-  ╱─────────────────────╲                   │
- ╱  password == "1234"?  ╲── Sim ──▶ print("Acesso")
- ╲                       ╱                  │
-  ╲─────────────────────╱                   │
-         │ Não                              │
-         ▼                                 │
-  ┌──────────────────────┐                 │
-  │ tentativas += 1      │                 │
-  └────┬─────────────────┘                 │
-       │                                   │
-       └── (volta ao losango do while) ◀───┘
-                                           │
-                                      ╭────┴───╮
-                                      │  FIM   │
-                                      ╰────────╯
-```
+![Fluxograma — while](./simbolos/fluxo_while.svg)
 
 ```python
 # Código equivalente
@@ -232,29 +123,7 @@ print("Bloqueado") if tentativas == 3 else None
 
 ### 5. Repetição — for (ciclo contado)
 
-```
-  ╭────────╮
-  │ INÍCIO │
-  ╰────┬───╯
-       │
-  ┌────┴──────────────────┐
-  │ Para i de 1 até 5     │  ← cabeçalho do for
-  └────┬──────────────────┘
-       │
-  ┌────┴──────────────────┐
-  │ print(i)              │  ← corpo do ciclo
-  └────┬──────────────────┘
-       │
-  ╱────┴──────────────╲
- ╱  Mais iterações?    ╲── Sim ──▶ (volta ao corpo)
- ╲                     ╱
-  ╲────────────────────╱
-         │ Não
-         ▼
-    ╭────────╮
-    │  FIM   │
-    ╰────────╯
-```
+![Fluxograma — for](./simbolos/fluxo_for.svg)
 
 ```python
 # Código equivalente

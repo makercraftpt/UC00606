@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 400" width="280" height="400">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#444"/>
+    </marker>
+  </defs>
+  <!-- INÍCIO -->
+  <ellipse cx="140" cy="36" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="140" y="41" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">INÍCIO</text>
+  <line x1="140" y1="60" x2="140" y2="88" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- Cabeçalho for -->
+  <rect x="55" y="95" width="170" height="38" rx="3" fill="#D6EAF8" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="140" y="119" text-anchor="middle" font-size="11" font-family="Arial" fill="#154360">Para i de 1 até 5</text>
+  <line x1="140" y1="133" x2="140" y2="158" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- Corpo -->
+  <polygon points="55,165 218,165 206,195 43,195" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="131" y="184" text-anchor="middle" font-size="11" font-family="Arial" fill="#1A5276">print(i)</text>
+  <line x1="140" y1="195" x2="140" y2="220" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <!-- Condição -->
+  <polygon points="140,225 220,265 140,305 60,265" fill="#FEF9E7" stroke="#F39C12" stroke-width="2"/>
+  <text x="140" y="261" text-anchor="middle" font-size="10" font-weight="bold" font-family="Arial" fill="#7D6608">Mais iterações?</text>
+  <!-- Sim → volta -->
+  <line x1="60" y1="265" x2="20" y2="265" stroke="#444" stroke-width="2"/>
+  <line x1="20" y1="265" x2="20" y2="114" stroke="#444" stroke-width="2"/>
+  <line x1="20" y1="114" x2="55" y2="114" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="30" y="258" font-size="10" font-family="Arial" fill="#27AE60" font-weight="bold">Sim</text>
+  <!-- Não → FIM -->
+  <line x1="140" y1="305" x2="140" y2="335" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="148" y="325" font-size="10" font-family="Arial" fill="#E74C3C" font-weight="bold">Não</text>
+  <!-- FIM -->
+  <ellipse cx="140" cy="360" rx="55" ry="24" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="140" y="365" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">FIM</text>
+</svg>
