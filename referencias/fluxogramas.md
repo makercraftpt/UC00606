@@ -322,36 +322,7 @@ O programa deve:
 
 **Fluxograma:**
 
-```
-          ╭─────────╮
-          │  INÍCIO │
-          ╰────┬────╯
-               │
-     ╱─────────┴────────╲
-    │  senha = input()   │   ← Paralelogramo (entrada)
-     ╲──────────────────╱
-               │
-               ▼
-     ╱─────────────────╲
-    ╱  len(senha) < 8?  ╲
-    ╲                   ╱
-     ╲─────────────────╱
-       │Sim        │Não
-       ▼           ▼
-  ╱────────╲  ╱──────────╲
- │ "Fraca"  │ │ "Segura"  │  ← Paralelogramos (saída)
-  ╲────────╱  ╲──────────╱
-       │           │
-       └─────┬─────┘
-             │
-  ╱──────────────────────╲
- │ print(len(senha))      │  ← Paralelogramo (saída)
-  ╲──────────────────────╱
-             │
-        ╭────┴────╮
-        │   FIM   │
-        ╰─────────╯
-```
+![Fluxograma — Verificador de Senha](./simbolos/fluxo_senha.svg)
 
 **Código Python:**
 
@@ -414,16 +385,6 @@ O artigo da **Miro** aprofunda vários conceitos importantes que complementam o 
 - Valida o fluxograma com outra pessoa antes de começar a programar
 
 > 💡 **Dica:** A Miro também tem um editor de fluxogramas online gratuito em [miro.com](https://miro.com) — alternativa ao Draw.io, com colaboração em tempo real.
-
----
-
-## 🖼️ Referência Visual — Símbolos em Draw.io
-
-O diagrama abaixo foi criado em **Draw.io** e mostra os 5 símbolos principais lado a lado:
-
-![Símbolos de Fluxograma](./fluxograma_simbolos.svg)
-
-> Este ficheiro foi desenhado no Draw.io e exportado como SVG — podes abrir o ficheiro `.drawio` original para ver como foi construído.
 
 ---
 

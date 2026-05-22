@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 490" width="320" height="490">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- INÍCIO -->
+  <ellipse cx="160" cy="36" rx="60" ry="26" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="160" y="41" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">INÍCIO</text>
+  <line x1="160" y1="62" x2="160" y2="88" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- Entrada: input -->
+  <polygon points="35,95 275,95 260,130 20,130" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="148" y="116" text-anchor="middle" font-size="11" font-weight="bold" font-family="Arial" fill="#1A5276">senha = input("Senha: ")</text>
+  <line x1="160" y1="130" x2="160" y2="158" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- Decisão -->
+  <polygon points="160,163 255,210 160,257 65,210" fill="#FEF9E7" stroke="#F39C12" stroke-width="2"/>
+  <text x="160" y="206" text-anchor="middle" font-size="11" font-weight="bold" font-family="Arial" fill="#7D6608">len(senha) &lt; 8?</text>
+
+  <!-- Sim → esquerda -->
+  <line x1="65" y1="210" x2="25" y2="210" stroke="#444" stroke-width="2"/>
+  <line x1="25" y1="210" x2="25" y2="295" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="34" y="203" font-size="10" font-family="Arial" fill="#27AE60" font-weight="bold">Sim</text>
+  <polygon points="5,302 130,302 118,330 -7,330" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="56" y="320" text-anchor="middle" font-size="10" font-family="Arial" fill="#1A5276">print("Senha fraca!")</text>
+
+  <!-- Não → direita -->
+  <line x1="255" y1="210" x2="295" y2="210" stroke="#444" stroke-width="2"/>
+  <line x1="295" y1="210" x2="295" y2="295" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+  <text x="263" y="203" font-size="10" font-family="Arial" fill="#E74C3C" font-weight="bold">Não</text>
+  <polygon points="178,302 305,302 293,330 166,330" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="236" y="320" text-anchor="middle" font-size="10" font-family="Arial" fill="#1A5276">print("Senha segura!")</text>
+
+  <!-- join -->
+  <line x1="25" y1="330" x2="25" y2="368" stroke="#444" stroke-width="2"/>
+  <line x1="295" y1="330" x2="295" y2="368" stroke="#444" stroke-width="2"/>
+  <line x1="25" y1="368" x2="295" y2="368" stroke="#444" stroke-width="2"/>
+  <line x1="160" y1="368" x2="160" y2="390" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- print len -->
+  <polygon points="35,397 275,397 260,427 20,427" fill="#EBF5FB" stroke="#2E86C1" stroke-width="2"/>
+  <text x="148" y="416" text-anchor="middle" font-size="11" font-family="Arial" fill="#1A5276">print(f"Tem {len(senha)} caracteres")</text>
+  <line x1="160" y1="427" x2="160" y2="450" stroke="#444" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- FIM -->
+  <ellipse cx="160" cy="472" rx="60" ry="26" fill="#C8F7C5" stroke="#27AE60" stroke-width="2"/>
+  <text x="160" y="477" text-anchor="middle" font-size="13" font-weight="bold" font-family="Arial" fill="#1A5C38">FIM</text>
+</svg>
