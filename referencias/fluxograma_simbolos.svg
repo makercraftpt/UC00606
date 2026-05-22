@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 880" width="600" height="880" style="font-family: Arial, sans-serif; background: #FFFFFF;">
+  <text x="300" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#0D1B2A">Símbolos de Fluxograma — ISO 5807</text>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <ellipse cx="140" cy="110" rx="80" ry="40" fill="#E8F4FD" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="140" y="115" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="bold" fill="#0D1B2A">Início / Fim</text>
+  <rect x="340" y="82" width="220" height="56" rx="6" fill="#F0F4F8" stroke="#CBD5E0" stroke-width="1"/>
+  <text x="350" y="102" font-size="12" fill="#2D3748">Ponto de entrada ou saída do programa</text>
+  <text x="350" y="122" font-size="11" fill="#718096" font-style="italic">Início / Fim</text>
+  <rect x="60" y="234" width="160" height="80" fill="#E8F4FD" stroke="#1D6FA4" stroke-width="2" rx="3"/>
+  <text x="140" y="279" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="bold" fill="#0D1B2A">Processo</text>
+  <rect x="340" y="246" width="220" height="56" rx="6" fill="#F0F4F8" stroke="#CBD5E0" stroke-width="1"/>
+  <text x="350" y="266" font-size="12" fill="#2D3748">Instrução ou conjunto de instruções</text>
+  <text x="350" y="286" font-size="11" fill="#718096" font-style="italic">Processo</text>
+  <polygon points="140,398 220,438 140,478 60,438" fill="#E8F4FD" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="140" y="443" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="bold" fill="#0D1B2A">Decisão</text>
+  <rect x="340" y="410" width="220" height="56" rx="6" fill="#F0F4F8" stroke="#CBD5E0" stroke-width="1"/>
+  <text x="350" y="430" font-size="12" fill="#2D3748">Condição (if/else, while)</text>
+  <text x="350" y="450" font-size="11" fill="#718096" font-style="italic">Decisão</text>
+  <polygon points="72,562 232,562 208,642 48,642" fill="#E8F4FD" stroke="#1D6FA4" stroke-width="2"/>
+  <text x="140" y="607" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="bold" fill="#0D1B2A">Entrada / Saída</text>
+  <rect x="340" y="574" width="220" height="56" rx="6" fill="#F0F4F8" stroke="#CBD5E0" stroke-width="1"/>
+  <text x="350" y="594" font-size="12" fill="#2D3748">input() / print()</text>
+  <text x="350" y="614" font-size="11" fill="#718096" font-style="italic">Entrada / Saída</text>
+  <line x1="80" y1="766" x2="200" y2="766" stroke="#555" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="140" y="771" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="bold" fill="#0D1B2A">Seta / Fluxo</text>
+  <rect x="340" y="738" width="220" height="56" rx="6" fill="#F0F4F8" stroke="#CBD5E0" stroke-width="1"/>
+  <text x="350" y="758" font-size="12" fill="#2D3748">Direção do fluxo de execução</text>
+  <text x="350" y="778" font-size="11" fill="#718096" font-style="italic">Seta / Fluxo</text>
+</svg>

@@ -522,4 +522,40 @@ print(f"A senha tem {len(senha)} caracteres.")
 
 ---
 
+## 📚 Leitura Extra — O que é um Fluxograma? (Miro)
+
+> **Fonte recomendada:** [miro.com — O que é um Fluxograma?](https://miro.com/pt/fluxograma/o-que-e-fluxograma/)
+
+O artigo da **Miro** aprofunda vários conceitos importantes que complementam o que aprendemos aqui:
+
+**História e origem**
+- Os fluxogramas foram criados por **Frank Gilbreth** em 1921 para a ASME (American Society of Mechanical Engineers)
+- Desde os anos 1940 tornaram-se essenciais na programação e engenharia de processos
+
+**Tipos de fluxogramas**
+- **Fluxograma de processo** — sequência de passos num procedimento (o mais comum em programação)
+- **Fluxograma swimlane** — divide responsabilidades entre diferentes atores (útil em equipas)
+- **Fluxograma de dados** — mostra como os dados fluem entre sistemas
+- **Fluxograma de decisão** — focado nos pontos de escolha (if/else em programação)
+
+**Boas práticas segundo a Miro**
+- Usa setas claras e consistentes (sempre na mesma direção: de cima para baixo ou da esquerda para a direita)
+- Mantém o fluxograma numa única página sempre que possível
+- Usa cores para distinguir tipos de operações (entradas, processos, decisões)
+- Valida o fluxograma com outra pessoa antes de começar a programar
+
+> 💡 **Dica:** A Miro também tem um editor de fluxogramas online gratuito em [miro.com](https://miro.com) — alternativa ao Draw.io, com colaboração em tempo real.
+
+---
+
+## 🖼️ Referência Visual — Símbolos em Draw.io
+
+O diagrama abaixo foi criado em **Draw.io** e mostra os 5 símbolos principais lado a lado:
+
+![Símbolos de Fluxograma](./fluxograma_simbolos.svg)
+
+> Este ficheiro foi desenhado no Draw.io e exportado como SVG — podes abrir o ficheiro `.drawio` original para ver como foi construído.
+
+---
+
 <sub>UC00606 · Linguagem Estruturada · ETPS · 2025/2026</sub>
