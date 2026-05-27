@@ -21,7 +21,7 @@
 | Semana | Tema | Estado |
 |--------|------|--------|
 | [Semana 1](semanas/semana01.md) | Variáveis, `input()`, f-strings, `print()` | ✅ Disponível |
-| Semana 2 | Seleção — `if / elif / else` | 🔒 Em breve |
+| [Semana 2](semanas/semana02.md) | Seleção — `if / elif / else` | ✅ Disponível |
 | Semana 3 | Ciclos — `while` | 🔒 Em breve |
 | Semana 4 | Ciclos — `for` + listas | 🔒 Em breve |
 | Semana 5 | Funções — `def`, `return`, parâmetros | 🔒 Em breve |
@@ -62,6 +62,7 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 
 - [Fichas Aula 1 — Bem-vindos à Matrix](exercicios/aula1.md)
+- [Fichas Aula 2 — Seleção `if / elif / else`](exercicios/aula2.md)
 
 ---
 
