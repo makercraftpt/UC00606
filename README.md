@@ -23,7 +23,7 @@
 | [Semana 1](semanas/semana01.md) | Variáveis, `input()`, f-strings, `print()` | ✅ Disponível |
 | [Semana 2](semanas/semana02.md) | Seleção — `if / elif / else` | ✅ Disponível |
 | [Semana 3](semanas/semana03.md) | Ciclos — `while` | ✅ Disponível |
-| Semana 4 | Ciclos — `for` + listas | 🔒 Em breve |
+| [Semana 4](semanas/semana04.md) | Ciclos — `for` + listas | ✅ Disponível |
 | Semana 5 | Funções — `def`, `return`, parâmetros | 🔒 Em breve |
 | Semana 6 | Strings — métodos, slicing, formatação | 🔒 Em breve |
 | Semana 7 | Tratamento de erros — `try / except` | 🔒 Em breve |
@@ -64,6 +64,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 1 — Bem-vindos à Matrix](exercicios/aula1.md)
 - [Fichas Aula 2 — Seleção `if / elif / else`](exercicios/aula2.md)
 - [Fichas Aula 3 — Ciclos `while`](exercicios/aula3.md)
+- [Fichas Aula 4 — Ciclos `for` + listas](exercicios/aula4.md)
 
 ---
 
