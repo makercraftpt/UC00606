@@ -41,6 +41,7 @@ Cábulas rápidas por tema — **guarda estas páginas nos favoritos**.
 | [Input e Output](referencias/input_output.md) | `input()`, `print()`, f-strings |
 | [Seleção](referencias/selecao.md) | `if`, `elif`, `else`, operadores |
 | [Ciclos](referencias/ciclos.md) | `while`, `for`, `break`, `continue` |
+| [Coleções](referencias/colecoes.md) | `list`, `tuple`, `set`, `dict`, `range` |
 | [Funções](referencias/funcoes.md) | `def`, `return`, parâmetros, âmbito |
 | [Strings](referencias/strings.md) | Métodos, slicing, formatação |
 | [Erros](referencias/erros.md) | `try`, `except`, `finally` |
