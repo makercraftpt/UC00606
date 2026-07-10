@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 7 — Strings &amp; Regex · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --navy:#0B1F3A; --teal:#1C7293; --accent:#F4A340; --ink:#1a1a1a; --paper:#F4F5F7;
+  }
+  .reveal { font-family: 'Segoe UI', Arial, sans-serif; }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Segoe UI', Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+  .reveal .slides section { text-align: left; }
+  .reveal h1 { text-align: left; color: #fff; font-size: 1.8em; }
+  .reveal h2 { text-align: left; color: #7FD1D9; font-size: 1.5em; }
+  .reveal .subtitle { color: #9fb3c8; font-size: 0.55em; margin-top: -0.4em; display:block; }
+  .reveal section.title-slide { text-align: center; }
+  .reveal section.title-slide h1 { text-align: center; font-size: 2.4em; }
+  .reveal ul { display:block; }
+  .reveal li { margin-bottom: 0.35em; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal pre code { font-size: 0.62em; max-height: 480px; padding: 14px 18px; border-radius: 8px; }
+  .reveal .two-col { display:flex; gap: 2em; }
+  .reveal .two-col > div { flex: 1; }
+  .reveal .badge { display:inline-block; background: var(--teal); color:#fff; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
+  .reveal .card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6em 1em; margin-bottom: 0.6em; }
+  .reveal table { font-size: 0.6em; }
+  .reveal table th { color: #7FD1D9; }
+  .reveal .footnote { font-size: 0.4em; color: #9fb3c8; }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section class="title-slide">
+      <h1>Strings &amp; Regex</h1>
+      <p class="subtitle">Métodos · Slicing · Padrões (regex)</p>
+      <p class="footnote">UC00606 · Linguagem Estruturada · Aula 7</p>
+    </section>
+
+    <section>
+      <h2>Desafio: porque é que isto falha?</h2>
+      <p class="subtitle">Observa o código antes de vermos a teoria</p>
+      <pre><code class="language-python" data-trim>log = 'IP=192.168.1.45 ERRO'
+partes = log.split(' ')
+ip = partes[0][3:]
+print(ip)
+
+# ... noutro dia, log muda ...
+
+log = 'ERRO IP=192.168.1.45'
+partes = log.split(' ')
+ip = partes[0][3:]
+print(ip)   # ERRADO!</code></pre>
+      <ul>
+        <li>1. <code>partes[0][3:]</code> assume que a ordem é sempre a mesma</li>
+        <li>2. Se a ordem das palavras mudar, o código parte</li>
+        <li>3. Como encontrar o IP em qualquer posição? → <strong>regex</strong></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Anatomia de um regex</h2>
+      <p class="subtitle">Cada símbolo tem um papel próprio</p>
+      <pre><code class="language-python" data-trim>match = re.search(padrao, texto)
+
+if match:
+    print(match.group())
+else:
+    print('sem padrao encontrado')</code></pre>
+      <div class="two-col">
+        <div>
+          <span class="badge">variável</span> guarda o resultado (Match ou None)<br>
+          <span class="badge">re.search()</span> procura o padrão no texto<br>
+        </div>
+        <div>
+          <span class="badge">padrão regex</span> o que estamos à procura<br>
+          <span class="badge">verificação</span> confirma se encontrou algo<br>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Porquê usar regex?</h2>
+      <p class="subtitle">Três motivos para dominar padrões em texto</p>
+      <div class="two-col">
+        <div class="card"><strong>Poupar tempo</strong><br>Um padrão, muitos textos. Escreves o padrão uma vez, usa em qualquer log ou ficheiro.</div>
+        <div class="card"><strong>Validar dados</strong><br>Confirma se um email, IP ou password tem o formato certo — sem dezenas de <code>if</code>.</div>
+        <div class="card"><strong>Extrair dados</strong><br>Tira IPs, datas e emails de logs inteiros em segundos.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Slicing — como cortar uma string</h2>
+      <p class="subtitle">Índices, intervalos e o passo (step)</p>
+      <pre><code class="language-python" data-trim># texto[inicio:fim:passo]
+ip = '192.168.1.45'
+print(ip[0:3])     # '192'
+
+# indices negativos contam do fim
+print(ip[-2:])     # '45'
+print(ip[::-1])    # invertido
+
+print(ip[:3])
+print(ip[4:])</code></pre>
+      <p>💡 Slicing nunca dá erro fora dos limites — devolve uma string vazia ou parcial.</p>
+    </section>
+
+    <section>
+      <h2>Métodos — o que uma string devolve</h2>
+      <p class="subtitle">Um novo valor, sem alterar o original (strings são imutáveis)</p>
+      <div class="two-col">
+        <div>
+<pre><code class="language-python" data-trim>nome = 'agente'
+nome.upper()      # 'AGENTE'
+
+txt = '  ola  '
+txt.strip()       # 'ola'</code></pre>
+        </div>
+        <div>
+<pre><code class="language-python" data-trim>log = 'ERRO IP falha'
+log.split(' ')
+# ['ERRO', 'IP', 'falha']
+
+txt.find('=')
+txt.replace('IP=', '')</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>re.search() como sinal</h2>
+      <p class="subtitle">Usar o resultado para saber se encontrou ou não</p>
+      <pre><code class="language-python" data-trim>texto = 'login OK, IP 10.0.0.5'
+m = re.search(r'\d+\.\d+\.\d+\.\d+', texto)
+
+if m:            # encontrou = Match
+    print('IP encontrado')
+else:            # None = não encontrou
+    print('sem IP no texto')</code></pre>
+      <ul>
+        <li><code>m.group()</code> → o texto encontrado</li>
+        <li><code>m.start()</code> → posição inicial</li>
+        <li><code>m.span()</code> → (início, fim)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>search() vs findall() — quanto procuram</h2>
+      <p class="subtitle">search() para no primeiro match; findall() percorre tudo</p>
+      <pre><code class="language-python" data-trim>logs = 'IP 1.1.1.1 e IP 2.2.2.2 falharam'
+padrao = r'\d+\.\d+\.\d+\.\d+'
+
+m = re.search(padrao, logs)       # só o 1º
+print(m.group())                  # '1.1.1.1'
+
+todos = re.findall(padrao, logs)  # todos
+print(todos)
+# ['1.1.1.1', '2.2.2.2']</code></pre>
+    </section>
+
+    <section>
+      <h2>Boas práticas</h2>
+      <p class="subtitle">Convenções que tornam os padrões mais legíveis e seguros</p>
+      <div class="two-col">
+        <div>
+          <div class="card">✔ <code>r'\d+\.\d+'</code> evita barras duplas<br>✘ <code>'\\d+\\.\\d+'</code> confuso, erro fácil</div>
+          <div class="card">✔ <code>padrao = re.compile(r'\d+')</code><br>✘ recompilar o padrão dentro de um loop</div>
+        </div>
+        <div>
+          <div class="card">✔ grupos nomeados: <code>(?P&lt;ip&gt;\d+...)</code><br>✘ padrões gigantes numa só linha</div>
+          <div class="card">✔ testar o padrão em <a href="https://regex101.com" target="_blank">regex101.com</a><br>✘ usar sem testar — falha em silêncio</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Padrões comuns — cheatsheet regex</h2>
+      <p class="subtitle">Os padrões que vais usar mais nesta aula</p>
+      <pre><code class="language-python" data-trim>IP:        \d{1,3}(\.\d{1,3}){3}
+Email:     \S+@\S+\.\S+
+Timestamp: \d{2}:\d{2}:\d{2}
+
+\d = dígito       \S = não-espaço
++  = 1 ou mais    {n} = exatamente n</code></pre>
+      <pre><code class="language-python" data-trim>log = '14:32:07 IP=10.0.0.5'
+hora = re.search(r'\d{2}:\d{2}:\d{2}', log)
+ip = re.search(r'\d{1,3}(\.\d{1,3}){3}', log)
+
+print(hora.group())  # '14:32:07'
+print(ip.group())    # '10.0.0.5'</code></pre>
+    </section>
+
+    <section>
+      <h2>Regex fora do Python</h2>
+      <p class="subtitle">O mesmo padrão funciona em quase todas as ferramentas</p>
+      <table>
+        <tr><th>Ação</th><th>grep</th><th>JavaScript</th><th>Python</th></tr>
+        <tr><td><strong>Procurar</strong></td><td><code>grep 'p' f.txt</code></td><td><code>t.match(/p/)</code></td><td><code>re.search(p, t)</code></td></tr>
+        <tr><td><strong>Todos</strong></td><td><code>grep -o 'p' -c</code></td><td><code>t.match(/p/g)</code></td><td><code>re.findall(p, t)</code></td></tr>
+        <tr><td><strong>Trocar</strong></td><td><code>sed 's/a/b/'</code></td><td><code>t.replace(/a/,'b')</code></td><td><code>re.sub(a,b,t)</code></td></tr>
+        <tr><td><strong>Grupos</strong></td><td><code>\(...\)</code></td><td><code>(...)</code></td><td><code>(...)</code></td></tr>
+      </table>
+      <p>A lógica é sempre igual: procurar um padrão. O que muda é a sintaxe.</p>
+    </section>
+
+    <section>
+      <h2>Demonstração ao vivo</h2>
+      <p class="subtitle">Refatorar o código do slide 2 usando regex</p>
+      <div class="two-col">
+        <div>
+          <strong>Antes — string.split():</strong>
+<pre><code class="language-python" data-trim>log = 'IP=192.168.1.45 ERRO'
+partes = log.split(' ')
+ip = partes[0][3:]
+print(ip)
+
+log = 'ERRO IP=192.168.1.45'
+partes = log.split(' ')
+ip = partes[0][3:]
+print(ip)  # ERRADO!</code></pre>
+        </div>
+        <div>
+          <strong>Depois — com regex:</strong>
+<pre><code class="language-python" data-trim>import re
+padrao = r'\d{1,3}(\.\d{1,3}){3}'
+
+log = 'IP=192.168.1.45 ERRO'
+print(re.search(padrao, log).group())
+
+log = 'ERRO IP=192.168.1.45'
+print(re.search(padrao, log).group())
+# funciona sempre!</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Fichas de trabalho</h2>
+      <p class="subtitle">Praticar é a única forma de aprender regex</p>
+      <div class="two-col">
+        <div class="card"><span class="badge">★</span> <strong>Formatador de Endereços IP</strong><br>Limpar e validar o formato de um IP. 35 min</div>
+        <div class="card"><span class="badge">★★</span> <strong>Analisador de Logs</strong><br><code>re.findall()</code> para extrair IPs e timestamps. 50 min</div>
+      </div>
+      <div class="card"><span class="badge">★★★</span> <strong>Gerador de Wordlist</strong><br>Gera variações de uma palavra para testes de força bruta. 60 min</div>
+      <p class="footnote">Ficha Extra: 5 desafios — Extrator de domínios · Deteção de palavras suspeitas · Anagramas</p>
+    </section>
+
+    <section>
+      <h2>Missão v0.6 — preview</h2>
+      <p class="subtitle">O simulador agora analisa logs com regex</p>
+      <pre><code class="language-python" data-trim>def analisar_logs(logs):
+    """Extrai IPs e horas suspeitas."""
+    p_ip = r'\d{1,3}(\.\d{1,3}){3}'
+    p_hora = r'\d{2}:\d{2}:\d{2}'
+    for linha in logs:
+        ip = re.search(p_ip, linha)
+        hora = re.search(p_hora, linha)
+        if ip:
+            print(hora.group(), ip.group())
+    return len(logs)</code></pre>
+    </section>
+
+    <section class="title-slide">
+      <h2 style="text-align:center">O que aprendemos hoje</h2>
+      <p>
+        <span class="badge">str</span>
+        <span class="badge">slicing</span>
+        <span class="badge">regex</span>
+        <span class="badge">search</span>
+        <span class="badge">findall</span>
+        <span class="badge">r'...' raw</span>
+        <span class="badge">IP/log</span>
+      </p>
+      <ul>
+        <li><code>re.search()</code> = 1º match, ou <code>None</code></li>
+        <li><code>re.findall()</code> = lista com TODAS as ocorrências</li>
+        <li>Usa raw strings <code>r'...'</code> para não duplicar barras</li>
+        <li><code>\d</code>, <code>\S</code>, <code>+</code>, <code>{n}</code> — os símbolos mais usados no dia a dia</li>
+        <li>Testa sempre o padrão antes de confiar nele</li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'slide',
+    plugins: [ RevealHighlight, RevealNotes ]
+  });
+</script>
+</body>
+</html>

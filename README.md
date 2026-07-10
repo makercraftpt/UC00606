@@ -1,6 +1,6 @@
 # 🛡️ UC00606 — Linguagem Estruturada
 
-> **CET Cibersegurança · ETPS · 2025/2026**  
+> **CET Cibersegurança · ETP Sicó · 2025/2026**  
 > Referência rápida e cábula para as aulas de Python 3.
 
 ---
@@ -13,6 +13,7 @@
 | [📖 Referências](#-referências-de-python) | Cábula de sintaxe Python por tema |
 | [🛠️ Ferramentas](#️-ferramentas) | Fluxogramas, Draw.io e outros recursos |
 | [💻 Exercícios](#-exercícios) | Fichas e enunciados |
+| [🖥️ Apresentações](#️-apresentações) | Slides interativos das aulas |
 
 ---
 
@@ -25,9 +26,14 @@
 | [Semana 3](semanas/semana03.md) | Ciclos — `while` | ✅ Disponível |
 | [Semana 4](semanas/semana04.md) | Ciclos — `for` + listas | ✅ Disponível |
 | Semana 5 | Funções — `def`, `return`, parâmetros | 🔒 Em breve |
-| Semana 6 | Strings — métodos, slicing, formatação | 🔒 Em breve |
-| Semana 7 | Tratamento de erros — `try / except` | 🔒 Em breve |
-| Semana 8–12 | Projeto — Missão Contínua | 🔒 Em breve |
+| Semana 6 | Avaliação 1 | 🔒 Em breve |
+| [Semana 7](semanas/semana07.md) | Strings — métodos, slicing, formatação e expressões regulares (`re`) | ✅ Disponível |
+| Semana 8 | Ficheiros de texto, logs e CSV | 🔒 Em breve |
+| Semana 9 | Dados estruturados — JSON, `.ini`, variáveis de ambiente e hashing (`hashlib`) | 🔒 Em breve |
+| Semana 10 | Base de dados em ficheiro — SQLite | 🔒 Em breve |
+| Semana 11 | Tratamento de erros — `try / except` | 🔒 Em breve |
+| Semanas 12–14 | Projeto — CyberTool | 🔒 Em breve |
+| Semana 15 | Avaliação 2 | 🔒 Em breve |
 
 ---
 
@@ -58,6 +64,12 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 
 ---
 
+## 🖥️ Apresentações
+
+- [Aula 7 — Strings & Regex (slides interativos)](apresentacoes/aula7.html)
+
+---
+
 ## 💻 Exercícios
 
 As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
@@ -66,6 +78,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 2 — Seleção `if / elif / else`](exercicios/aula2.md)
 - [Fichas Aula 3 — Ciclos `while`](exercicios/aula3.md)
 - [Fichas Aula 4 — Ciclos `for` + listas](exercicios/aula4.md)
+- [Fichas Aula 7 — Strings & Regex](exercicios/aula7.md)
 
 ---
 
@@ -98,4 +111,4 @@ Os conteúdos são gerados e carregados automaticamente antes de cada aula — s
 
 ---
 
-<sub>UC00606 · Linguagem Estruturada · ETPS · 2025/2026 · Atualizado semanalmente</sub>
+<sub>UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026 · Atualizado semanalmente</sub>
