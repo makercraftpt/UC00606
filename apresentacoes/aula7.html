@@ -26,7 +26,8 @@
   .reveal .two-col { display:flex; gap: 2em; }
   .reveal .two-col > div { flex: 1; }
   .reveal .badge { display:inline-block; background: var(--teal); color:#fff; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
-  .reveal .card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6em 1em; margin-bottom: 0.6em; }
+  .reveal .card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal section { overflow: visible; }
   .reveal table { font-size: 0.6em; }
   .reveal table th { color: #7FD1D9; }
   .reveal .footnote { font-size: 0.4em; color: #9fb3c8; }
@@ -88,9 +89,9 @@ else:
       <h2>Porquê usar regex?</h2>
       <p class="subtitle">Três motivos para dominar padrões em texto</p>
       <div class="two-col">
-        <div class="card"><strong>Poupar tempo</strong><br>Um padrão, muitos textos. Escreves o padrão uma vez, usa em qualquer log ou ficheiro.</div>
-        <div class="card"><strong>Validar dados</strong><br>Confirma se um email, IP ou password tem o formato certo — sem dezenas de <code>if</code>.</div>
-        <div class="card"><strong>Extrair dados</strong><br>Tira IPs, datas e emails de logs inteiros em segundos.</div>
+        <div class="card"><strong>Poupar tempo</strong><br>Um padrão, muitos textos.</div>
+        <div class="card"><strong>Validar dados</strong><br>Confirma o formato — sem dezenas de <code>if</code>.</div>
+        <div class="card"><strong>Extrair dados</strong><br>Tira IPs e emails de logs em segundos.</div>
       </div>
     </section>
 
@@ -168,12 +169,12 @@ print(todos)
       <p class="subtitle">Convenções que tornam os padrões mais legíveis e seguros</p>
       <div class="two-col">
         <div>
-          <div class="card">✔ <code>r'\d+\.\d+'</code> evita barras duplas<br>✘ <code>'\\d+\\.\\d+'</code> confuso, erro fácil</div>
-          <div class="card">✔ <code>padrao = re.compile(r'\d+')</code><br>✘ recompilar o padrão dentro de um loop</div>
+          <div class="card">✔ <code>r'\d+\.\d+'</code> — evita barras duplas</div>
+          <div class="card">✔ <code>re.compile()</code> — não recompilar em loop</div>
         </div>
         <div>
-          <div class="card">✔ grupos nomeados: <code>(?P&lt;ip&gt;\d+...)</code><br>✘ padrões gigantes numa só linha</div>
-          <div class="card">✔ testar o padrão em <a href="https://regex101.com" target="_blank">regex101.com</a><br>✘ usar sem testar — falha em silêncio</div>
+          <div class="card">✔ grupos nomeados: <code>(?P&lt;ip&gt;...)</code></div>
+          <div class="card">✔ testa em <a href="https://regex101.com" target="_blank">regex101.com</a> antes de usar</div>
         </div>
       </div>
     </section>
@@ -243,10 +244,10 @@ print(re.search(padrao, log).group())
       <h2>Fichas de trabalho</h2>
       <p class="subtitle">Praticar é a única forma de aprender regex</p>
       <div class="two-col">
-        <div class="card"><span class="badge">★</span> <strong>Formatador de Endereços IP</strong><br>Limpar e validar o formato de um IP. 35 min</div>
-        <div class="card"><span class="badge">★★</span> <strong>Analisador de Logs</strong><br><code>re.findall()</code> para extrair IPs e timestamps. 50 min</div>
+        <div class="card"><span class="badge">★</span> <strong>Formatador de Endereços IP</strong><br>Limpar e validar o formato de um IP.<br>35 min</div>
+        <div class="card"><span class="badge">★★</span> <strong>Analisador de Logs</strong><br><code>re.findall()</code> para IPs e timestamps.<br>50 min</div>
+        <div class="card"><span class="badge">★★★</span> <strong>Gerador de Wordlist</strong><br>Variações de uma palavra para força bruta.<br>60 min</div>
       </div>
-      <div class="card"><span class="badge">★★★</span> <strong>Gerador de Wordlist</strong><br>Gera variações de uma palavra para testes de força bruta. 60 min</div>
       <p class="footnote">Ficha Extra: 5 desafios — Extrator de domínios · Deteção de palavras suspeitas · Anagramas</p>
     </section>
 
@@ -298,6 +299,11 @@ print(re.search(padrao, log).group())
     progress: true,
     center: false,
     transition: 'slide',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    minScale: 0.2,
+    maxScale: 1.5,
     plugins: [ RevealHighlight, RevealNotes ]
   });
 </script>
