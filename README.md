@@ -25,7 +25,7 @@
 | [Semana 2](semanas/semana02.md) | Seleção — `if / elif / else` | ✅ Disponível |
 | [Semana 3](semanas/semana03.md) | Ciclos — `while` | ✅ Disponível |
 | [Semana 4](semanas/semana04.md) | Ciclos — `for` + listas | ✅ Disponível |
-| Semana 5 | Funções — `def`, `return`, parâmetros | 🔒 Em breve |
+| [Semana 5](semanas/semana05.md) | Funções — `def`, `return`, parâmetros | ✅ Disponível |
 | Semana 6 | Avaliação 1 | 🔒 Em breve |
 | [Semana 7](semanas/semana07.md) | Strings — métodos, slicing, formatação e expressões regulares (`re`) | ✅ Disponível |
 | Semana 8 | Ficheiros de texto, logs e CSV | 🔒 Em breve |
@@ -66,6 +66,7 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 
 ## 🖥️ Apresentações
 
+- [Aula 5 — Funções (slides interativos)](apresentacoes/aula5.html)
 - [Aula 7 — Strings & Regex (slides interativos)](apresentacoes/aula7.html)
 
 ---
@@ -78,6 +79,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 2 — Seleção `if / elif / else`](exercicios/aula2.md)
 - [Fichas Aula 3 — Ciclos `while`](exercicios/aula3.md)
 - [Fichas Aula 4 — Ciclos `for` + listas](exercicios/aula4.md)
+- [Fichas Aula 5 — Funções](exercicios/aula5.md)
 - [Fichas Aula 7 — Strings & Regex](exercicios/aula7.md)
 
 ---
