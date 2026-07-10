@@ -50,6 +50,8 @@ Cábulas rápidas por tema — **guarda estas páginas nos favoritos**.
 | [Coleções](referencias/colecoes.md) | `list`, `tuple`, `set`, `dict`, `range` |
 | [Funções](referencias/funcoes.md) | `def`, `return`, parâmetros, âmbito |
 | [Strings](referencias/strings.md) | Métodos, slicing, formatação |
+| [Dividir e Juntar Strings](referencias/split.md) | `split`, `rsplit`, `partition`, `join` |
+| [Expressões Regulares (regex)](referencias/regex.md) | Sintaxe completa, padrões prontos, regex noutras linguagens |
 | [Erros](referencias/erros.md) | `try`, `except`, `finally` |
 
 ---

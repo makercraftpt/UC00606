@@ -168,4 +168,11 @@ re.search(r"\d{1,3}(\.\d{1,3}){3}", log)   # encontra qualquer IP
 
 ---
 
-<sub>← [Voltar](../README.md) · [Semana 7](../semanas/semana07.md)</sub>
+## 📚 Aprofundar mais
+
+- [Dividir e Juntar Strings](split.md) — `split()`, `rsplit()`, `partition()`, `join()` em detalhe
+- [Expressões Regulares (regex)](regex.md) — sintaxe completa, padrões prontos e regex noutras linguagens
+
+---
+
+<sub>← [Voltar](../README.md) · [Split/Join](split.md) · [Regex](regex.md) · [Semana 7](../semanas/semana07.md)</sub>

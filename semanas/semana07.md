@@ -118,6 +118,8 @@ def analisar_logs(logs):
 ## 📚 Para aprofundar
 
 - [Referência — Strings](../referencias/strings.md) — Sintaxe completa, padrões e exemplos
+- [Referência — Dividir e Juntar Strings](../referencias/split.md) — `split`, `rsplit`, `partition`, `join`
+- [Referência — Expressões Regulares (regex)](../referencias/regex.md) — cheatsheet completo, boas práticas e regex noutras linguagens
 - [Documentação oficial Python — Métodos de string](https://docs.python.org/pt/3/library/stdtypes.html#string-methods)
 - [Documentação oficial Python — módulo `re`](https://docs.python.org/pt/3/library/re.html)
 - [regex101.com](https://regex101.com) — testar padrões regex online antes de usar
