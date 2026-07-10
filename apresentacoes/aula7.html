@@ -182,7 +182,7 @@ print(todos)
     <section>
       <h2>Padrões comuns — cheatsheet regex</h2>
       <p class="subtitle">Os padrões que vais usar mais nesta aula</p>
-      <pre><code class="language-python" data-trim>IP:        \d{1,3}(\.\d{1,3}){3}
+      <pre><code class="language-python" data-trim>IP:        \d{1,3}(?:\.\d{1,3}){3}
 Email:     \S+@\S+\.\S+
 Timestamp: \d{2}:\d{2}:\d{2}
 
@@ -190,7 +190,7 @@ Timestamp: \d{2}:\d{2}:\d{2}
 +  = 1 ou mais    {n} = exatamente n</code></pre>
       <pre><code class="language-python" data-trim>log = '14:32:07 IP=10.0.0.5'
 hora = re.search(r'\d{2}:\d{2}:\d{2}', log)
-ip = re.search(r'\d{1,3}(\.\d{1,3}){3}', log)
+ip = re.search(r'\d{1,3}(?:\.\d{1,3}){3}', log)
 
 print(hora.group())  # '14:32:07'
 print(ip.group())    # '10.0.0.5'</code></pre>
@@ -228,7 +228,7 @@ print(ip)  # ERRADO!</code></pre>
         <div>
           <strong>Depois — com regex:</strong>
 <pre><code class="language-python" data-trim>import re
-padrao = r'\d{1,3}(\.\d{1,3}){3}'
+padrao = r'\d{1,3}(?:\.\d{1,3}){3}'
 
 log = 'IP=192.168.1.45 ERRO'
 print(re.search(padrao, log).group())
@@ -256,7 +256,7 @@ print(re.search(padrao, log).group())
       <p class="subtitle">O simulador agora analisa logs com regex</p>
       <pre><code class="language-python" data-trim>def analisar_logs(logs):
     """Extrai IPs e horas suspeitas."""
-    p_ip = r'\d{1,3}(\.\d{1,3}){3}'
+    p_ip = r'\d{1,3}(?:\.\d{1,3}){3}'
     p_hora = r'\d{2}:\d{2}:\d{2}'
     for linha in logs:
         ip = re.search(p_ip, linha)
@@ -309,3 +309,4 @@ print(re.search(padrao, log).group())
 </script>
 </body>
 </html>
+                                                                                                                               

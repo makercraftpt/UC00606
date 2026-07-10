@@ -53,6 +53,7 @@ Cábulas rápidas por tema — **guarda estas páginas nos favoritos**.
 | [Dividir e Juntar Strings](referencias/split.md) | `split`, `rsplit`, `partition`, `join` |
 | [Expressões Regulares (regex)](referencias/regex.md) | Sintaxe completa, padrões prontos, regex noutras linguagens |
 | [Erros](referencias/erros.md) | `try`, `except`, `finally` |
+| 🤖 [Aprender com IA](referencias/aprender_com_ia.md) | O método das 5 fases — ideia, estratégia, tentativa, teste, validação |
 
 ---
 

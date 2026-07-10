@@ -105,7 +105,7 @@ m.span()    # (6, 10)  — (início, fim)
 ## Padrões comuns — cheatsheet
 
 ```
-IP:        \d{1,3}(\.\d{1,3}){3}
+IP:        \d{1,3}(?:\.\d{1,3}){3}
 Email:     \S+@\S+\.\S+
 Timestamp: \d{2}:\d{2}:\d{2}
 
@@ -118,7 +118,7 @@ Timestamp: \d{2}:\d{2}:\d{2}
 log = "14:32:07 IP=10.0.0.5"
 
 hora = re.search(r"\d{2}:\d{2}:\d{2}", log)
-ip   = re.search(r"\d{1,3}(\.\d{1,3}){3}", log)
+ip   = re.search(r"\d{1,3}(?:\.\d{1,3}){3}", log)
 
 print(hora.group())  # '14:32:07'
 print(ip.group())    # '10.0.0.5'
@@ -135,11 +135,11 @@ print(ip.group())    # '10.0.0.5'
 
 ```python
 # ✔ Bom
-padrao = re.compile(r"\d{1,3}(\.\d{1,3}){3}")   # padrão de IP
+padrao = re.compile(r"\d{1,3}(?:\.\d{1,3}){3}")   # padrão de IP
 resultado = padrao.findall(texto)
 
 # ✘ Evitar
-resultado = re.findall(r"\d{1,3}(\.\d{1,3}){3}", texto)  # recompila a cada chamada
+resultado = re.findall(r"\d{1,3}(?:\.\d{1,3}){3}", texto)  # recompila a cada chamada
 ```
 
 ---
@@ -163,7 +163,7 @@ padrao = r"\d+"        # ✔ correto
 log.find("192.168")   # só encontra esse IP exato
 
 # ✅ Usar regex quando o formato varia
-re.search(r"\d{1,3}(\.\d{1,3}){3}", log)   # encontra qualquer IP
+re.search(r"\d{1,3}(?:\.\d{1,3}){3}", log)   # encontra qualquer IP
 ```
 
 ---

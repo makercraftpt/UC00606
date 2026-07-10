@@ -80,7 +80,7 @@ re.findall(padrao, logs)   # devolve uma lista com TODOS: ['1.1.1.1', '2.2.2.2']
 ### Padrões comuns — cheatsheet
 
 ```
-IP:        \d{1,3}(\.\d{1,3}){3}
+IP:        \d{1,3}(?:\.\d{1,3}){3}
 Email:     \S+@\S+\.\S+
 Timestamp: \d{2}:\d{2}:\d{2}
 
@@ -101,7 +101,7 @@ import re
 
 def analisar_logs(logs):
     """Extrai IPs e horas suspeitas de uma lista de logs."""
-    p_ip = r"\d{1,3}(\.\d{1,3}){3}"
+    p_ip = r"\d{1,3}(?:\.\d{1,3}){3}"
     p_hora = r"\d{2}:\d{2}:\d{2}"
     for linha in logs:
         ip = re.search(p_ip, linha)

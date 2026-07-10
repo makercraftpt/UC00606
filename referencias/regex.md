@@ -110,7 +110,7 @@ re.split(r"\s*,\s*", "a, b,c ,  d")   # ['a', 'b', 'c', 'd']
 ### `re.compile()` — quando usar muitas vezes o mesmo padrão
 
 ```python
-padrao_ip = re.compile(r"\d{1,3}(\.\d{1,3}){3}")
+padrao_ip = re.compile(r"\d{1,3}(?:\.\d{1,3}){3}")
 
 for linha in logs:
     m = padrao_ip.search(linha)   # não recompila o padrão a cada chamada
@@ -121,7 +121,7 @@ for linha in logs:
 ## Padrões prontos a usar — cheatsheet
 
 ```
-IP:          \d{1,3}(\.\d{1,3}){3}
+IP:          \d{1,3}(?:\.\d{1,3}){3}
 Email:       \S+@\S+\.\S+
 Timestamp:   \d{2}:\d{2}:\d{2}
 Data (PT):   \d{2}/\d{2}/\d{4}
@@ -136,7 +136,7 @@ log = "2026-07-10 14:32:07 IP=10.0.0.5 user@dominio.pt"
 
 data  = re.search(r"\d{4}-\d{2}-\d{2}", log).group()
 hora  = re.search(r"\d{2}:\d{2}:\d{2}", log).group()
-ip    = re.search(r"\d{1,3}(\.\d{1,3}){3}", log).group()
+ip    = re.search(r"\d{1,3}(?:\.\d{1,3}){3}", log).group()
 email = re.search(r"\S+@\S+\.\S+", log).group()
 ```
 
