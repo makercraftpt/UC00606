@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 8 — Dados que Persistem · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --navy:#0B1F3A; --teal:#1C7293; --accent:#F4A340; --ink:#1a1a1a; --paper:#F4F5F7;
+  }
+  .reveal { font-family: 'Segoe UI', Arial, sans-serif; }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Segoe UI', Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+  .reveal .slides section { text-align: left; }
+  .reveal h1 { text-align: left; color: #fff; font-size: 1.8em; }
+  .reveal h2 { text-align: left; color: #7FD1D9; font-size: 1.5em; }
+  .reveal .subtitle { color: #9fb3c8; font-size: 0.55em; margin-top: -0.4em; display:block; }
+  .reveal section.title-slide { text-align: center; }
+  .reveal section.title-slide h1 { text-align: center; font-size: 2.4em; }
+  .reveal ul { display:block; }
+  .reveal li { margin-bottom: 0.35em; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal pre code { font-size: 0.62em; max-height: 480px; padding: 14px 18px; border-radius: 8px; }
+  .reveal .two-col { display:flex; gap: 2em; }
+  .reveal .two-col > div { flex: 1; }
+  .reveal .badge { display:inline-block; background: var(--teal); color:#fff; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
+  .reveal .badge-orange { display:inline-block; background: var(--accent); color:#111; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
+  .reveal .card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal .card-warn { background: rgba(244,163,64,0.12); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal section { overflow: visible; }
+  .reveal table { font-size: 0.6em; }
+  .reveal table th { color: #7FD1D9; }
+  .reveal .footnote { font-size: 0.4em; color: #9fb3c8; }
+  .reveal .img-placeholder {
+    background: rgba(255,255,255,0.04);
+    border: 2px dashed rgba(127,209,217,0.4);
+    border-radius: 10px;
+    padding: 1em;
+    font-size: 0.38em;
+    color: #7FD1D9;
+    text-align: center;
+    margin: 0.5em 0;
+    line-height: 1.6;
+  }
+  .reveal .img-placeholder strong { display:block; margin-bottom:0.4em; font-size:1.15em; }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ─── SLIDE 1 — Título ─────────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1>Dados que Persistem</h1>
+      <p class="subtitle">Ficheiros de texto · Logs · CSV</p>
+      <p class="footnote">UC00606 · Linguagem Estruturada · Aula 8</p>
+    </section>
+
+    <!-- ─── SLIDE 2 — Desafio inicial ───────────────────────────────── -->
+    <section>
+      <h2>O problema: memória que desaparece</h2>
+      <p class="subtitle">Tudo o que está numa variável morre quando o programa fecha</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim># O Simulador tem uma lista de agentes
+agentes = ["Ana", "Bruno", "Carla"]
+
+# O utilizador adiciona um novo agente...
+agentes.append("Diana")
+
+# ... e fecha o PyCharm.
+
+# Amanhã, ao abrir de novo:
+agentes = ["Ana", "Bruno", "Carla"]
+#                           ↑ Diana desapareceu!</code></pre>
+      <ul style="font-size:0.85em; margin-top:0.3em">
+        <li>Variáveis existem apenas <strong>em memória RAM</strong> — volátil</li>
+        <li>Para dados sobreviverem ao programa precisamos de <strong>ficheiros</strong></li>
+      </ul>
+    </section>
+
+    <!-- ─── SLIDE 3 — open() ─────────────────────────────────────────── -->
+    <section>
+      <h2>open() — a porta de entrada</h2>
+      <p class="subtitle">Três modos essenciais — escolhe o certo para cada situação</p>
+      <table>
+        <tr><th>Modo</th><th>Significado</th><th>Ficheiro existe?</th><th>Apaga conteúdo?</th></tr>
+        <tr><td><code>'r'</code></td><td>Ler (read)</td><td>Tem de existir</td><td>Não</td></tr>
+        <tr><td><code>'w'</code></td><td>Escrever (write)</td><td>Cria se não existir</td><td>✅ Sim</td></tr>
+        <tr><td><code>'a'</code></td><td>Acrescentar (append)</td><td>Cria se não existir</td><td>Não</td></tr>
+      </table>
+      <div class="card-warn" style="margin-top:0.8em">
+        ⚠️ Modo <code>'w'</code> apaga todo o conteúdo anterior sem aviso — usa com cuidado.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 4 — with...as ─────────────────────────────────────── -->
+    <section>
+      <h2>with...as — a forma certa</h2>
+      <p class="subtitle">Garante que o ficheiro fecha sempre, mesmo se houver erro</p>
+      <div class="two-col">
+        <div>
+          <strong style="font-size:0.6em; color:#e07070">❌ Forma arriscada:</strong>
+          <pre><code class="language-python" data-trim>f = open('dados.txt', 'r')
+conteudo = f.read()
+# Se houver erro aqui...
+f.close()   # nunca chega aqui!</code></pre>
+        </div>
+        <div>
+          <strong style="font-size:0.6em; color:#7FD1D9">✅ Forma correta:</strong>
+          <pre><code class="language-python" data-trim>with open('dados.txt', 'r') as f:
+    conteudo = f.read()
+# fecha automaticamente —
+# mesmo se houver erro</code></pre>
+        </div>
+      </div>
+      <ul>
+        <li><code>with</code> é um <em>gestor de contexto</em> — abre e fecha automaticamente</li>
+        <li>Sempre que usares <code>open()</code>, usa-o dentro de <code>with</code></li>
+      </ul>
+    </section>
+
+    <!-- ─── SLIDE 5 — Ler ficheiros ──────────────────────────────────── -->
+    <section>
+      <h2>Ler um ficheiro — três formas</h2>
+      <p class="subtitle">Escolhe conforme o que precisas</p>
+      <pre><code class="language-python" data-trim>with open('agentes.txt', 'r', encoding='utf-8') as f:
+
+    # Tudo de uma vez (string)
+    tudo = f.read()
+
+    # Linha a linha (lista de strings)
+    linhas = f.readlines()
+
+    # Percorrer linha por linha (eficiente para ficheiros grandes)
+    for linha in f:
+        print(linha.strip())   # .strip() remove o '\n' do fim</code></pre>
+      <div class="two-col" style="margin-top:0.5em">
+        <div class="card"><strong>read()</strong> → string com tudo</div>
+        <div class="card"><strong>readlines()</strong> → lista de strings</div>
+        <div class="card"><strong>for linha in f</strong> → processa linha a linha</div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 6 — Escrever ficheiros ────────────────────────────── -->
+    <section>
+      <h2>Escrever e acrescentar</h2>
+      <p class="subtitle">write() para um valor, writelines() para uma lista</p>
+      <div class="two-col">
+        <div>
+          <strong style="font-size:0.6em">Criar/substituir (modo 'w'):</strong>
+          <pre><code class="language-python" data-trim>agentes = ["Ana\n", "Bruno\n", "Carla\n"]
+
+with open('agentes.txt', 'w', encoding='utf-8') as f:
+    f.writelines(agentes)
+    # ou: f.write("Ana\nBruno\n")</code></pre>
+        </div>
+        <div>
+          <strong style="font-size:0.6em">Acrescentar log (modo 'a'):</strong>
+          <pre><code class="language-python" data-trim">from datetime import datetime
+
+evento = f"{datetime.now()} login OK\n"
+
+with open('log.txt', 'a', encoding='utf-8') as f:
+    f.write(evento)
+# cada chamada acrescenta uma linha</code></pre>
+        </div>
+      </div>
+      <p>💡 Inclui sempre <code>encoding='utf-8'</code> para acentos funcionarem.</p>
+    </section>
+
+    <!-- ─── SLIDE 7 — Imagem placeholder: fluxo ficheiro ────────────── -->
+    <section>
+      <h2>Fluxo de um ficheiro</h2>
+      <p class="subtitle">Abrir → operar → fechar (o with faz isso por ti)</p>
+
+      <img src="img/aula8_ficheiro_fluxo.png" alt="Fluxo de ficheiro: open → operações → auto close" style="width:90%; border-radius:10px; margin:0.3em auto; display:block;">
+
+      <p style="font-size:0.75em; margin-top:0.4em">✅ Mesmo com erro no meio, o ficheiro fecha sempre — é garantido.</p>
+    </section>
+
+    <!-- ─── SLIDE 8 — CSV: o que é ──────────────────────────────────── -->
+    <section>
+      <h2>CSV — Comma Separated Values</h2>
+      <p class="subtitle">A forma mais simples de guardar dados em tabela</p>
+      <div class="two-col">
+        <div>
+          <strong style="font-size:0.6em">O que parece no ficheiro:</strong>
+          <pre><code class="language-text" data-trim>nome,nivel,ativo
+Ana,ANALISTA,True
+Bruno,CADETE,True
+Carla,RECRUTA,False</code></pre>
+        </div>
+        <div>
+          <strong style="font-size:0.6em">O que representa:</strong>
+          <table style="font-size:0.85em">
+            <tr><th>nome</th><th>nivel</th><th>ativo</th></tr>
+            <tr><td>Ana</td><td>ANALISTA</td><td>True</td></tr>
+            <tr><td>Bruno</td><td>CADETE</td><td>True</td></tr>
+            <tr><td>Carla</td><td>RECRUTA</td><td>False</td></tr>
+          </table>
+        </div>
+      </div>
+      <ul style="margin-top:0.4em">
+        <li>Primeira linha = cabeçalho (nomes das colunas)</li>
+        <li>Abre em Excel, Google Sheets, LibreOffice — e no Python</li>
+        <li>Ideal para listas de dados simples sem relações complexas</li>
+      </ul>
+    </section>
+
+    <!-- ─── SLIDE 9 — csv.reader / csv.writer ───────────────────────── -->
+    <section>
+      <h2>csv.reader e csv.writer</h2>
+      <p class="subtitle">O módulo csv trata das vírgulas e das aspas por ti</p>
+      <div class="two-col">
+        <div>
+          <strong style="font-size:0.6em">Ler:</strong>
+          <pre><code class="language-python" data-trim>import csv
+
+with open('agentes.csv', 'r', encoding='utf-8') as f:
+    leitor = csv.reader(f)
+    next(leitor)        # saltar cabeçalho
+    for linha in leitor:
+        print(linha)
+# ['Ana', 'ANALISTA', 'True']</code></pre>
+        </div>
+        <div>
+          <strong style="font-size:0.6em">Escrever:</strong>
+          <pre><code class="language-python" data-trim>import csv
+
+agentes = [
+    ['nome', 'nivel', 'ativo'],
+    ['Ana', 'ANALISTA', 'True'],
+    ['Bruno', 'CADETE', 'True'],
+]
+
+with open('agentes.csv', 'w', newline='', encoding='utf-8') as f:
+    escritor = csv.writer(f)
+    escritor.writerows(agentes)</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 10 — DictReader / DictWriter ──────────────────────── -->
+    <section>
+      <h2>DictReader e DictWriter</h2>
+      <p class="subtitle">Aceder às colunas pelo nome — muito mais legível</p>
+      <div class="two-col">
+        <div>
+          <strong style="font-size:0.6em">DictReader — ler como dicionário:</strong>
+          <pre><code class="language-python" data-trim">import csv
+
+with open('agentes.csv', 'r', encoding='utf-8') as f:
+    leitor = csv.DictReader(f)
+    for agente in leitor:
+        print(agente['nome'], agente['nivel'])
+        # Ana ANALISTA
+        # Bruno CADETE</code></pre>
+        </div>
+        <div>
+          <strong style="font-size:0.6em">DictWriter — escrever com cabeçalho:</strong>
+          <pre><code class="language-python" data-trim>import csv
+
+campos = ['nome', 'nivel', 'ativo']
+agentes = [
+    {'nome': 'Ana', 'nivel': 'ANALISTA', 'ativo': True},
+]
+
+with open('agentes.csv', 'w', newline='', encoding='utf-8') as f:
+    escritor = csv.DictWriter(f, fieldnames=campos)
+    escritor.writeheader()
+    escritor.writerows(agentes)</code></pre>
+        </div>
+      </div>
+      <p>💡 Prefere <code>DictReader/DictWriter</code> — o código faz sentido sem saberes a posição de cada coluna.</p>
+    </section>
+
+    <!-- ─── SLIDE 11 — Ficheiros de log ─────────────────────────────── -->
+    <section>
+      <h2>Ficheiros de log — dados que contam a história</h2>
+      <p class="subtitle">Cada linha é um evento — com hora, tipo e mensagem</p>
+      <pre style="font-size:0.52em; margin-bottom:0.3em"><code class="language-text" data-trim>2025-11-14 20:31:02 INFO  Login bem-sucedido: ana
+2025-11-14 20:31:45 ERROR Tentativa de acesso negada: IP 10.0.0.99
+2025-11-14 20:32:10 INFO  Agente desligado: ana
+2025-11-14 20:35:01 ERROR Tentativa de acesso negada: IP 10.0.0.99</code></pre>
+      <pre style="font-size:0.52em; margin-bottom:0.3em"><code class="language-python" data-trim>erros = []
+with open('simulador.log', 'r', encoding='utf-8') as f:
+    for linha in f:
+        if 'ERROR' in linha:
+            erros.append(linha.strip())
+
+print(f'{len(erros)} erros encontrados')
+for e in erros:
+    print(e)</code></pre>
+      <p style="font-size:0.8em; margin-top:0.2em">🔐 Em cibersegurança, analisar logs é o primeiro passo para detetar intrusos.</p>
+    </section>
+
+    <!-- ─── SLIDE 12 — Simulador v1.0 ───────────────────────────────── -->
+    <section>
+      <h2>Simulador v1.0 — dados que sobrevivem</h2>
+      <p class="subtitle">O Simulador passa a guardar e carregar agentes em CSV</p>
+      <pre style="font-size:0.50em"><code class="language-python" data-trim>import csv
+
+FICHEIRO_AGENTES = 'agentes.csv'
+
+def carregar_agentes():
+    agentes = []
+    try:
+        with open(FICHEIRO_AGENTES, 'r', encoding='utf-8') as f:
+            leitor = csv.DictReader(f)
+            for linha in leitor:
+                agentes.append(linha)
+    except FileNotFoundError:
+        pass   # primeira vez — ficheiro ainda não existe
+    return agentes
+
+def guardar_agentes(agentes):
+    with open(FICHEIRO_AGENTES, 'w', newline='', encoding='utf-8') as f:
+        campos = ['nome', 'codename', 'nivel']
+        escritor = csv.DictWriter(f, fieldnames=campos)
+        escritor.writeheader()
+        escritor.writerows(agentes)</code></pre>
+      <span class="badge-orange">Missão v1.0</span> <span style="font-size:0.5em">Os dados já não se perdem entre sessões!</span>
+    </section>
+
+    <!-- ─── SLIDE 13 — Boas práticas ────────────────────────────────── -->
+    <section>
+      <h2>Boas práticas com ficheiros</h2>
+      <p class="subtitle">Pequenos detalhes que evitam problemas grandes</p>
+      <div class="two-col">
+        <div>
+          <div class="card">✔ <strong>Sempre <code>with open()</code></strong><br>Nunca fechas por acidente.</div>
+          <div class="card">✔ <strong>Sempre <code>encoding='utf-8'</code></strong><br>Acentos e caracteres especiais funcionam.</div>
+          <div class="card">✔ <strong><code>newline=''</code> no CSV</strong><br>Evita linhas em branco duplicadas no Windows.</div>
+        </div>
+        <div>
+          <div class="card">✔ <strong>Caminhos relativos</strong><br><code>'agentes.csv'</code> em vez de <code>'C:\\Users\\...'</code> — portátil entre máquinas.</div>
+          <div class="card">✔ <strong><code>try/except FileNotFoundError</code></strong><br>Para quando o ficheiro ainda não existe.</div>
+          <div class="card">✔ <strong>Nunca guardar passwords em claro</strong><br>Já sabes que vem aí o <code>hashlib</code> na Aula 9 😉</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 14 — Demonstração ao vivo ─────────────────────────── -->
+    <section>
+      <h2>Demonstração ao vivo</h2>
+      <p class="subtitle">Vamos carregar o Simulador v0.5 e adicionar persistência</p>
+      <ol style="font-size: 0.7em">
+        <li>Abrir o Simulador v0.5 no PyCharm</li>
+        <li>Adicionar a função <code>carregar_agentes()</code></li>
+        <li>Adicionar a função <code>guardar_agentes()</code></li>
+        <li>Chamar <code>carregar_agentes()</code> no início do <code>main()</code></li>
+        <li>Chamar <code>guardar_agentes()</code> antes de sair</li>
+        <li>Fechar e abrir o PyCharm — os dados estão lá!</li>
+      </ol>
+      <div class="card-warn" style="margin-top:0.8em; font-size:0.5em">
+        💡 O ficheiro <code>agentes.csv</code> aparece na pasta do projeto — podem abri-lo em Excel para confirmar.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 15 — Resumo ────────────────────────────────────────── -->
+    <section>
+      <h2>Resumo da Aula 8</h2>
+      <p class="subtitle">O que aprendeste hoje</p>
+      <div class="two-col">
+        <div>
+          <div class="card">📂 <strong>open() + with</strong><br>Modos r / w / a · Fechar sempre · encoding utf-8</div>
+          <div class="card">📄 <strong>Ler e escrever texto</strong><br>read() · readlines() · write() · writelines()</div>
+          <div class="card">📊 <strong>CSV</strong><br>csv.reader / writer · DictReader / DictWriter</div>
+        </div>
+        <div>
+          <div class="card">🗒️ <strong>Logs</strong><br>Filtrar linhas por tipo · Acumular com modo 'a'</div>
+          <div class="card">🚀 <strong>Simulador v1.0</strong><br>Agentes guardados em CSV — persistência real</div>
+          <div class="card">🔐 <strong>Próxima aula</strong><br>JSON · .ini · variáveis de ambiente · hashlib</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    plugins: []
+  });
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

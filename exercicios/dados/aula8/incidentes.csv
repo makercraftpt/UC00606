@@ -1,0 +1,6 @@
+data_hora,tipo,severidade,descricao
+2025-11-10 09:14:22,PHISHING,3,Email suspeito recebido por 4 utilizadores
+2025-11-11 14:32:05,MALWARE,5,Ransomware detetado no servidor principal
+2025-11-12 08:55:41,DDoS,2,Tráfego elevado no porto 443 durante 12 minutos
+2025-11-13 21:03:17,BREACH,4,Acesso não autorizado à pasta /dados/agentes
+2025-11-14 11:28:50,PHISHING,2,Link malicioso partilhado no chat interno

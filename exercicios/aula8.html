@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Aula 8 — Dados que Persistem · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --teal: #1C7293;
+    --teal-lt: #2a9abf;
+    --accent: #F4A340;
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --bg: #111a27;
+    --card: #162032;
+    --border: #1e3050;
+    --text: #dce6f0;
+    --muted: #7a92a8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 2em 1em 4em;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .header {
+    background: var(--navy);
+    border-left: 5px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 1.2em 1.5em;
+    margin-bottom: 2em;
+  }
+  .header h1 { font-size: 1.6em; color: #fff; }
+  .header .meta { color: var(--muted); font-size: 0.85em; margin-top: 0.3em; }
+  .header .scaffolding-note {
+    margin-top: 1em;
+    background: rgba(28,114,147,0.15);
+    border: 1px solid var(--teal);
+    border-radius: 8px;
+    padding: 0.6em 1em;
+    font-size: 0.82em;
+    color: #a8d8e8;
+  }
+
+  /* ── Exercício card ── */
+  .exercicio {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 2.5em;
+    overflow: hidden;
+  }
+  .ex-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    padding: 1em 1.4em;
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-header.nivel-1 { background: rgba(46,204,113,0.08); border-left: 4px solid var(--green); }
+  .ex-header.nivel-2 { background: rgba(244,163,64,0.08); border-left: 4px solid var(--accent); }
+  .ex-header.nivel-3 { background: rgba(231,76,60,0.08);  border-left: 4px solid var(--red); }
+  .estrelas { font-size: 1.1em; }
+  .ex-titulo { font-size: 1.1em; font-weight: bold; color: #fff; }
+  .ex-num { color: var(--muted); font-size: 0.8em; }
+  .ex-tempo {
+    margin-left: auto;
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 0.2em 0.7em;
+    font-size: 0.78em;
+    color: var(--muted);
+  }
+  .ex-body { padding: 1.4em; }
+
+  /* ── Scaffold badge ── */
+  .scaffold-badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 0.15em 0.7em;
+    font-size: 0.72em;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+  .scaffold-badge.completo { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+  .scaffold-badge.meio     { background: rgba(244,163,64,0.15);  color: #F4A340; border: 1px solid #F4A340; }
+  .scaffold-badge.livre    { background: rgba(231,76,60,0.15);   color: #e74c3c; border: 1px solid #e74c3c; }
+
+  /* ── Enunciado ── */
+  .enunciado { margin-bottom: 1.2em; }
+  .enunciado p { margin-bottom: 0.6em; color: var(--text); }
+  .enunciado ul, .enunciado ol { padding-left: 1.5em; margin-bottom: 0.6em; }
+  .enunciado li { margin-bottom: 0.3em; }
+
+  /* ── Ficheiro de dados exemplo ── */
+  .ficheiro-exemplo {
+    background: #0d1520;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 0.8em 1em;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.82em;
+    color: #8ab4c8;
+    margin: 0.8em 0 1.2em;
+  }
+  .ficheiro-exemplo .label {
+    color: var(--muted);
+    font-size: 0.85em;
+    margin-bottom: 0.4em;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+
+  /* ── Código ── */
+  pre { border-radius: 8px; margin: 1em 0; font-size: 0.88em; }
+  code.inline { background: rgba(255,255,255,0.07); padding: 0.1em 0.4em; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.9em; }
+
+  /* ── TODO highlight ── */
+  .todo-note {
+    background: rgba(244,163,64,0.1);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.5em 0.8em;
+    font-size: 0.83em;
+    color: #f0c080;
+    margin: 0.8em 0;
+  }
+
+  /* ── Cabeçalho Python ── */
+  .cabecalho-python {
+    background: #0d1520;
+    border: 1px solid var(--teal);
+    border-radius: 8px;
+    margin-bottom: 1.2em;
+  }
+  .cabecalho-python .label {
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.75em;
+    padding: 0.3em 0.8em;
+    border-radius: 7px 7px 0 0;
+  }
+
+  /* ── Conceitos ── */
+  .conceitos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin-top: 1em;
+  }
+  .conceito {
+    background: rgba(28,114,147,0.15);
+    border: 1px solid rgba(28,114,147,0.4);
+    border-radius: 6px;
+    padding: 0.15em 0.6em;
+    font-size: 0.78em;
+    font-family: 'Consolas', monospace;
+    color: #7FD1D9;
+  }
+
+  /* ── Dica ── */
+  .dica {
+    background: rgba(28,114,147,0.08);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    padding: 0.6em 0.9em;
+    font-size: 0.83em;
+    color: #a8d8e8;
+    margin-top: 1em;
+  }
+
+  /* ── Separador ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ── Dados de exemplo ── */
+  .dados-box {
+    background: #0a1220;
+    border: 1px solid var(--teal);
+    border-radius: 8px;
+    margin: 1em 0;
+    overflow: hidden;
+  }
+  .dados-box .dados-header {
+    background: rgba(28,114,147,0.2);
+    padding: 0.4em 0.9em;
+    font-size: 0.78em;
+    color: #7FD1D9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dados-box pre {
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0.8em 1em;
+  }
+  .dados-box pre code {
+    background: transparent;
+    font-size: 0.82em;
+    color: #8ab4c8;
+    font-family: 'Consolas', 'Courier New', monospace;
+  }
+  .instrucao-ficheiro {
+    background: rgba(244,163,64,0.07);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.5em 0.9em;
+    font-size: 0.8em;
+    color: #f0c080;
+    margin: 0.6em 0 1em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ═══ HEADER ══════════════════════════════════════════════════════ -->
+  <div class="header">
+    <h1>💾 Aula 8 — Dados que Persistem</h1>
+    <div class="meta">UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</div>
+    <div class="scaffolding-note">
+      <strong>Como funciona esta ficha:</strong>
+      <span style="color:#2ecc71">★ Fácil</span> — código quase completo, preenches os espaços &nbsp;|&nbsp;
+      <span style="color:#F4A340">★★ Médio</span> — estrutura dada, lógica por completar &nbsp;|&nbsp;
+      <span style="color:#e74c3c">★★★ Difícil</span> — só o enunciado, solução é tua
+    </div>
+  </div>
+
+  <!-- ═══ EXERCÍCIO 1 — ★ ══════════════════════════════════════════════ -->
+  <div class="exercicio">
+    <div class="ex-header nivel-1">
+      <span class="estrelas">★</span>
+      <div>
+        <div class="ex-titulo">Agenda de Contactos</div>
+        <div class="ex-num">#78</div>
+      </div>
+      <div class="ex-tempo">⏱ 30 min</div>
+    </div>
+    <div class="ex-body">
+      <span class="scaffold-badge completo">🟢 Esqueleto quase completo — preenche os espaços ___</span>
+
+      <div class="enunciado">
+        <p>Cria uma agenda de contactos simples. O programa deve:</p>
+        <ol>
+          <li>Ao iniciar, <strong>mostrar todos os contactos</strong> guardados em ficheiro</li>
+          <li>Pedir o <strong>nome</strong> e <strong>email</strong> de um novo contacto</li>
+          <li><strong>Guardar</strong> o contacto no ficheiro (sem apagar os anteriores)</li>
+          <li>Os dados devem <strong>persistir entre execuções</strong> — fechar e abrir o PyCharm não os apaga</li>
+        </ol>
+      </div>
+
+      <div class="instrucao-ficheiro">
+        📁 Cria uma pasta para este exercício no PyCharm e coloca lá o ficheiro <code style="font-family:monospace">contactos.txt</code> com estes dados de exemplo — ou começa com a agenda vazia (o programa trata disso).
+      </div>
+      <div class="dados-box">
+        <div class="dados-header">
+          <span>📄 contactos.txt — dados de exemplo</span>
+          <span style="color:var(--muted)">copia para a pasta do projeto</span>
+        </div>
+        <pre><code>Ana Silva,ana.silva@etpsico.pt
+Bruno Martins,bruno.martins@gmail.com
+Carla Rodrigues,carla.r@outlook.com</code></pre>
+      </div>
+
+      <div class="cabecalho-python">
+        <div class="label">📄 Começa sempre com este cabeçalho — preenche os campos em branco</div>
+        <pre><code class="language-python">"""
+Ficheiro: ex78_agenda.py
+UC: UC00606 — Linguagem Estruturada
+Aula: 8
+Autor: ________________________________
+Data: ________________________________
+Descrição: Agenda de contactos com persistência em ficheiro de texto
+Como usar: Executar no PyCharm — os dados ficam em contactos.txt
+"""</code></pre>
+      </div>
+
+      <pre><code class="language-python">FICHEIRO = 'contactos.txt'
+
+
+def guardar_contacto(nome, email):
+    # Abre em modo ___ para acrescentar sem apagar o que já existe
+    with open(FICHEIRO, ___, encoding='utf-8') as f:
+        f.write(f"{nome},{email}\n")
+
+
+def mostrar_contactos():
+    try:
+        with open(FICHEIRO, ___, encoding='utf-8') as f:
+            linhas = f.___()          # lê todas as linhas de uma vez
+        if not linhas:
+            print("Agenda vazia.")
+            return
+        print("\n--- Contactos ---")
+        for linha in linhas:
+            partes = linha.___(',')   # divide pelo separador
+            print(f"Nome: {partes[0]}  |  Email: {partes[1]}")
+    except ___:                       # ficheiro ainda não existe
+        print("Agenda vazia.")
+
+
+# ── Programa principal ──────────────────────────────────────────────
+mostrar_contactos()
+
+nome = input("\nNome do novo contacto: ")
+email = input("Email: ")
+guardar_contacto(___, ___)            # passa as duas variáveis
+print("✅ Contacto guardado!")</code></pre>
+
+      <div class="todo-note">
+        Preenche cada <code>___</code> com o valor correto. Não alteres o resto do código.
+      </div>
+
+      <div class="conceitos">
+        <span class="conceito">open()</span>
+        <span class="conceito">modo 'a'</span>
+        <span class="conceito">modo 'r'</span>
+        <span class="conceito">readlines()</span>
+        <span class="conceito">split()</span>
+        <span class="conceito">FileNotFoundError</span>
+        <span class="conceito">f.write()</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCÍCIO 2 — ★★ ═════════════════════════════════════════════ -->
+  <div class="exercicio">
+    <div class="ex-header nivel-2">
+      <span class="estrelas">★★</span>
+      <div>
+        <div class="ex-titulo">Analisador de Logs em Ficheiro</div>
+        <div class="ex-num">#80</div>
+      </div>
+      <div class="ex-tempo">⏱ 45 min</div>
+    </div>
+    <div class="ex-body">
+      <span class="scaffold-badge meio">🟡 Estrutura dada — implementa a lógica dentro de cada função</span>
+
+      <div class="enunciado">
+        <p>Lê um ficheiro de logs de segurança, conta quantas linhas são de cada tipo e mostra um resumo formatado.</p>
+        <p>Copia o ficheiro <code class="inline">logs_exemplo.txt</code> abaixo para a pasta do projeto — é obrigatório para o programa funcionar.</p>
+      </div>
+
+      <div class="instrucao-ficheiro">
+        📁 Coloca o ficheiro <code style="font-family:monospace">logs_exemplo.txt</code> na mesma pasta que o teu <code style="font-family:monospace">ex80_analisador.py</code> no PyCharm.
+      </div>
+      <div class="dados-box">
+        <div class="dados-header">
+          <span>📄 logs_exemplo.txt — 20 linhas de log</span>
+          <span style="color:var(--muted)">copia para a pasta do projeto</span>
+        </div>
+        <pre><code>2025-11-14 20:31:02 INFO  Login bem-sucedido: ana
+2025-11-14 20:31:45 ERROR Tentativa de acesso negada: IP 10.0.0.99
+2025-11-14 20:32:10 INFO  Agente desligado: ana
+2025-11-14 20:33:01 WARNING Ligação lenta detetada: latência 850ms
+2025-11-14 20:35:01 ERROR Tentativa de acesso negada: IP 10.0.0.99
+2025-11-14 20:36:22 INFO  Login bem-sucedido: bruno
+2025-11-14 20:37:44 ERROR Ficheiro de configuração em falta: config.ini
+2025-11-14 20:39:10 INFO  Backup automático concluído
+2025-11-14 20:40:03 WARNING Tentativas de login falhadas: utilizador desconhecido (3x)
+2025-11-14 20:41:55 ERROR Acesso negado: permissões insuficientes em /dados/agentes.csv
+2025-11-14 20:43:12 INFO  Login bem-sucedido: carla
+2025-11-14 20:44:08 WARNING Sessão expirada: ana
+2025-11-14 20:45:30 INFO  Relatório diário gerado
+2025-11-14 20:46:17 ERROR Tentativa de acesso negada: IP 192.168.1.200
+2025-11-14 20:47:01 INFO  Agente desligado: bruno
+2025-11-14 20:48:44 ERROR Base de dados inacessível: timeout após 30s
+2025-11-14 20:49:22 INFO  Login bem-sucedido: diana
+2025-11-14 20:50:05 WARNING Disco quase cheio: 92% utilizado
+2025-11-14 20:51:33 INFO  Scan de segurança concluído: sem ameaças
+2025-11-14 20:52:19 ERROR Tentativa de acesso negada: IP 10.0.0.99</code></pre>
+      </div>
+
+      <div class="cabecalho-python">
+        <div class="label">📄 Cabeçalho obrigatório</div>
+        <pre><code class="language-python">"""
+Ficheiro: ex80_analisador.py
+UC: UC00606 — Linguagem Estruturada
+Aula: 8
+Autor: ________________________________
+Data: ________________________________
+Descrição: Lê logs de segurança e apresenta resumo por tipo
+Como usar: Colocar logs_exemplo.txt na mesma pasta e executar
+"""</code></pre>
+      </div>
+
+      <pre><code class="language-python">FICHEIRO_LOGS = 'logs_exemplo.txt'
+
+
+def carregar_logs():
+    """Lê o ficheiro e devolve lista de linhas sem espaços extra."""
+    linhas = []
+    with open(FICHEIRO_LOGS, 'r', encoding='utf-8') as f:
+        # TODO: percorre o ficheiro linha a linha
+        #       e acrescenta cada linha (sem '\n') à lista
+        pass
+    return linhas
+
+
+def contar_tipos(linhas):
+    """Conta quantas linhas há de cada tipo. Devolve dicionário."""
+    contagem = {'INFO': 0, 'WARNING': 0, 'ERROR': 0}
+    for linha in linhas:
+        # TODO: verifica se 'INFO', 'WARNING' ou 'ERROR' está na linha
+        #       e incrementa o contador correto
+        pass
+    return contagem
+
+
+def mostrar_resumo(contagem, total):
+    """Mostra o relatório formatado no terminal."""
+    print(f"\n{'='*42}")
+    print(f"{'RELATÓRIO DE LOGS':^42}")
+    print(f"{'='*42}")
+    # TODO: para cada tipo, mostra a contagem e a percentagem
+    #       exemplo de linha:  INFO    ......  3 ocorrências (42.9%)
+    #       dica: percentagem = contagem[tipo] / total * 100
+    pass
+    print(f"{'='*42}")
+    print(f"Total: {total} linhas\n")
+
+
+# ── Programa principal ──────────────────────────────────────────────
+linhas = carregar_logs()
+total = len(linhas)
+contagem = contar_tipos(linhas)
+mostrar_resumo(contagem, total)</code></pre>
+
+      <div class="dica">
+        💡 Para verificar se uma palavra está numa linha usa <code class="inline">'ERROR' in linha</code>. Para formatar colunas alinhadas usa f-strings com largura fixa: <code class="inline">f"{tipo:&lt;10}"</code>
+      </div>
+
+      <div class="conceitos">
+        <span class="conceito">open() + with</span>
+        <span class="conceito">strip()</span>
+        <span class="conceito">in</span>
+        <span class="conceito">dict</span>
+        <span class="conceito">f-string formatação</span>
+        <span class="conceito">/ * 100</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXERCÍCIO 3 — ★★★ ════════════════════════════════════════════ -->
+  <div class="exercicio">
+    <div class="ex-header nivel-3">
+      <span class="estrelas">★★★</span>
+      <div>
+        <div class="ex-titulo">Registo de Incidentes de Segurança</div>
+        <div class="ex-num">#82</div>
+      </div>
+      <div class="ex-tempo">⏱ 60 min</div>
+    </div>
+    <div class="ex-body">
+      <span class="scaffold-badge livre">🔴 Só enunciado — estrutura e código são teus</span>
+
+      <div class="enunciado">
+        <p>Cria um sistema de registo de incidentes de segurança. O programa deve:</p>
+        <ol>
+          <li>Ao iniciar, <strong>mostrar todos os incidentes anteriores</strong> guardados em CSV</li>
+          <li>Pedir ao utilizador:
+            <ul>
+              <li>Tipo de incidente: <code class="inline">BREACH</code> / <code class="inline">MALWARE</code> / <code class="inline">PHISHING</code> / <code class="inline">DDoS</code></li>
+              <li>Severidade: número de <code class="inline">1</code> (baixa) a <code class="inline">5</code> (crítica)</li>
+              <li>Descrição curta do incidente</li>
+            </ul>
+          </li>
+          <li><strong>Guardar o incidente</strong> em <code class="inline">incidentes.csv</code> com a <strong>data e hora automáticas</strong> (<code class="inline">datetime.now()</code>)</li>
+          <li>Os dados devem acumular entre execuções — o histórico nunca se perde</li>
+        </ol>
+
+        <p style="margin-top:1em">Começa com este ficheiro <code class="inline">incidentes.csv</code> já preenchido — ao executar o programa vês logo o histórico antes de adicionares um novo:</p>
+      </div>
+
+      <div class="instrucao-ficheiro">
+        📁 Coloca o ficheiro <code style="font-family:monospace">incidentes.csv</code> na pasta do projeto. O programa deve mostrar estes 5 incidentes ao arrancar, antes de pedir um novo.
+      </div>
+      <div class="dados-box">
+        <div class="dados-header">
+          <span>📄 incidentes.csv — 5 incidentes históricos</span>
+          <span style="color:var(--muted)">copia para a pasta do projeto</span>
+        </div>
+        <pre><code>data_hora,tipo,severidade,descricao
+2025-11-10 09:14:22,PHISHING,3,Email suspeito recebido por 4 utilizadores
+2025-11-11 14:32:05,MALWARE,5,Ransomware detetado no servidor principal
+2025-11-12 08:55:41,DDoS,2,Tráfego elevado no porto 443 durante 12 minutos
+2025-11-13 21:03:17,BREACH,4,Acesso não autorizado à pasta /dados/agentes
+2025-11-14 11:28:50,PHISHING,2,Link malicioso partilhado no chat interno</code></pre>
+      </div>
+
+      <div class="cabecalho-python">
+        <div class="label">📄 Não te esqueças do cabeçalho</div>
+        <pre><code class="language-python">"""
+Ficheiro: ex82_incidentes.py
+UC: UC00606 — Linguagem Estruturada
+Aula: 8
+Autor: ________________________________
+Data: ________________________________
+Descrição: Sistema de registo de incidentes de segurança em CSV
+Como usar: Executar no PyCharm — os dados ficam em incidentes.csv
+"""</code></pre>
+      </div>
+
+      <div class="dica">
+        💡 Módulos úteis: <code class="inline">import csv</code> e <code class="inline">from datetime import datetime</code><br>
+        Para obter a data e hora atual: <code class="inline">datetime.now().strftime('%Y-%m-%d %H:%M:%S')</code>
+      </div>
+
+      <div class="conceitos">
+        <span class="conceito">csv.DictReader</span>
+        <span class="conceito">csv.DictWriter</span>
+        <span class="conceito">datetime.now()</span>
+        <span class="conceito">modo 'a'</span>
+        <span class="conceito">writeheader()</span>
+        <span class="conceito">FileNotFoundError</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

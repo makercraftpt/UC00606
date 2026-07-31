@@ -28,7 +28,7 @@
 | [Semana 5](semanas/semana05.md) | Funções — `def`, `return`, parâmetros | ✅ Disponível |
 | Semana 6 | Avaliação 1 | 🔒 Em breve |
 | [Semana 7](semanas/semana07.md) | Strings — métodos, slicing, formatação e expressões regulares (`re`) | ✅ Disponível |
-| Semana 8 | Ficheiros de texto, logs e CSV | 🔒 Em breve |
+| [Semana 8](apresentacoes/aula8.html) | Ficheiros de texto, logs e CSV | ✅ Disponível |
 | Semana 9 | Dados estruturados — JSON, `.ini`, variáveis de ambiente e hashing (`hashlib`) | 🔒 Em breve |
 | Semana 10 | Base de dados em ficheiro — SQLite | 🔒 Em breve |
 | Semana 11 | Tratamento de erros — `try / except` | 🔒 Em breve |
@@ -71,6 +71,7 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 
 - [Aula 5 — Funções (slides interativos)](apresentacoes/aula5.html)
 - [Aula 7 — Strings & Regex (slides interativos)](apresentacoes/aula7.html)
+- [Aula 8 — Dados que Persistem (slides interativos)](apresentacoes/aula8.html)
 
 ---
 
@@ -84,6 +85,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 4 — Ciclos `for` + listas](exercicios/aula4.md)
 - [Fichas Aula 5 — Funções](exercicios/aula5.md)
 - [Fichas Aula 7 — Strings & Regex](exercicios/aula7.md)
+- [Fichas Aula 8 — Dados que Persistem](exercicios/aula8.html)
 
 ---
 

@@ -1,0 +1,20 @@
+2025-11-14 20:31:02 INFO  Login bem-sucedido: ana
+2025-11-14 20:31:45 ERROR Tentativa de acesso negada: IP 10.0.0.99
+2025-11-14 20:32:10 INFO  Agente desligado: ana
+2025-11-14 20:33:01 WARNING Ligação lenta detetada: latência 850ms
+2025-11-14 20:35:01 ERROR Tentativa de acesso negada: IP 10.0.0.99
+2025-11-14 20:36:22 INFO  Login bem-sucedido: bruno
+2025-11-14 20:37:44 ERROR Ficheiro de configuração em falta: config.ini
+2025-11-14 20:39:10 INFO  Backup automático concluído
+2025-11-14 20:40:03 WARNING Tentativas de login falhadas: utilizador desconhecido (3x)
+2025-11-14 20:41:55 ERROR Acesso negado: permissões insuficientes em /dados/agentes.csv
+2025-11-14 20:43:12 INFO  Login bem-sucedido: carla
+2025-11-14 20:44:08 WARNING Sessão expirada: ana
+2025-11-14 20:45:30 INFO  Relatório diário gerado
+2025-11-14 20:46:17 ERROR Tentativa de acesso negada: IP 192.168.1.200
+2025-11-14 20:47:01 INFO  Agente desligado: bruno
+2025-11-14 20:48:44 ERROR Base de dados inacessível: timeout após 30s
+2025-11-14 20:49:22 INFO  Login bem-sucedido: diana
+2025-11-14 20:50:05 WARNING Disco quase cheio: 92% utilizado
+2025-11-14 20:51:33 INFO  Scan de segurança concluído: sem ameaças
+2025-11-14 20:52:19 ERROR Tentativa de acesso negada: IP 10.0.0.99
