@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Aula 9 — Como os Dados São Encontrados Rápido · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A; --teal: #1C7293; --accent: #F4A340;
+    --green: #27ae60; --orange: #e67e22; --red: #c0392b;
+    --bg: #10192a; --surface: #162032; --text: #e2e8f0;
+    --code-bg: #1e2a38; --border: rgba(28,114,147,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; line-height: 1.6; }
+  header { border-bottom: 2px solid var(--teal); padding-bottom: 1rem; margin-bottom: 2rem; }
+  header h1 { color: #fff; font-size: 1.6rem; }
+  header p { color: #7FD1D9; font-size: 0.9rem; margin-top: 0.2rem; }
+  .ex { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+  .ex-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+  .star-1 { color: var(--green); font-size: 1.3rem; }
+  .star-2 { color: var(--orange); font-size: 1.3rem; }
+  .star-3 { color: var(--red); font-size: 1.3rem; }
+  .ex-num { font-size: 0.75rem; color: #9fb3c8; }
+  .ex h2 { color: #fff; font-size: 1.15rem; }
+  .ex p { margin: 0.5rem 0; font-size: 0.92rem; }
+  pre { background: var(--code-bg); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; overflow-x: auto; font-size: 0.82rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .tag { display: inline-block; border-radius: 5px; padding: 1px 8px; font-size: 0.72rem; margin: 2px; }
+  .tag-blue { background: rgba(28,114,147,0.3); color: #7FD1D9; border: 1px solid rgba(28,114,147,0.4); }
+  .tag-orange { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.3); }
+  .data-block { background: #0d1520; border: 1px solid rgba(127,209,217,0.2); border-radius: 8px; padding: 0.8rem; margin: 0.6rem 0; font-size: 0.8rem; color: #7FD1D9; }
+  .data-block strong { display: block; color: #9fb3c8; font-size: 0.72rem; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip { background: rgba(28,114,147,0.1); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  .warn { background: rgba(244,163,64,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  .blank { display: inline-block; border-bottom: 2px solid var(--teal); min-width: 80px; color: transparent; user-select: none; }
+  footer { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; color: #4a6080; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aula 9 — Como os Dados São Encontrados Rápido</h1>
+  <p>UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #85 — ★  (esqueleto com blanks)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-1">★</span><span class="star-1">☆☆</span>
+    <span class="ex-num">#85</span>
+    <h2>Leitor de Agentes JSON</h2>
+  </div>
+
+  <p>O Simulador guarda os agentes num ficheiro JSON. Completa o programa para carregar os agentes, mostrar quantos estão ativos e listar os seus codenames.</p>
+
+  <div class="data-block">
+    <strong>Ficheiro de dados — dados/aula9/agentes.json</strong>
+    <code>[<br>
+&nbsp;&nbsp;{"id": 1, "codename": "FALCON", "nivel": 3, "ativo": true},<br>
+&nbsp;&nbsp;{"id": 2, "codename": "VIPER",  "nivel": 5, "ativo": false},<br>
+&nbsp;&nbsp;{"id": 3, "codename": "GHOST",  "nivel": 2, "ativo": true},<br>
+&nbsp;&nbsp;...<br>
+]</code>
+  </div>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex85_agentes_json.py
+UC        : UC00606
+Aula      : 9
+Autor     :
+Data      : 07/08/2026
+Descrição : Lê agentes de um ficheiro JSON e apresenta um resumo.
+Como usar : python ex85_agentes_json.py
+"""
+import ___                           # módulo para trabalhar com JSON
+
+FICHEIRO = "dados/aula9/agentes.json"
+
+def carregar_agentes(caminho):
+    """Carrega a lista de agentes do ficheiro JSON."""
+    with open(caminho, "r", encoding="utf-8") as f:
+        return json.___(f)           # ler de ficheiro → lista Python
+
+def mostrar_resumo(agentes):
+    """Mostra total, ativos e lista de codenames ativos."""
+    total = len(agentes)
+    ativos = [a for a in agentes if a["___"]]   # filtrar os ativos
+
+    print(f"Total de agentes : {total}")
+    print(f"Agentes ativos   : {len(ativos)}")
+    print("\nCodenames ativos:")
+    for agente in ___:
+        print(f"  → {agente['codename']} (nível {agente['nivel']})")
+
+def main():
+    agentes = carregar_agentes(___)
+    mostrar_resumo(agentes)
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    💡 <strong>Dica:</strong> <code>json.load(f)</code> lê de um ficheiro já aberto.
+    Usa <code>a["ativo"]</code> para aceder ao campo booleano — em JSON <code>true</code> torna-se <code>True</code> em Python.
+  </div>
+
+  <p><strong>Output esperado:</strong></p>
+  <pre><code>Total de agentes : 5
+Agentes ativos   : 3
+
+Codenames ativos:
+  → FALCON (nível 3)
+  → GHOST (nível 2)
+  → LYNX (nível 4)</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">json.load()</span>
+    <span class="tag tag-blue">dict</span>
+    <span class="tag tag-blue">list comprehension</span>
+    <span class="tag tag-orange">ficheiros</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #87 — ★★  (estrutura dada, lógica a completar)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-2">★★</span><span class="star-2">☆</span>
+    <span class="ex-num">#87</span>
+    <h2>Diretório de Agentes com set e SHA-256</h2>
+  </div>
+
+  <p>Vais construir um mini-diretório que responde à pergunta <em>"este codename existe?"</em> de forma eficiente, e que calcula uma hash de integridade dos dados carregados.</p>
+
+  <div class="data-block">
+    <strong>Comportamento esperado</strong>
+    Carregar agentes.json → construir um set de codenames → pesquisar em O(1) → calcular SHA-256 do conteúdo.
+  </div>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex87_diretorio_agentes.py
+UC        : UC00606
+Aula      : 9
+Autor     :
+Data      : 07/08/2026
+Descrição : Diretório de agentes com pesquisa eficiente e hash de integridade.
+Como usar : python ex87_diretorio_agentes.py
+"""
+import json
+import hashlib
+
+FICHEIRO = "dados/aula9/agentes.json"
+
+def carregar_agentes(caminho):
+    # TODO: abre o ficheiro e retorna a lista de agentes
+    pass
+
+def construir_indice(agentes):
+    # TODO: devolve um set com todos os codenames (em maiúsculas)
+    # Exemplo: {"FALCON", "VIPER", "GHOST", "LYNX", "COBRA"}
+    pass
+
+def pesquisar(indice, codename):
+    # TODO: retorna True se o codename existir no índice, False caso contrário
+    # (pesquisa em O(1) graças ao set)
+    pass
+
+def hash_integridade(agentes):
+    # TODO: converte a lista para string JSON e calcula o SHA-256
+    # Retorna os primeiros 16 caracteres do hexdigest
+    pass
+
+def main():
+    agentes = carregar_agentes(FICHEIRO)
+    indice = construir_indice(agentes)
+
+    print(f"Índice construído com {len(indice)} codenames")
+    print(f"Integridade: {hash_integridade(agentes)}")
+    print()
+
+    testes = ["FALCON", "SHADOW", "VIPER", "MIRO"]
+    for nome in testes:
+        existe = pesquisar(indice, nome)
+        estado = "✅ encontrado" if existe else "❌ não existe"
+        print(f"  {nome:10} → {estado}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    💡 <strong>Dicas:</strong><br>
+    • <code>set()</code> — pesquisa em O(1) por ser implementado como hash table.<br>
+    • <code>json.dumps(lista)</code> — converte lista para string JSON.<br>
+    • <code>hashlib.sha256(texto.encode()).hexdigest()[:16]</code> — primeiros 16 chars do digest.
+  </div>
+
+  <p><strong>Output esperado:</strong></p>
+  <pre><code>Índice construído com 5 codenames
+Integridade: fc3a8d2e9b147501
+
+  FALCON     → ✅ encontrado
+  SHADOW     → ❌ não existe
+  VIPER      → ✅ encontrado
+  MIRO       → ❌ não existe</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">set</span>
+    <span class="tag tag-blue">O(1)</span>
+    <span class="tag tag-blue">hashlib.sha256</span>
+    <span class="tag tag-blue">json.dumps()</span>
+    <span class="tag tag-orange">integridade de dados</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #89 — ★★★  (só enunciado)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-3">★★★</span>
+    <span class="ex-num">#89</span>
+    <h2>Simulador v2.0 — Configuração + JSON + Integridade</h2>
+  </div>
+
+  <p>Constrói a versão 2.0 do Simulador que integra tudo o que aprendeste hoje.</p>
+
+  <div class="data-block">
+    <strong>Ficheiro de configuração — dados/aula9/config.ini</strong>
+    <code>[simulador]<br>
+versao = 2.0<br>
+max_agentes = 50<br>
+ficheiro_dados = agentes.json<br>
+<br>
+[seguranca]<br>
+tentativas_max = 3</code>
+  </div>
+
+  <p><strong>O programa deve:</strong></p>
+  <ol style="margin: 0.5rem 0 0.5rem 1.5rem; font-size:0.92rem; line-height:2">
+    <li>Ler a configuração do <code>config.ini</code> com <code>configparser</code></li>
+    <li>Carregar os agentes do ficheiro definido na config (<code>agentes.json</code>)</li>
+    <li>Apresentar um menu: Listar · Adicionar · Pesquisar · Sair</li>
+    <li>Pesquisar deve usar um <code>set</code> de codenames — não uma lista</li>
+    <li>Ao adicionar um agente, verificar se já existe (via set) e se não ultrapassa <code>max_agentes</code></li>
+    <li>Ao sair, guardar os agentes em JSON e mostrar o SHA-256 dos dados guardados</li>
+    <li>Não ultrapassar o número de tentativas inválidas definido em <code>tentativas_max</code></li>
+  </ol>
+
+  <div class="warn">
+    ⚠️ <strong>Atenção:</strong> o ficheiro de dados é definido na config, não hardcoded no código. Separa configuração de lógica.
+  </div>
+
+  <div class="tip">
+    💡 <strong>Estrutura sugerida (podes organizar à tua maneira):</strong><br>
+    <code>carregar_config()</code> · <code>carregar_agentes()</code> · <code>guardar_agentes()</code> ·
+    <code>construir_indice()</code> · <code>adicionar()</code> · <code>pesquisar()</code> · <code>main()</code>
+  </div>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">configparser</span>
+    <span class="tag tag-blue">json.load / dump</span>
+    <span class="tag tag-blue">set</span>
+    <span class="tag tag-blue">hashlib.sha256</span>
+    <span class="tag tag-blue">O(1)</span>
+    <span class="tag tag-orange">arquitetura de programa</span>
+  </p>
+</div>
+
+<footer>
+  UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026 · makercraft.pt/UC00606
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

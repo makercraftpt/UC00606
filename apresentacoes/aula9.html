@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 9 — Como os Dados São Encontrados Rápido · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css" id="theme">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --navy:#0B1F3A; --teal:#1C7293; --accent:#F4A340; --ink:#1a1a1a; --paper:#F4F5F7;
+  }
+  .reveal { font-family: 'Segoe UI', Arial, sans-serif; }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Segoe UI', Arial, sans-serif; text-transform: none; letter-spacing: 0; }
+  .reveal .slides section { text-align: left; }
+  .reveal h1 { text-align: left; color: #fff; font-size: 1.8em; }
+  .reveal h2 { text-align: left; color: #7FD1D9; font-size: 1.5em; }
+  .reveal .subtitle { color: #9fb3c8; font-size: 0.55em; margin-top: -0.4em; display:block; }
+  .reveal section.title-slide { text-align: center; }
+  .reveal section.title-slide h1 { text-align: center; font-size: 2.2em; }
+  .reveal ul { display:block; }
+  .reveal li { margin-bottom: 0.35em; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal pre code { font-size: 0.62em; max-height: 480px; padding: 14px 18px; border-radius: 8px; }
+  .reveal .two-col { display:flex; gap: 2em; }
+  .reveal .two-col > div { flex: 1; }
+  .reveal .badge { display:inline-block; background: var(--teal); color:#fff; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
+  .reveal .badge-orange { display:inline-block; background: var(--accent); color:#111; border-radius:6px; padding:2px 10px; font-size:0.5em; margin-right:8px; }
+  .reveal .card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal .card-warn { background: rgba(244,163,64,0.12); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal .card-green { background: rgba(28,200,100,0.10); border-left: 3px solid #1cc864; border-radius: 0 8px 8px 0; padding: 0.5em 0.7em; margin-bottom: 0.5em; font-size: 0.42em; line-height: 1.3; }
+  .reveal section { overflow: visible; }
+  .reveal table { font-size: 0.55em; }
+  .reveal table th { color: #7FD1D9; }
+  .reveal .footnote { font-size: 0.4em; color: #9fb3c8; }
+  .reveal .img-placeholder {
+    background: rgba(255,255,255,0.04);
+    border: 2px dashed rgba(127,209,217,0.4);
+    border-radius: 10px;
+    padding: 1em;
+    font-size: 0.38em;
+    color: #7FD1D9;
+    text-align: center;
+    margin: 0.5em 0;
+    line-height: 1.6;
+  }
+  .reveal .img-placeholder strong { display:block; margin-bottom:0.4em; font-size:1.15em; }
+  .reveal .big-o { display:inline-block; background: rgba(28,114,147,0.25); border: 1px solid var(--teal); border-radius:8px; padding: 0.15em 0.5em; font-family: monospace; font-size: 1.1em; color: #7FD1D9; }
+  .reveal .bucket-row { display:flex; gap:4px; margin: 0.4em 0; font-size:0.42em; }
+  .reveal .bucket { background: rgba(255,255,255,0.07); border:1px solid rgba(127,209,217,0.3); border-radius:4px; padding:4px 8px; min-width:70px; text-align:center; }
+  .reveal .bucket.filled { background: rgba(28,114,147,0.35); border-color: var(--teal); }
+  .reveal .bucket.collision { background: rgba(244,163,64,0.25); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ─── SLIDE 1 — Título ─────────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1>Como os Dados São<br>Encontrados Rápido</h1>
+      <p class="subtitle">Big-O · Hash Tables · dict / set · hashlib · JSON · .ini · env vars</p>
+      <p class="footnote">UC00606 · Linguagem Estruturada · Aula 9</p>
+    </section>
+
+    <!-- ─── SLIDE 2 — O problema ─────────────────────────────────────── -->
+    <section>
+      <h2>O problema: 1 milhão de usernames</h2>
+      <p class="subtitle">Como encontramos "miro" numa lista com 1 000 000 entradas?</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim>utilizadores = ["ana", "bruno", "carlos", ..., "miro", ...]
+#               ↑                                ↑
+#           posição 0                     posição ???
+
+# Só há uma forma: verificar um por um
+for u in utilizadores:
+    if u == "miro":
+        return True   # mas onde está?</code></pre>
+      <div class="card-warn" style="margin-top:0.6em">
+        <strong>Pior caso:</strong> "miro" está na última posição — percorremos <strong>todos</strong> os elementos.<br>
+        Com 1 milhão de entradas → até 1 000 000 comparações.
+      </div>
+      <p style="font-size:0.7em; margin-top:0.5em">Será que conseguimos fazer melhor?</p>
+    </section>
+
+    <!-- ─── SLIDE 3 — Big-O intro ────────────────────────────────────── -->
+    <section>
+      <h2>Complexidade algorítmica — Big-O</h2>
+      <p class="subtitle">Quando os dados crescem, como cresce o trabalho?</p>
+      <p style="font-size:0.7em">Big-O descreve <strong>como o custo escala com n</strong> — não quanto demora exatamente.</p>
+      <table style="margin-top:0.4em; width:100%">
+        <thead><tr><th>Notação</th><th>Nome</th><th>10 elem.</th><th>1 000 elem.</th><th>1 000 000 elem.</th></tr></thead>
+        <tbody>
+          <tr><td><span class="big-o">O(1)</span></td><td>Constante</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><td><span class="big-o">O(log n)</span></td><td>Logarítmico</td><td>~3</td><td>~10</td><td>~20</td></tr>
+          <tr><td><span class="big-o">O(n)</span></td><td>Linear</td><td>10</td><td>1 000</td><td>1 000 000</td></tr>
+          <tr><td><span class="big-o">O(n²)</span></td><td>Quadrático</td><td>100</td><td>1 000 000</td><td>10¹²</td></tr>
+        </tbody>
+      </table>
+      <div class="card" style="margin-top:0.6em">
+        <strong>Regra prática:</strong> a escolha da estrutura de dados pode transformar um programa lento num programa rápido — mesmo com o mesmo código de lógica.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 4 — Ideia da hash function ────────────────────────── -->
+    <section>
+      <h2>E se soubéssemos sempre onde procurar?</h2>
+      <p class="subtitle">Ideia: transformar a chave diretamente num índice</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <p style="font-size:0.7em">Lista normal:</p>
+          <pre style="font-size:0.5em"><code class="language-python" data-trim># Temos de procurar um por um
+"ana"   → posição ???
+"bruno" → posição ???
+"miro"  → posição ???
+# O(n)</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.7em">Com hash function:</p>
+          <pre style="font-size:0.5em"><code class="language-python" data-trim># Calculamos diretamente onde está
+"ana"   → hash → posição 2
+"bruno" → hash → posição 7
+"miro"  → hash → posição 4
+# O(1) em média!</code></pre>
+        </div>
+      </div>
+      <div style="margin-top:0.5em; text-align:center">
+        <img src="img/aula9_hash_concept.png" alt="Hash function concept diagram" style="max-height:220px; border-radius:8px;">
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 5 — Hash function manual ──────────────────────────── -->
+    <section>
+      <h2>Construir uma hash function à mão</h2>
+      <p class="subtitle">Só para perceber o mecanismo — nunca usar em produção!</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim">def hash_simples(texto):
+    soma = 0
+    for letra in texto:
+        soma += ord(letra)   # valor numérico da letra
+    return soma % 10         # posição entre 0 e 9
+
+# Testar:
+print(hash_simples("ana"))    # → ?
+print(hash_simples("bruno"))  # → ?
+print(hash_simples("miro"))   # → ?</code></pre>
+      <div class="bucket-row" style="margin-top:0.5em">
+        <div class="bucket">0<br>—</div>
+        <div class="bucket">1<br>—</div>
+        <div class="bucket filled">2<br>"ana"</div>
+        <div class="bucket">3<br>—</div>
+        <div class="bucket filled">4<br>"miro"</div>
+        <div class="bucket">5<br>—</div>
+        <div class="bucket">6<br>—</div>
+        <div class="bucket filled">7<br>"bruno"</div>
+        <div class="bucket">8<br>—</div>
+        <div class="bucket">9<br>—</div>
+      </div>
+      <p style="font-size:0.6em; margin-top:0.3em">Para pesquisar "miro" → calculamos <code>hash_simples("miro")</code> → posição 4 → acesso direto → <span class="big-o">O(1)</span></p>
+    </section>
+
+    <!-- ─── SLIDE 6 — Colisão ────────────────────────────────────────── -->
+    <section>
+      <h2>Colisão — quando duas chaves têm o mesmo hash</h2>
+      <p class="subtitle">É esperado e normal — a implementação tem de saber lidar</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim">print(hash_simples("abc"))   # soma: 97+98+99 = 294 → 294 % 10 = 4
+print(hash_simples("acb"))   # soma: 97+99+98 = 294 → 294 % 10 = 4
+
+# "abc" != "acb"   MAS   hash("abc") == hash("acb")
+# Ambos querem a posição 4 → COLISÃO</code></pre>
+      <div class="bucket-row" style="margin-top:0.4em">
+        <div class="bucket">0</div><div class="bucket">1</div><div class="bucket">2</div><div class="bucket">3</div>
+        <div class="bucket collision">4<br>"abc"<br>"acb" ⚠️</div>
+        <div class="bucket">5</div><div class="bucket">6</div><div class="bucket">7</div><div class="bucket">8</div><div class="bucket">9</div>
+      </div>
+      <div class="card" style="margin-top:0.5em">
+        <strong>Solução — Separate Chaining:</strong> cada posição guarda uma lista de elementos.<br>
+        Para pesquisar: calculamos o hash → vamos à posição → comparamos as chaves da lista.
+      </div>
+      <p style="font-size:0.6em">Com uma boa hash function, as listas ficam curtas → <span class="big-o">O(1)</span> em média.<br>
+      Com uma função má (tudo no mesmo bucket) → pode degradar até <span class="big-o">O(n)</span>.</p>
+    </section>
+
+    <!-- ─── SLIDE 7 — dict e set em Python ──────────────────────────── -->
+    <section>
+      <h2><code>dict</code> e <code>set</code> — hash tables em Python</h2>
+      <p class="subtitle">Já usaste hash tables — só não sabias o nome</p>
+      <div class="two-col">
+        <div>
+          <p style="font-size:0.65em"><strong>dict</strong> — Hash Map (chave → valor)</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">notas = {
+    "Ana":   17,
+    "Bruno": 14,
+    "Miro":  18,
+}
+
+# O(1) — acesso direto por chave
+print(notas["Miro"])   # 18
+
+"Ana" in notas         # True — O(1)
+notas["Diana"] = 16   # inserção — O(1)</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em"><strong>set</strong> — Hash Set (pertença)</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">bloqueados = {"ana", "hacker99", "root"}
+
+# O(1) — verificar pertença
+"ana" in bloqueados       # True
+"miro" in bloqueados      # False
+
+# vs lista O(n):
+["ana", "hacker99", "root"].count("ana")</code></pre>
+        </div>
+      </div>
+      <div class="card-green" style="margin-top:0.5em; font-size:0.5em">
+        <strong>Regra prática:</strong> quando precisas de procurar elementos frequentemente → usa <code>dict</code> ou <code>set</code>, nunca uma lista.<br>
+        Com 1 milhão de IPs bloqueados: lista → até 1 000 000 comparações; set → ~1 comparação.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 8 — hash() vs hashlib ────────────────────────────── -->
+    <section>
+      <h2><code>hash()</code> vs <code>hashlib</code> — são coisas diferentes</h2>
+      <p class="subtitle">Mesmo nome, objetivos completamente distintos</p>
+      <div class="two-col">
+        <div>
+          <p style="font-size:0.65em"><strong>hash()</strong> — uso interno do Python</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">hash("Ana")    # algum inteiro
+hash("Bruno")  # outro inteiro
+
+# Usado internamente por dict e set
+# NÃO usar para segurança!
+# O valor pode mudar entre execuções</code></pre>
+          <div class="card-warn" style="font-size:0.9em">
+            ❌ Nunca guardar passwords com <code>hash()</code>
+          </div>
+        </div>
+        <div>
+          <p style="font-size:0.65em"><strong>hashlib</strong> — hashing criptográfico</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">import hashlib
+
+texto = "Olá mundo"
+digest = hashlib.sha256(
+    texto.encode()
+).hexdigest()
+
+print(digest)
+# a591a6d40bf420404a011733...
+# Sempre o mesmo resultado
+# para o mesmo input</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 9 — Avalanche Effect ──────────────────────────────── -->
+    <section>
+      <h2>Avalanche Effect — sensibilidade mínima</h2>
+      <p class="subtitle">Uma pequena mudança → digest completamente diferente</p>
+      <pre style="font-size:0.56em"><code class="language-python" data-trim">import hashlib
+
+def sha256(texto):
+    return hashlib.sha256(texto.encode()).hexdigest()
+
+print(sha256("ola"))
+# → fcde2b2edba56bf408601fb721fe9b5c338d10ee429ea04fae5511b68fbf8fb9
+
+print(sha256("Ola"))  # só mudou a capitalização!
+# → 20da5dc9b0f5b98cd9a61836b0b5ba78e3bb81d3b0af3b5c79cc9b5b68c5965
+
+print(sha256("ola!")) # um único caráter a mais
+# → 9c56cc51b374c3ba189210d5b6d4bf57790d351ef8d10ec232cfdd69b5be4a0</code></pre>
+      <div class="card" style="margin-top:0.4em">
+        <strong>Porquê é útil:</strong> se um ficheiro foi alterado (mesmo que um único byte), o SHA-256 muda completamente. Podes verificar integridade de ficheiros, logs, e transferências.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 10 — Password hashing ─────────────────────────────── -->
+    <section>
+      <h2>SHA-256 <span style="color:var(--accent)">não é suficiente</span> para passwords</h2>
+      <p class="subtitle">Contexto de cibersegurança — distinção crítica</p>
+      <pre style="font-size:0.52em"><code class="language-python" data-trim"># ❌ Errado — nunca fazer isto para guardar passwords:
+password_guardada = hashlib.sha256("minhapassword".encode()).hexdigest()
+
+# Problema: SHA-256 é extremamente RÁPIDO
+# Um atacante testa milhões de passwords por segundo
+# com GPUs modernas</code></pre>
+      <div class="card-warn">
+        Para passwords usam-se funções <strong>intencionalmente lentas</strong> (bcrypt, Argon2, scrypt, PBKDF2).<br>
+        Lentas para o atacante; quase impercetíveis para o utilizador legítimo.
+      </div>
+      <div class="card" style="margin-top:0.3em">
+        <strong>hashlib.sha256 é correto para:</strong> verificar integridade de ficheiros · assinar logs · gerar IDs únicos · checksums de transferências.<br>
+        <strong>Não é correto para:</strong> armazenar passwords diretamente.
+      </div>
+      <p class="footnote">Python tem hashlib.pbkdf2_hmac() para passwords — mas na prática usa-se a biblioteca <code>bcrypt</code></p>
+    </section>
+
+    <!-- ─── SLIDE 11 — JSON intro ────────────────────────────────────── -->
+    <section>
+      <h2>JSON — dados estruturados como texto</h2>
+      <p class="subtitle">O formato universal de troca de dados na web</p>
+      <div class="two-col">
+        <div>
+          <p style="font-size:0.65em">Ficheiro <code>agentes.json</code></p>
+          <pre style="font-size:0.48em"><code class="language-json" data-trim">[
+  {
+    "id": 1,
+    "codename": "FALCON",
+    "nivel": 3,
+    "ativo": true
+  },
+  {
+    "id": 2,
+    "codename": "VIPER",
+    "nivel": 5,
+    "ativo": false
+  }
+]</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em">Equivalência Python</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim"># JSON → Python
+object  →  dict
+array   →  list
+string  →  str
+number  →  int / float
+true    →  True
+false   →  False
+null    →  None
+
+# Parsing = transformar
+# texto JSON em objetos Python</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 12 — json module ───────────────────────────────────── -->
+    <section>
+      <h2>Módulo <code>json</code> — 4 funções essenciais</h2>
+      <p class="subtitle">load/loads para ler · dump/dumps para escrever</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim">import json
+
+# LER de ficheiro → Python
+with open("agentes.json", "r", encoding="utf-8") as f:
+    agentes = json.load(f)           # ficheiro → lista/dict Python
+
+# LER de string → Python
+texto = '{"codename": "FALCON", "nivel": 3}'
+agente = json.loads(texto)           # string → dict Python
+
+# ESCREVER Python → ficheiro
+with open("agentes.json", "w", encoding="utf-8") as f:
+    json.dump(agentes, f, indent=2, ensure_ascii=False)
+
+# ESCREVER Python → string
+texto_json = json.dumps(agentes, indent=2, ensure_ascii=False)</code></pre>
+      <table style="margin-top:0.4em; font-size:0.5em; width:100%">
+        <thead><tr><th>Função</th><th>Recebe</th><th>Retorna</th></tr></thead>
+        <tbody>
+          <tr><td><code>json.load(f)</code></td><td>file object</td><td>dict / list Python</td></tr>
+          <tr><td><code>json.loads(s)</code></td><td>string</td><td>dict / list Python</td></tr>
+          <tr><td><code>json.dump(obj, f)</code></td><td>Python + file</td><td>escreve no ficheiro</td></tr>
+          <tr><td><code>json.dumps(obj)</code></td><td>Python</td><td>string JSON</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ─── SLIDE 13 — INI + env vars ───────────────────────────────── -->
+    <section>
+      <h2>Configuração: <code>.ini</code> e variáveis de ambiente</h2>
+      <p class="subtitle">Código, configuração e segredos devem estar separados</p>
+      <div class="two-col">
+        <div>
+          <p style="font-size:0.60em"><code>config.ini</code></p>
+          <pre style="font-size:0.45em"><code class="language-ini" data-trim">[simulador]
+versao = 1.0
+max_agentes = 50
+ficheiro_dados = agentes.json
+
+[logs]
+nivel = INFO
+ficheiro = sistema.log</code></pre>
+          <pre style="font-size:0.45em"><code class="language-python" data-trim">import configparser
+cfg = configparser.ConfigParser()
+cfg.read("config.ini")
+
+versao = cfg["simulador"]["versao"]
+max_ag = cfg["simulador"].getint("max_agentes")</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.60em">Variáveis de ambiente</p>
+          <pre style="font-size:0.45em"><code class="language-python" data-trim">import os
+
+# Ler variável de ambiente
+api_key = os.getenv("API_KEY")
+db_host = os.getenv("DB_HOST", "localhost")
+#                               ↑ valor por omissão
+
+# ❌ Nunca fazer:
+API_KEY = "s3cr3t_k3y_123"   # fica no código!
+
+# ✅ Correto:
+API_KEY = os.getenv("API_KEY")  # fica no ambiente</code></pre>
+        </div>
+      </div>
+      <div class="card-warn" style="font-size:0.9em">
+        Se um ficheiro com segredos for para o Git por engano → comprometido para sempre (git log não esquece).
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 14 — Simulador v2.0 ───────────────────────────────── -->
+    <section>
+      <h2>Simulador v2.0 — com JSON + config</h2>
+      <p class="subtitle">Tudo o que aprendemos aplicado ao projeto</p>
+      <pre style="font-size:0.50em"><code class="language-python" data-trim">"""
+Ficheiro: simulador.py  |  UC: UC00606  |  Aula: 9
+"""
+import json, configparser, hashlib, os
+
+# 1. Ler configuração
+cfg = configparser.ConfigParser()
+cfg.read("config.ini")
+FICHEIRO = cfg["simulador"]["ficheiro_dados"]
+
+# 2. Carregar agentes do JSON
+def carregar():
+    try:
+        with open(FICHEIRO, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+# 3. Guardar com hash de integridade
+def guardar(agentes):
+    with open(FICHEIRO, "w", encoding="utf-8") as f:
+        json.dump(agentes, f, indent=2, ensure_ascii=False)
+    conteudo = json.dumps(agentes, ensure_ascii=False)
+    print("✅ Guardado | SHA-256:", hashlib.sha256(conteudo.encode()).hexdigest()[:16], "...")</code></pre>
+    </section>
+
+    <!-- ─── SLIDE 15 — Resumo ────────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1 style="font-size:1.6em">O que ficou hoje</h1>
+      <div style="text-align:left; font-size:0.65em; display:grid; grid-template-columns:1fr 1fr; gap:0.8em; margin-top:0.5em">
+        <div class="card">
+          <strong>🔍 Procura eficiente</strong><br>
+          O(1) vs O(n) — a estrutura certa faz toda a diferença<br>
+          <code>dict</code> e <code>set</code> são hash tables
+        </div>
+        <div class="card">
+          <strong>🔒 Hashing criptográfico</strong><br>
+          <code>hashlib.sha256</code> para integridade<br>
+          SHA-256 ≠ solução para passwords
+        </div>
+        <div class="card">
+          <strong>📦 JSON</strong><br>
+          load/loads ← ler · dump/dumps → escrever<br>
+          Parsing = texto → objetos Python
+        </div>
+        <div class="card">
+          <strong>⚙️ Configuração</strong><br>
+          <code>configparser</code> para <code>.ini</code><br>
+          <code>os.getenv()</code> para segredos e ambientes
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.8em">UC00606 · Aula 9 · makercraft.pt/UC00606</p>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    transition: 'slide',
+    plugins: []
+  });
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

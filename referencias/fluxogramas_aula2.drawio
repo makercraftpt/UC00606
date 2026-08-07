@@ -1,0 +1,136 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Classificador de Acesso" id="aula2-classificador">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- INÍCIO -->
+        <mxCell id="2" value="INÍCIO" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00C851;strokeColor=#007A32;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="40" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Seta INÍCIO → input -->
+        <mxCell id="3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="2" target="4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- INPUT: nivel = input() -->
+        <mxCell id="4" value="nivel = input(&quot;Nível de acesso: &quot;)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#1D6FA4;strokeColor=#1354A0;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="160" y="150" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Seta input → decisão 1 -->
+        <mxCell id="5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="4" target="6" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DECISÃO 1: nivel == "admin"? -->
+        <mxCell id="6" value='nivel == "admin"?' style="rhombus;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#CC7000;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="175" y="260" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Sim → print admin -->
+        <mxCell id="7" value="Sim" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="6" target="8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- OUTPUT admin -->
+        <mxCell id="8" value='print("🔓 Acesso total ao sistema")' style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#1D6FA4;strokeColor=#1354A0;fontColor=#ffffff;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="275" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Não → decisão 2 -->
+        <mxCell id="9" value="Não" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="6" target="10" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DECISÃO 2: nivel == "user"? -->
+        <mxCell id="10" value='nivel == "user"?' style="rhombus;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#CC7000;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="175" y="400" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Sim → print user -->
+        <mxCell id="11" value="Sim" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="10" target="12" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- OUTPUT user -->
+        <mxCell id="12" value='print("🔒 Acesso limitado")' style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#1D6FA4;strokeColor=#1354A0;fontColor=#ffffff;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="415" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Não → decisão 3 -->
+        <mxCell id="13" value="Não" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="10" target="14" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DECISÃO 3: nivel == "guest"? -->
+        <mxCell id="14" value='nivel == "guest"?' style="rhombus;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#CC7000;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="175" y="540" width="170" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Sim → print guest -->
+        <mxCell id="15" value="Sim" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="14" target="16" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- OUTPUT guest -->
+        <mxCell id="16" value='print("👁 Só leitura")' style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#1D6FA4;strokeColor=#1354A0;fontColor=#ffffff;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="555" width="220" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Não → else -->
+        <mxCell id="17" value="Não" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" source="14" target="18" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- OUTPUT else: negado -->
+        <mxCell id="18" value='print("⛔ Acesso negado")' style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#E53935;strokeColor=#B71C1C;fontColor=#ffffff;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="160" y="680" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- admin → FIM -->
+        <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="8" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="305"/>
+              <mxPoint x="680" y="820"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- user → FIM -->
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="12" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="445"/>
+              <mxPoint x="680" y="820"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- guest → FIM -->
+        <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="16" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="585"/>
+              <mxPoint x="680" y="820"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- negado → FIM -->
+        <mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="18" target="20" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- FIM -->
+        <mxCell id="20" value="FIM" style="ellipse;whiteSpace=wrap;html=1;fillColor=#00C851;strokeColor=#007A32;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="790" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

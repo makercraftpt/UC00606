@@ -1,0 +1,72 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="okl8y3AXhqhHMS1GHxqX">
+    <mxGraphModel dx="978" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-18" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZSLL2OkhMc4vFFLm6Gkr-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="S0&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(00)&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;R=0; Y=0; G=1;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;P_G=0&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="490" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-5" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="ZSLL2OkhMc4vFFLm6Gkr-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="S1&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(01)&lt;/span&gt;&lt;div&gt;R=0; Y=1; G=0;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;P_G=0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="650" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-6" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZSLL2OkhMc4vFFLm6Gkr-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="440" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-22" connectable="0" parent="ZSLL2OkhMc4vFFLm6Gkr-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="BTN = 0" vertex="1">
+          <mxGeometry relative="1" x="-0.4229" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-21" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="ZSLL2OkhMc4vFFLm6Gkr-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-23" connectable="0" parent="ZSLL2OkhMc4vFFLm6Gkr-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="BTN=1" vertex="1">
+          <mxGeometry relative="1" x="-0.2933" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="S2&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(10)&lt;/span&gt;&lt;div&gt;R=1; Y=0; G=0;&lt;/div&gt;&lt;div&gt;P_G=0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="400" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-24" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="460" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-19" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="S3&lt;div&gt;(11)&lt;/div&gt;&lt;div&gt;Peões&lt;/div&gt;&lt;div&gt;R=1; Y=0; G=0;&lt;/div&gt;&lt;div&gt;P_G=1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="250" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-27" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ZSLL2OkhMc4vFFLm6Gkr-28" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="190" />
+            </Array>
+            <mxPoint x="310" y="230" as="sourcePoint" />
+            <mxPoint x="460" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-29" edge="1" parent="1" source="ZSLL2OkhMc4vFFLm6Gkr-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ZSLL2OkhMc4vFFLm6Gkr-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZSLL2OkhMc4vFFLm6Gkr-28" parent="1" style="shape=waypoint;sketch=0;fillStyle=solid;size=6;pointerEvents=1;points=[];fillColor=none;resizable=0;rotatable=0;perimeter=centerPerimeter;snapToPoint=1;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="450" y="180" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

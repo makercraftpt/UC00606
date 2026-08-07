@@ -1,0 +1,7 @@
+[
+  {"id": 1, "codename": "FALCON", "nivel": 3, "ativo": true},
+  {"id": 2, "codename": "VIPER",  "nivel": 5, "ativo": false},
+  {"id": 3, "codename": "GHOST",  "nivel": 2, "ativo": true},
+  {"id": 4, "codename": "LYNX",   "nivel": 4, "ativo": true},
+  {"id": 5, "codename": "COBRA",  "nivel": 1, "ativo": false}
+]
