@@ -178,24 +178,23 @@ cur.execute("""
     <section>
       <h2>DB Browser for SQLite — Ver a BD por dentro</h2>
       <p class="subtitle">Ferramenta gratuita para explorar ficheiros .db sem código</p>
-      <div class="two-col" style="margin-top:0.4em; align-items:start">
-        <div>
-          <div class="card" style="margin-bottom:0.5em">
+      <div class="two-col" style="margin-top:0.3em; align-items:start">
+        <div style="display:flex; flex-direction:column; gap:0.35em">
+          <div class="card" style="font-size:0.9em">
             <strong>🔍 O que consegues fazer</strong>
-            Ver e editar dados em tabela · Correr SQL interativamente · Criar e ver índices · Definir foreign keys · <strong>Exportar script SQL</strong> de criação da BD
+            Ver/editar dados · Correr SQL · Índices · Foreign keys · <strong>Exportar script SQL</strong>
           </div>
-          <div class="card" style="margin-bottom:0.5em; border-color:rgba(244,163,64,0.35)">
+          <div class="card" style="border-color:rgba(244,163,64,0.35); font-size:0.9em">
             <strong style="color:var(--accent)">📤 Exportar script SQL</strong>
-            <em>File → Export → Database to SQL file</em><br>
-            Gera o <code>CREATE TABLE</code> completo — podes reutilizar noutro projeto.
+            <em>File → Export → Database to SQL file</em> — gera o <code>CREATE TABLE</code> completo.
           </div>
-          <div class="card" style="border-color:rgba(100,100,100,0.4)">
+          <div class="card" style="border-color:rgba(100,100,100,0.4); font-size:0.9em">
             <strong style="color:#9fb3c8">⚠️ Para diagramas ER</strong>
-            DB Browser é básico. Para diagramas entidade-relação: <strong>DBeaver</strong> (gratuito) ou <strong>dbdiagram.io</strong> (web, simples)
+            <strong>DBeaver</strong> (gratuito) ou <strong>dbdiagram.io</strong> (web, simples)
           </div>
         </div>
         <div style="text-align:center">
-          <img src="img/aula10_db_browser.jpeg" alt="DB Browser for SQLite mockup" style="max-height:240px; border-radius:8px; width:100%; object-fit:cover">
+          <img src="img/aula10_db_browser.jpeg" alt="DB Browser for SQLite mockup" style="max-height:170px; border-radius:8px; width:100%; object-fit:cover">
           <p style="font-size:0.5em; color:#4a6080; margin-top:0.3em">
             🔗 <a href="https://sqlitebrowser.org" target="_blank" style="color:var(--teal)">sqlitebrowser.org</a> — gratuito, Windows/Mac/Linux
           </p>
@@ -301,7 +300,7 @@ conn.close()</code></pre>
     <section>
       <h2>Criar uma tabela — CREATE TABLE</h2>
       <p class="subtitle">Definir a estrutura dos dados antes de os guardar</p>
-      <pre style="font-size:0.54em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.47em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     conn.execute("""
         CREATE TABLE IF NOT EXISTS agentes (
             id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -310,7 +309,7 @@ conn.close()</code></pre>
             ativo    INTEGER NOT NULL DEFAULT 1
         )
     """)</code></pre>
-      <div class="three-col" style="margin-top:0.5em">
+      <div class="three-col" style="margin-top:0.3em">
         <div class="card">
           <strong>PRIMARY KEY</strong>
           Identificador único e automático. Nunca repetido.
@@ -324,7 +323,7 @@ conn.close()</code></pre>
           Sem duplicados — dois agentes não podem ter o mesmo codename.
         </div>
       </div>
-      <div class="card" style="margin-top:0.5em; font-size:0.65em">
+      <div class="card" style="margin-top:0.3em; font-size:0.65em">
         💡 <code>IF NOT EXISTS</code> — só cria se a tabela ainda não existir. Seguro para chamar sempre ao iniciar o programa.
       </div>
     </section>
@@ -363,25 +362,25 @@ conn.execute(
     <section>
       <h2>Consultar dados — SELECT</h2>
       <p class="subtitle">Buscar exatamente o que precisamos</p>
-      <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     cur = conn.cursor()
 
     # Todos os agentes
     cur.execute("SELECT * FROM agentes")
-    todos = cur.fetchall()             # lista de tuplos
+    todos = cur.fetchall()          # lista de tuplos
 
     # Filtrar: ativos com nível > 3
     cur.execute(
         "SELECT codename, nivel FROM agentes "
-        "WHERE ativo = 1 AND nivel > ?", (3,)
+        "WHERE ativo=1 AND nivel > ?", (3,)
     )
     elite = cur.fetchall()
 
     # Um agente pelo codename
     cur.execute(
-        "SELECT * FROM agentes WHERE codename = ?", ("FALCON",)
+        "SELECT * FROM agentes WHERE codename=?", ("FALCON",)
     )
-    agente = cur.fetchone()            # tuplo ou None</code></pre>
+    agente = cur.fetchone()         # tuplo ou None</code></pre>
       <div class="three-col" style="margin-top:0.4em">
         <div class="card"><strong>fetchall()</strong>Todos os resultados → lista de tuplos</div>
         <div class="card"><strong>fetchone()</strong>Primeiro resultado → tuplo ou <code>None</code></div>
