@@ -178,25 +178,23 @@ cur.execute("""
     <section>
       <h2>DB Browser for SQLite — Ver a BD por dentro</h2>
       <p class="subtitle">Ferramenta gratuita para explorar ficheiros .db sem código</p>
-      <div class="two-col" style="margin-top:0.3em; align-items:start">
-        <div style="display:flex; flex-direction:column; gap:0.35em">
-          <div class="card" style="font-size:0.9em">
-            <strong>🔍 O que consegues fazer</strong>
-            Ver/editar dados · Correr SQL · Índices · Foreign keys · <strong>Exportar script SQL</strong>
-          </div>
-          <div class="card" style="border-color:rgba(244,163,64,0.35); font-size:0.9em">
-            <strong style="color:var(--accent)">📤 Exportar script SQL</strong>
-            <em>File → Export → Database to SQL file</em> — gera o <code>CREATE TABLE</code> completo.
-          </div>
-          <div class="card" style="border-color:rgba(100,100,100,0.4); font-size:0.9em">
-            <strong style="color:#9fb3c8">⚠️ Para diagramas ER</strong>
-            <strong>DBeaver</strong> (gratuito) ou <strong>dbdiagram.io</strong> (web, simples)
-          </div>
-        </div>
+      <div style="display:grid; grid-template-columns:36% 64%; gap:0.6em; margin-top:0.25em; align-items:center">
         <div style="text-align:center">
-          <img src="img/aula10_db_browser.jpeg" alt="DB Browser for SQLite mockup" style="max-height:170px; border-radius:8px; width:100%; object-fit:cover">
-          <p style="font-size:0.5em; color:#4a6080; margin-top:0.3em">
-            🔗 <a href="https://sqlitebrowser.org" target="_blank" style="color:var(--teal)">sqlitebrowser.org</a> — gratuito, Windows/Mac/Linux
+          <img src="img/aula10_db_browser.jpeg" alt="DB Browser for SQLite mockup" style="max-height:210px; border-radius:8px; width:100%; object-fit:cover">
+          <p style="font-size:0.44em; color:#4a6080; margin-top:0.2em">
+            🔗 <a href="https://sqlitebrowser.org" target="_blank" style="color:var(--teal)">sqlitebrowser.org</a> — gratuito, Win/Mac/Linux
+          </p>
+        </div>
+        <div class="card" style="font-size:0.7em; padding:0.6em 0.9em">
+          <strong>🔍 O que consegues fazer</strong>
+          <ul style="margin:0.3em 0 0 1.1em; line-height:1.5">
+            <li>Ver e editar dados em tabela</li>
+            <li>Correr SQL interativamente</li>
+            <li>Criar e gerir índices · Definir foreign keys</li>
+            <li><strong>📤 Exportar script SQL</strong> — <em>File → Export → Database to SQL file</em> — gera o <code>CREATE TABLE</code> completo</li>
+          </ul>
+          <p style="margin-top:0.5em; padding-top:0.4em; border-top:1px solid rgba(255,255,255,0.1); font-size:0.88em; color:#9fb3c8">
+            ⚠️ Para diagramas ER a sério: <strong>DBeaver</strong> (gratuito) ou <strong>dbdiagram.io</strong> (web, simples)
           </p>
         </div>
       </div>
@@ -206,7 +204,7 @@ cur.execute("""
     <section>
       <h2>Ligar à base de dados</h2>
       <p class="subtitle">Connection + Cursor — o padrão do sqlite3</p>
-      <pre style="font-size:0.48em"><code class="language-python" data-trim">import sqlite3
+      <pre style="font-size:0.43em"><code class="language-python" data-trim">import sqlite3
 
 # Ligar (cria o ficheiro se não existir)
 conn = sqlite3.connect("agentes.db")
@@ -219,7 +217,7 @@ cur = conn.cursor()
 # Guardar alterações e fechar
 conn.commit()
 conn.close()</code></pre>
-      <div class="two-col" style="margin-top:0.4em">
+      <div class="two-col" style="margin-top:0.25em">
         <div class="card">
           <strong>🔌 conn — Connection</strong>
           Representa a ligação ao ficheiro .db.<br>
@@ -269,7 +267,7 @@ conn.close()</code></pre>
     <section>
       <h2>CRUD — As 4 operações fundamentais</h2>
       <p class="subtitle">Tudo o que fazemos com dados resume-se a 4 ações</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8em; margin-top:0.6em">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5em; margin-top:0.35em">
         <div class="card" style="border-color:rgba(46,204,113,0.4)">
           <strong style="color:var(--green)">C — Create (criar)</strong>
           Adicionar novos registos à tabela<br>
@@ -291,8 +289,8 @@ conn.close()</code></pre>
           SQL: <code>DELETE FROM agentes WHERE id = ?</code>
         </div>
       </div>
-      <div class="card" style="margin-top:0.6em; font-size:0.65em">
-        💡 CRUD é o vocabulário universal de qualquer sistema que guarda dados — bases de dados, APIs REST, apps web. Nas próximas aulas vamos implementar cada uma no Simulador.
+      <div class="card" style="margin-top:0.35em; font-size:0.65em">
+        💡 CRUD é o vocabulário universal de qualquer sistema que guarda dados — bases de dados, APIs REST, apps web.
       </div>
     </section>
 
@@ -300,7 +298,7 @@ conn.close()</code></pre>
     <section>
       <h2>Criar uma tabela — CREATE TABLE</h2>
       <p class="subtitle">Definir a estrutura dos dados antes de os guardar</p>
-      <pre style="font-size:0.47em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.43em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     conn.execute("""
         CREATE TABLE IF NOT EXISTS agentes (
             id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -309,21 +307,21 @@ conn.close()</code></pre>
             ativo    INTEGER NOT NULL DEFAULT 1
         )
     """)</code></pre>
-      <div class="three-col" style="margin-top:0.3em">
-        <div class="card">
+      <div class="three-col" style="margin-top:0.25em">
+        <div class="card" style="font-size:0.62em">
           <strong>PRIMARY KEY</strong>
           Identificador único e automático. Nunca repetido.
         </div>
-        <div class="card">
+        <div class="card" style="font-size:0.62em">
           <strong>NOT NULL</strong>
           Campo obrigatório — não pode ficar vazio.
         </div>
-        <div class="card">
+        <div class="card" style="font-size:0.62em">
           <strong>UNIQUE</strong>
           Sem duplicados — dois agentes não podem ter o mesmo codename.
         </div>
       </div>
-      <div class="card" style="margin-top:0.3em; font-size:0.65em">
+      <div class="card" style="margin-top:0.2em; font-size:0.6em">
         💡 <code>IF NOT EXISTS</code> — só cria se a tabela ainda não existir. Seguro para chamar sempre ao iniciar o programa.
       </div>
     </section>
@@ -335,7 +333,7 @@ conn.close()</code></pre>
       <div class="two-col" style="margin-top:0.3em">
         <div>
           <p style="font-size:0.65em; color:var(--red)">❌ Perigoso — SQL Injection!</p>
-          <pre style="font-size:0.46em"><code class="language-python" data-trim">nome = input("Codename: ")
+          <pre style="font-size:0.42em"><code class="language-python" data-trim">nome = input("Codename: ")
 # E se o utilizador escrever:
 # FALCON'); DROP TABLE agentes; --
 sql = f"INSERT INTO agentes (codename) VALUES ('{nome}')"
@@ -343,12 +341,10 @@ conn.execute(sql)  # 💀</code></pre>
         </div>
         <div>
           <p style="font-size:0.65em; color:var(--green)">✅ Seguro — parâmetros</p>
-          <pre style="font-size:0.46em"><code class="language-python" data-trim">nome = input("Codename: ")
-conn.execute(
-    "INSERT INTO agentes (codename, nivel, ativo) "
-    "VALUES (?, ?, ?)",
-    (nome, 3, 1)      # ← tuple de valores
-)
+          <pre style="font-size:0.42em"><code class="language-python" data-trim">nome = input("Codename: ")
+sql = ("INSERT INTO agentes"
+       " (codename,nivel,ativo) VALUES(?,?,?)")
+conn.execute(sql, (nome, 3, 1))
 # sqlite3 trata da sanitização</code></pre>
         </div>
       </div>
@@ -362,25 +358,21 @@ conn.execute(
     <section>
       <h2>Consultar dados — SELECT</h2>
       <p class="subtitle">Buscar exatamente o que precisamos</p>
-      <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.44em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     cur = conn.cursor()
 
     # Todos os agentes
     cur.execute("SELECT * FROM agentes")
-    todos = cur.fetchall()          # lista de tuplos
+    todos = cur.fetchall()                    # lista de tuplos
 
     # Filtrar: ativos com nível > 3
-    cur.execute(
-        "SELECT codename, nivel FROM agentes "
-        "WHERE ativo=1 AND nivel > ?", (3,)
-    )
+    cur.execute("SELECT codename, nivel FROM agentes "
+                "WHERE ativo=1 AND nivel > ?", (3,))
     elite = cur.fetchall()
 
     # Um agente pelo codename
-    cur.execute(
-        "SELECT * FROM agentes WHERE codename=?", ("FALCON",)
-    )
-    agente = cur.fetchone()         # tuplo ou None</code></pre>
+    cur.execute("SELECT * FROM agentes WHERE codename=?", ("FALCON",))
+    agente = cur.fetchone()                   # tuplo ou None</code></pre>
       <div class="three-col" style="margin-top:0.4em">
         <div class="card"><strong>fetchall()</strong>Todos os resultados → lista de tuplos</div>
         <div class="card"><strong>fetchone()</strong>Primeiro resultado → tuplo ou <code>None</code></div>
@@ -489,12 +481,11 @@ for row in cur.fetchall():
     <section>
       <h2>Migrar do JSON para SQLite</h2>
       <p class="subtitle">Importar os agentes existentes para a base de dados</p>
-      <pre style="font-size:0.50em"><code class="language-python" data-trim">import json, sqlite3
+      <pre style="font-size:0.46em"><code class="language-python" data-trim">import json, sqlite3
 
 def migrar(json_path, db_path):
     with open(json_path, "r", encoding="utf-8") as f:
         agentes = json.load(f)
-
     with sqlite3.connect(db_path) as conn:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS agentes (
@@ -505,7 +496,7 @@ def migrar(json_path, db_path):
             )
         """)
         conn.executemany(
-            "INSERT OR IGNORE INTO agentes (codename, nivel, ativo) VALUES (?, ?, ?)",
+            "INSERT OR IGNORE INTO agentes (codename, nivel, ativo) VALUES (?,?,?)",
             [(a["codename"], a["nivel"], 1 if a["ativo"] else 0) for a in agentes]
         )
     print(f"✅ {len(agentes)} agentes migrados para {db_path}")
@@ -521,11 +512,10 @@ migrar("dados/aula9/agentes.json", "dados/aula10/agentes.db")</code></pre>
     <section>
       <h2>Simulador v3.0 — com SQLite</h2>
       <p class="subtitle">Tudo o que aprendemos numa arquitetura limpa</p>
-      <pre style="font-size:0.46em"><code class="language-python" data-trim">"""
+      <pre style="font-size:0.44em"><code class="language-python" data-trim">"""
 Ficheiro: simulador.py  |  UC: UC00606  |  Aula: 10
 """
-import sqlite3, configparser
-
+import sqlite3
 DB = "dados/aula10/agentes.db"
 
 def inicializar():
@@ -539,19 +529,22 @@ def inicializar():
 def listar():
     with sqlite3.connect(DB) as conn:
         conn.row_factory = sqlite3.Row
-        rows = conn.execute("SELECT * FROM agentes WHERE ativo=1 ORDER BY nivel DESC").fetchall()
+        rows = conn.execute(
+            "SELECT * FROM agentes WHERE ativo=1 ORDER BY nivel DESC"
+        ).fetchall()
     for r in rows:
         print(f"  [{r['id']:>2}] {r['codename']:<12} nível {r['nivel']}")
 
 def adicionar(codename, nivel):
     with sqlite3.connect(DB) as conn:
-        conn.execute("INSERT INTO agentes (codename, nivel) VALUES (?,?)", (codename, nivel))
-    print(f"✅ Agente {codename} adicionado")
+        conn.execute("INSERT INTO agentes (codename,nivel) VALUES (?,?)", (codename, nivel))
 
 def pesquisar(codename):
     with sqlite3.connect(DB) as conn:
         conn.row_factory = sqlite3.Row
-        r = conn.execute("SELECT * FROM agentes WHERE codename=?", (codename,)).fetchone()
+        r = conn.execute(
+            "SELECT * FROM agentes WHERE codename=?", (codename,)
+        ).fetchone()
     return dict(r) if r else None</code></pre>
     </section>
 
