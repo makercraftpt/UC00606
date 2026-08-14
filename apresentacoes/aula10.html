@@ -189,11 +189,9 @@ cur.execute("""
             <em>File → Export → Database to SQL file</em><br>
             Gera o <code>CREATE TABLE</code> completo — podes reutilizar noutro projeto.
           </div>
-          <div class="card" style="border-color:rgba(100,100,100,0.4); font-size:0.85em">
+          <div class="card" style="border-color:rgba(100,100,100,0.4)">
             <strong style="color:#9fb3c8">⚠️ Para diagramas ER</strong>
-            DB Browser é básico nesse aspeto. Para diagramas entidade-relação a sério:<br>
-            <strong>DBeaver</strong> — gratuito, mais completo<br>
-            <strong>dbdiagram.io</strong> — web, simples, visual
+            DB Browser é básico. Para diagramas entidade-relação: <strong>DBeaver</strong> (gratuito) ou <strong>dbdiagram.io</strong> (web, simples)
           </div>
         </div>
         <div style="text-align:center">
@@ -209,7 +207,7 @@ cur.execute("""
     <section>
       <h2>Ligar à base de dados</h2>
       <p class="subtitle">Connection + Cursor — o padrão do sqlite3</p>
-      <pre style="font-size:0.56em"><code class="language-python" data-trim">import sqlite3
+      <pre style="font-size:0.48em"><code class="language-python" data-trim">import sqlite3
 
 # Ligar (cria o ficheiro se não existir)
 conn = sqlite3.connect("agentes.db")
@@ -222,7 +220,7 @@ cur = conn.cursor()
 # Guardar alterações e fechar
 conn.commit()
 conn.close()</code></pre>
-      <div class="two-col" style="margin-top:0.5em">
+      <div class="two-col" style="margin-top:0.4em">
         <div class="card">
           <strong>🔌 conn — Connection</strong>
           Representa a ligação ao ficheiro .db.<br>
@@ -365,27 +363,25 @@ conn.execute(
     <section>
       <h2>Consultar dados — SELECT</h2>
       <p class="subtitle">Buscar exatamente o que precisamos</p>
-      <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     cur = conn.cursor()
 
     # Todos os agentes
     cur.execute("SELECT * FROM agentes")
-    todos = cur.fetchall()       # lista de tuplos
+    todos = cur.fetchall()             # lista de tuplos
 
-    # Só os ativos com nível > 3
+    # Filtrar: ativos com nível > 3
     cur.execute(
         "SELECT codename, nivel FROM agentes "
-        "WHERE ativo = 1 AND nivel > ?",
-        (3,)
+        "WHERE ativo = 1 AND nivel > ?", (3,)
     )
     elite = cur.fetchall()
 
-    # Um agente específico
+    # Um agente pelo codename
     cur.execute(
-        "SELECT * FROM agentes WHERE codename = ?",
-        ("FALCON",)
+        "SELECT * FROM agentes WHERE codename = ?", ("FALCON",)
     )
-    agente = cur.fetchone()      # tuplo ou None</code></pre>
+    agente = cur.fetchone()            # tuplo ou None</code></pre>
       <div class="three-col" style="margin-top:0.4em">
         <div class="card"><strong>fetchall()</strong>Todos os resultados → lista de tuplos</div>
         <div class="card"><strong>fetchone()</strong>Primeiro resultado → tuplo ou <code>None</code></div>
