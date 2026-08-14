@@ -204,7 +204,7 @@ cur.execute("""
     <section>
       <h2>Ligar à base de dados</h2>
       <p class="subtitle">Connection + Cursor — o padrão do sqlite3</p>
-      <pre style="font-size:0.43em"><code class="language-python" data-trim">import sqlite3
+      <pre style="font-size:0.3em"><code class="language-python" data-trim">import sqlite3
 
 # Ligar (cria o ficheiro se não existir)
 conn = sqlite3.connect("agentes.db")
@@ -384,7 +384,7 @@ conn.execute(sql, (nome, 3, 1))
     <section>
       <h2>Atualizar dados — UPDATE</h2>
       <p class="subtitle">Modificar registos existentes com segurança</p>
-      <pre style="font-size:0.50em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.450em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     # Promover agente para nível 5
     cur = conn.execute(
         "UPDATE agentes SET nivel = ? WHERE codename = ?",
