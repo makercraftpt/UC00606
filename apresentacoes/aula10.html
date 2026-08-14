@@ -174,7 +174,38 @@ cur.execute("""
       </div>
     </section>
 
-    <!-- ─── SLIDE 4 — Conexão e cursor ───────────────────────────────── -->
+    <!-- ─── SLIDE 4 — DB Browser ────────────────────────────────────── -->
+    <section>
+      <h2>DB Browser for SQLite — Ver a BD por dentro</h2>
+      <p class="subtitle">Ferramenta gratuita para explorar ficheiros .db sem código</p>
+      <div class="two-col" style="margin-top:0.4em; align-items:start">
+        <div>
+          <div class="card" style="margin-bottom:0.5em">
+            <strong>🔍 O que consegues fazer</strong>
+            Ver e editar dados em tabela · Correr SQL interativamente · Criar e ver índices · Definir foreign keys · <strong>Exportar script SQL</strong> de criação da BD
+          </div>
+          <div class="card" style="margin-bottom:0.5em; border-color:rgba(244,163,64,0.35)">
+            <strong style="color:var(--accent)">📤 Exportar script SQL</strong>
+            <em>File → Export → Database to SQL file</em><br>
+            Gera o <code>CREATE TABLE</code> completo — podes reutilizar noutro projeto.
+          </div>
+          <div class="card" style="border-color:rgba(100,100,100,0.4); font-size:0.85em">
+            <strong style="color:#9fb3c8">⚠️ Para diagramas ER</strong>
+            DB Browser é básico nesse aspeto. Para diagramas entidade-relação a sério:<br>
+            <strong>DBeaver</strong> — gratuito, mais completo<br>
+            <strong>dbdiagram.io</strong> — web, simples, visual
+          </div>
+        </div>
+        <div style="text-align:center">
+          <img src="img/aula10_db_browser.jpeg" alt="DB Browser for SQLite mockup" style="max-height:240px; border-radius:8px; width:100%; object-fit:cover">
+          <p style="font-size:0.5em; color:#4a6080; margin-top:0.3em">
+            🔗 <a href="https://sqlitebrowser.org" target="_blank" style="color:var(--teal)">sqlitebrowser.org</a> — gratuito, Windows/Mac/Linux
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 5 — Conexão e cursor ───────────────────────────────── -->
     <section>
       <h2>Ligar à base de dados</h2>
       <p class="subtitle">Connection + Cursor — o padrão do sqlite3</p>
@@ -237,7 +268,38 @@ conn.close()</code></pre>
       </div>
     </section>
 
-    <!-- ─── SLIDE 6 — CREATE TABLE ───────────────────────────────────── -->
+    <!-- ─── SLIDE 6 — CRUD ──────────────────────────────────────────── -->
+    <section>
+      <h2>CRUD — As 4 operações fundamentais</h2>
+      <p class="subtitle">Tudo o que fazemos com dados resume-se a 4 ações</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8em; margin-top:0.6em">
+        <div class="card" style="border-color:rgba(46,204,113,0.4)">
+          <strong style="color:var(--green)">C — Create (criar)</strong>
+          Adicionar novos registos à tabela<br>
+          SQL: <code>INSERT INTO agentes ...</code>
+        </div>
+        <div class="card" style="border-color:rgba(28,114,147,0.5)">
+          <strong style="color:#7FD1D9">R — Read (ler)</strong>
+          Consultar dados existentes<br>
+          SQL: <code>SELECT * FROM agentes</code>
+        </div>
+        <div class="card" style="border-color:rgba(244,163,64,0.4)">
+          <strong style="color:var(--accent)">U — Update (atualizar)</strong>
+          Modificar registos existentes<br>
+          SQL: <code>UPDATE agentes SET nivel = ?</code>
+        </div>
+        <div class="card" style="border-color:rgba(231,76,60,0.4)">
+          <strong style="color:var(--red)">D — Delete (apagar)</strong>
+          Remover registos (ou desativar)<br>
+          SQL: <code>DELETE FROM agentes WHERE id = ?</code>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.6em; font-size:0.65em">
+        💡 CRUD é o vocabulário universal de qualquer sistema que guarda dados — bases de dados, APIs REST, apps web. Nas próximas aulas vamos implementar cada uma no Simulador.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 7 — CREATE TABLE ───────────────────────────────────── -->
     <section>
       <h2>Criar uma tabela — CREATE TABLE</h2>
       <p class="subtitle">Definir a estrutura dos dados antes de os guardar</p>
@@ -303,23 +365,27 @@ conn.execute(
     <section>
       <h2>Consultar dados — SELECT</h2>
       <p class="subtitle">Buscar exatamente o que precisamos</p>
-      <pre style="font-size:0.52em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+      <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
     cur = conn.cursor()
 
     # Todos os agentes
     cur.execute("SELECT * FROM agentes")
-    todos = cur.fetchall()          # lista de tuplos
+    todos = cur.fetchall()       # lista de tuplos
 
     # Só os ativos com nível > 3
     cur.execute(
-        "SELECT codename, nivel FROM agentes WHERE ativo = 1 AND nivel > ?",
+        "SELECT codename, nivel FROM agentes "
+        "WHERE ativo = 1 AND nivel > ?",
         (3,)
     )
     elite = cur.fetchall()
 
     # Um agente específico
-    cur.execute("SELECT * FROM agentes WHERE codename = ?", ("FALCON",))
-    agente = cur.fetchone()         # um tuplo ou None</code></pre>
+    cur.execute(
+        "SELECT * FROM agentes WHERE codename = ?",
+        ("FALCON",)
+    )
+    agente = cur.fetchone()      # tuplo ou None</code></pre>
       <div class="three-col" style="margin-top:0.4em">
         <div class="card"><strong>fetchall()</strong>Todos os resultados → lista de tuplos</div>
         <div class="card"><strong>fetchone()</strong>Primeiro resultado → tuplo ou <code>None</code></div>
@@ -327,38 +393,69 @@ conn.execute(
       </div>
     </section>
 
-    <!-- ─── SLIDE 9 — UPDATE e DELETE ────────────────────────────────── -->
+    <!-- ─── SLIDE 11 — UPDATE ───────────────────────────────────────── -->
     <section>
-      <h2>Alterar e apagar — UPDATE · DELETE</h2>
-      <p class="subtitle">Modificar dados existentes com segurança</p>
-      <div class="two-col" style="margin-top:0.4em">
-        <div>
-          <p style="font-size:0.65em; color:#7FD1D9">UPDATE — atualizar</p>
-          <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
-    # Promover agente
-    conn.execute(
+      <h2>Atualizar dados — UPDATE</h2>
+      <p class="subtitle">Modificar registos existentes com segurança</p>
+      <pre style="font-size:0.50em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    # Promover agente para nível 5
+    cur = conn.execute(
         "UPDATE agentes SET nivel = ? WHERE codename = ?",
         (5, "FALCON")
     )
-    print(f"Linhas afetadas: "
-          f"{conn.execute('SELECT changes()').fetchone()[0]}")</code></pre>
-        </div>
-        <div>
-          <p style="font-size:0.65em; color:#7FD1D9">DELETE — apagar</p>
-          <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
-    # Desativar (nunca apagar dados!)
+    print(f"Linhas afetadas: {cur.rowcount}")
+
+    # Atualizar vários campos ao mesmo tempo
     conn.execute(
-        "UPDATE agentes SET ativo = 0 WHERE codename = ?",
+        "UPDATE agentes SET nivel = ?, ativo = ? WHERE codename = ?",
+        (3, 1, "GHOST")
+    )</code></pre>
+      <div class="two-col" style="margin-top:0.5em">
+        <div class="card">
+          <strong>cur.rowcount</strong>
+          Número de linhas afetadas pelo último UPDATE.<br>
+          Se for <code>0</code>, o codename não existia.
+        </div>
+        <div class="card">
+          <strong>Sempre com WHERE</strong>
+          Sem <code>WHERE</code>, o UPDATE afeta <em>todas</em> as linhas da tabela — cuidado!
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 12 — DELETE ────────────────────────────────────────── -->
+    <section>
+      <h2>Apagar dados — DELETE</h2>
+      <p class="subtitle">Soft delete vs. delete real — quando usar cada um</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <p style="font-size:0.65em; color:#7FD1D9">✅ Soft delete (recomendado)</p>
+          <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    # Desativar — dados ficam na BD
+    conn.execute(
+        "UPDATE agentes SET ativo = 0 "
+        "WHERE codename = ?",
         ("VIPER",)
     )
-    # Apagar mesmo (cuidado!)
-    # conn.execute(
-    #     "DELETE FROM agentes WHERE id = ?", (2,)
-    # )</code></pre>
+# Dados históricos preservados!
+# Pode ser reativado mais tarde.</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--red)">⚠️ Delete real (irreversível)</p>
+          <pre style="font-size:0.46em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    # Apagar para sempre
+    cur = conn.execute(
+        "DELETE FROM agentes WHERE id = ?",
+        (2,)
+    )
+    print(f"Apagados: {cur.rowcount}")
+
+    # SEM WHERE = apaga tudo!
+    # conn.execute("DELETE FROM agentes")</code></pre>
         </div>
       </div>
       <div class="card" style="margin-top:0.4em; font-size:0.65em; border-color:rgba(244,163,64,0.3)">
-        💡 Boa prática: em vez de <code>DELETE</code>, usar um campo <code>ativo = 0</code> (soft delete). Assim os dados históricos não se perdem.
+        💡 Regra prática: usa soft delete (<code>ativo = 0</code>) em dados de negócio. Usa DELETE real para limpeza técnica — logs antigos, sessões expiradas, dados de teste.
       </div>
     </section>
 
