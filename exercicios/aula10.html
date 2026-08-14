@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Aula 10 — Do JSON à Base de Dados · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A; --teal: #1C7293; --accent: #F4A340;
+    --green: #27ae60; --orange: #e67e22; --red: #c0392b;
+    --bg: #10192a; --surface: #162032; --text: #e2e8f0;
+    --code-bg: #1e2a38; --border: rgba(28,114,147,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; line-height: 1.6; }
+  header { border-bottom: 2px solid var(--teal); padding-bottom: 1rem; margin-bottom: 2rem; }
+  header h1 { color: #fff; font-size: 1.6rem; }
+  header p { color: #7FD1D9; font-size: 0.9rem; margin-top: 0.2rem; }
+  .ex { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+  .ex-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+  .star-1 { color: var(--green); font-size: 1.3rem; }
+  .star-2 { color: var(--orange); font-size: 1.3rem; }
+  .star-3 { color: var(--red); font-size: 1.3rem; }
+  .ex-num { font-size: 0.75rem; color: #9fb3c8; }
+  .ex h2 { color: #fff; font-size: 1.15rem; }
+  .ex p { margin: 0.5rem 0; font-size: 0.92rem; }
+  pre { background: var(--code-bg); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; overflow-x: auto; font-size: 0.82rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .tag { display: inline-block; border-radius: 5px; padding: 1px 8px; font-size: 0.72rem; margin: 2px; }
+  .tag-blue { background: rgba(28,114,147,0.3); color: #7FD1D9; border: 1px solid rgba(28,114,147,0.4); }
+  .tag-orange { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.3); }
+  .data-block { background: #0d1520; border: 1px solid rgba(127,209,217,0.2); border-radius: 8px; padding: 0.8rem; margin: 0.6rem 0; font-size: 0.8rem; color: #7FD1D9; }
+  .data-block strong { display: block; color: #9fb3c8; font-size: 0.72rem; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip { background: rgba(28,114,147,0.1); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  .warn { background: rgba(244,163,64,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  ol { margin: 0.5rem 0 0.5rem 1.5rem; font-size: 0.92rem; line-height: 2; }
+  footer { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; color: #4a6080; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aula 10 — Do JSON à Base de Dados</h1>
+  <p>UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #90 — ★  (esqueleto com blanks)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-1">★</span><span class="star-1">☆☆</span>
+    <span class="ex-num">#90</span>
+    <h2>Primeira Base de Dados de Agentes</h2>
+  </div>
+
+  <p>Cria uma base de dados SQLite com a tabela de agentes, insere três registos e lista-os todos.</p>
+
+  <div class="data-block">
+    <strong>Ficheiro de dados — dados/aula10/seed.sql (para referência)</strong>
+    <code>CREATE TABLE agentes (id INTEGER PRIMARY KEY AUTOINCREMENT, codename TEXT NOT NULL UNIQUE, nivel INTEGER, ativo INTEGER);<br>
+-- Agentes: FALCON (nível 3), GHOST (nível 2), LYNX (nível 4)</code>
+  </div>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex90_primeira_db.py
+UC        : UC00606
+Aula      : 10
+Autor     :
+Data      : 14/08/2026
+Descrição : Cria tabela de agentes, insere registos e lista-os.
+Como usar : python ex90_primeira_db.py
+"""
+import ___                          # módulo de base de dados do Python
+
+DB = "dados/aula10/agentes.db"
+
+def criar_tabela(conn):
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS ___ (
+            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            codename TEXT    NOT NULL UNIQUE,
+            nivel    INTEGER NOT NULL DEFAULT 1,
+            ativo    INTEGER NOT NULL DEFAULT 1
+        )
+    """)
+
+def inserir_agentes(conn):
+    agentes = [
+        ("FALCON", 3, 1),
+        ("GHOST",  2, 1),
+        ("LYNX",   4, 1),
+    ]
+    conn.executemany(
+        "INSERT OR IGNORE INTO agentes (___, nivel, ativo) VALUES (?, ?, ?)",
+        ___
+    )
+
+def listar(conn):
+    conn.___.row_factory = sqlite3.Row     # resultados como dicionário
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM agentes ORDER BY nivel ___")
+    for row in cur.fetchall():
+        estado = "✅" if row["___"] else "❌"
+        print(f"  {estado} {row['codename']:<10} nível {row['nivel']}")
+
+def main():
+    with sqlite3.___(DB) as conn:
+        criar_tabela(conn)
+        inserir_agentes(conn)
+        listar(conn)
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    💡 <strong>Dicas:</strong><br>
+    • <code>sqlite3.connect("ficheiro.db")</code> — liga (e cria se não existir).<br>
+    • <code>ORDER BY nivel DESC</code> — do maior para o menor.<br>
+    • <code>row["ativo"]</code> devolve 1 (True) ou 0 (False).
+  </div>
+
+  <p><strong>Output esperado:</strong></p>
+  <pre><code>  ✅ LYNX       nível 4
+  ✅ FALCON     nível 3
+  ✅ GHOST      nível 2</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">sqlite3.connect()</span>
+    <span class="tag tag-blue">CREATE TABLE</span>
+    <span class="tag tag-blue">executemany()</span>
+    <span class="tag tag-blue">row_factory</span>
+    <span class="tag tag-orange">bases de dados</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #92 — ★★  (estrutura dada, lógica a completar)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-2">★★</span><span class="star-2">☆</span>
+    <span class="ex-num">#92</span>
+    <h2>Pesquisa e Atualização Seguras</h2>
+  </div>
+
+  <p>Implementa as funções de pesquisa e atualização do Simulador, usando sempre parâmetros para evitar SQL Injection.</p>
+
+  <div class="data-block">
+    <strong>Pré-requisito — corre primeiro o ex90 para criar a base de dados</strong>
+    O ficheiro <code>dados/aula10/agentes.db</code> deve já existir com FALCON, GHOST e LYNX.
+  </div>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex92_pesquisa_atualizacao.py
+UC        : UC00606
+Aula      : 10
+Autor     :
+Data      : 14/08/2026
+Descrição : Pesquisa e atualização de agentes com parâmetros seguros.
+Como usar : python ex92_pesquisa_atualizacao.py
+"""
+import sqlite3
+
+DB = "dados/aula10/agentes.db"
+
+def pesquisar(codename):
+    """Retorna o agente com esse codename, ou None se não existir."""
+    # TODO: ligar à DB, fazer SELECT com parâmetro ?, retornar fetchone() como dict
+    pass
+
+def promover(codename, novo_nivel):
+    """Atualiza o nível do agente. Retorna True se encontrado, False caso contrário."""
+    # TODO: UPDATE agentes SET nivel = ? WHERE codename = ?
+    # Dica: conn.execute(...).rowcount diz quantas linhas foram afetadas
+    pass
+
+def desativar(codename):
+    """Faz soft delete — ativo = 0. Retorna True se encontrado."""
+    # TODO: UPDATE agentes SET ativo = 0 WHERE codename = ?
+    pass
+
+def main():
+    # Pesquisar agente existente
+    agente = pesquisar("FALCON")
+    if agente:
+        print(f"Encontrado: {agente['codename']} — nível {agente['nivel']}")
+    else:
+        print("Agente não encontrado")
+
+    # Pesquisar agente inexistente
+    print(f"SHADOW existe? {pesquisar('SHADOW')}")
+
+    # Promover FALCON para nível 5
+    ok = promover("FALCON", 5)
+    print(f"Promoção: {'✅' if ok else '❌'}")
+
+    # Verificar
+    agente = pesquisar("FALCON")
+    print(f"FALCON agora: nível {agente['nivel']}")
+
+    # Desativar GHOST
+    desativar("GHOST")
+    ghost = pesquisar("GHOST")
+    print(f"GHOST ativo: {bool(ghost['ativo'])}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="warn">
+    ⚠️ <strong>Nunca faças isto:</strong><br>
+    <code>f"SELECT * FROM agentes WHERE codename = '{codename}'"</code><br>
+    Usa sempre <code>"... WHERE codename = ?"</code> com <code>(codename,)</code> como segundo argumento.
+  </div>
+
+  <div class="tip">
+    💡 <strong>Dicas:</strong><br>
+    • <code>conn.row_factory = sqlite3.Row</code> antes do cursor para aceder por nome.<br>
+    • <code>cursor.rowcount</code> — número de linhas afetadas pelo último UPDATE/DELETE.<br>
+    • Nota o <code>,</code> em <code>(codename,)</code> — é obrigatório para criar um tuplo de um elemento.
+  </div>
+
+  <p><strong>Output esperado:</strong></p>
+  <pre><code>Encontrado: FALCON — nível 3
+SHADOW existe? None
+Promoção: ✅
+FALCON agora: nível 5
+GHOST ativo: False</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">SELECT · UPDATE</span>
+    <span class="tag tag-blue">parâmetros (?)</span>
+    <span class="tag tag-blue">rowcount</span>
+    <span class="tag tag-blue">soft delete</span>
+    <span class="tag tag-orange">SQL Injection</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #94 — ★★★  (só enunciado)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-3">★★★</span>
+    <span class="ex-num">#94</span>
+    <h2>Simulador v3.0 — Migração + Menu + SQLite</h2>
+  </div>
+
+  <p>Constrói a versão 3.0 do Simulador: importa os agentes do JSON da Aula 9 para SQLite e apresenta um menu completo de gestão.</p>
+
+  <ol>
+    <li>Ao iniciar, verificar se <code>agentes.db</code> já existe — se não, migrar automaticamente de <code>dados/aula9/agentes.json</code></li>
+    <li>Menu: Listar ativos · Pesquisar · Adicionar · Promover · Desativar · Sair</li>
+    <li>Listar deve mostrar agentes ordenados por nível (DESC) e filtrar apenas os ativos</li>
+    <li>Pesquisar por codename — mostrar todos os detalhes, mesmo se inativo</li>
+    <li>Adicionar deve validar: codename em maiúsculas, nível entre 1 e 5, não duplicado</li>
+    <li>Ao sair, mostrar um resumo: total de agentes, quantos ativos, média de nível</li>
+  </ol>
+
+  <div class="warn">
+    ⚠️ <strong>SQL Injection:</strong> todos os inputs do utilizador devem usar parâmetros <code>?</code>. Nunca concatenar strings SQL.
+  </div>
+
+  <div class="tip">
+    💡 <strong>Estrutura sugerida:</strong><br>
+    <code>inicializar_db()</code> · <code>migrar_json()</code> · <code>listar()</code> · <code>pesquisar()</code> ·
+    <code>adicionar()</code> · <code>promover()</code> · <code>desativar()</code> · <code>resumo()</code> · <code>main()</code>
+  </div>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">sqlite3</span>
+    <span class="tag tag-blue">json.load()</span>
+    <span class="tag tag-blue">CREATE · INSERT · SELECT · UPDATE</span>
+    <span class="tag tag-blue">row_factory</span>
+    <span class="tag tag-orange">migração de dados</span>
+    <span class="tag tag-orange">arquitetura</span>
+  </p>
+</div>
+
+<footer>
+  UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026 · makercraft.pt/UC00606
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

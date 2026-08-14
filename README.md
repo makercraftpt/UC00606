@@ -30,7 +30,7 @@
 | [Semana 7](semanas/semana07.md) | Strings — métodos, slicing, formatação e expressões regulares (`re`) | ✅ Disponível |
 | [Semana 8](apresentacoes/aula8.html) | Ficheiros de texto, logs e CSV | ✅ Disponível |
 | [Semana 9](apresentacoes/aula9.html) | Big-O, hash tables, `dict`/`set`, `hashlib`, JSON, `.ini` e variáveis de ambiente | ✅ Disponível |
-| Semana 10 | Base de dados em ficheiro — SQLite | 🔒 Em breve |
+| [Semana 10](apresentacoes/aula10.html) | Base de dados em ficheiro — SQLite | ✅ Disponível |
 | Semana 11 | Tratamento de erros — `try / except` | 🔒 Em breve |
 | Semanas 12–14 | Projeto — CyberTool | 🔒 Em breve |
 | Semana 15 | Avaliação 2 | 🔒 Em breve |
@@ -73,6 +73,7 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 - [Aula 7 — Strings & Regex (slides interativos)](apresentacoes/aula7.html)
 - [Aula 8 — Dados que Persistem (slides interativos)](apresentacoes/aula8.html)
 - [Aula 9 — Como os Dados São Encontrados Rápido (slides interativos)](apresentacoes/aula9.html)
+- [Aula 10 — Do JSON à Base de Dados (slides interativos)](apresentacoes/aula10.html)
 
 ---
 
@@ -88,6 +89,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 7 — Strings & Regex](exercicios/aula7.md)
 - [Fichas Aula 8 — Dados que Persistem](exercicios/aula8.html)
 - [Fichas Aula 9 — Como os Dados São Encontrados Rápido](exercicios/aula9.html)
+- [Fichas Aula 10 — Do JSON à Base de Dados](exercicios/aula10.html)
 
 ---
 

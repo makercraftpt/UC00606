@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 10 — Do JSON à Base de Dados · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --teal: #1C7293;
+    --accent: #F4A340;
+    --green: #2ecc71;
+    --red: #e74c3c;
+  }
+  .reveal { background: var(--navy); }
+  .reveal h1, .reveal h2 { color: #fff; text-transform: none; }
+  .reveal h1 { font-size: 1.8em; }
+  .reveal h2 { font-size: 1.2em; border-bottom: 2px solid var(--teal); padding-bottom: 0.2em; margin-bottom: 0.4em; }
+  .reveal p, .reveal li { color: #c8d8e8; font-size: 0.8em; }
+  .subtitle { color: #7FD1D9 !important; font-size: 0.75em !important; margin-top: -0.2em !important; }
+  .footnote { color: #4a6080 !important; font-size: 0.5em !important; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .reveal .hljs { background: #0d1520; border-radius: 8px; padding: 0.8em; }
+
+  .title-slide { text-align: center; }
+  .title-slide h1 { font-size: 2em; color: #fff; }
+  .title-slide .tagline { color: var(--accent); font-size: 0.85em; margin-top: 0.3em; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; text-align: left; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; text-align: left; }
+
+  .card {
+    background: rgba(28,114,147,0.15);
+    border: 1px solid rgba(28,114,147,0.35);
+    border-radius: 10px;
+    padding: 0.7em 0.9em;
+    font-size: 0.68em;
+    color: #c8d8e8;
+  }
+  .card strong { color: #fff; display: block; margin-bottom: 0.2em; }
+  .card code { color: #7FD1D9; font-size: 0.9em; }
+
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.62em;
+    margin: 2px;
+    font-weight: bold;
+  }
+  .badge-teal  { background: rgba(28,114,147,0.3); color: #7FD1D9; border: 1px solid rgba(28,114,147,0.5); }
+  .badge-orange{ background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.4); }
+  .badge-green { background: rgba(46,204,113,0.15); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .badge-red   { background: rgba(231,76,60,0.15); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+
+  .table-compare {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.65em;
+    color: #c8d8e8;
+  }
+  .table-compare th {
+    background: rgba(28,114,147,0.3);
+    color: #fff;
+    padding: 0.4em 0.7em;
+    text-align: left;
+    font-size: 0.9em;
+  }
+  .table-compare td {
+    padding: 0.35em 0.7em;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .table-compare tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .ok { color: var(--green); }
+  .nok { color: var(--red); }
+
+  .img-placeholder {
+    background: rgba(28,114,147,0.08);
+    border: 1px dashed rgba(28,114,147,0.4);
+    border-radius: 8px;
+    padding: 0.6em 1em;
+    font-size: 0.55em;
+    color: #5a8090;
+    text-align: left;
+  }
+  .sql-keyword { color: #c792ea; }
+  .sql-str     { color: #c3e88d; }
+  .sql-num     { color: #f78c6c; }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ─── SLIDE 1 — Título ──────────────────────────────────────────── -->
+    <section class="title-slide">
+      <p style="color:var(--teal); font-size:0.6em; letter-spacing:0.12em; text-transform:uppercase">UC00606 · Aula 10</p>
+      <h1>Do JSON à Base de Dados</h1>
+      <p class="tagline">SQLite — persistência com superpoderes</p>
+      <div style="margin-top:1.2em; font-size:0.55em; color:#4a6080">
+        CET Cibersegurança · ETP Sicó · 2025/2026
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 2 — O problema do JSON ─────────────────────────────── -->
+    <section>
+      <h2>O Simulador v2.0 tem um problema</h2>
+      <p class="subtitle">O JSON funciona… mas tem limites</p>
+      <div class="two-col" style="margin-top:0.5em">
+        <div>
+          <p style="font-size:0.65em; color:var(--accent)">❌ Com JSON</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim># Para encontrar agentes nível > 3:
+with open("agentes.json") as f:
+    todos = json.load(f)   # carrega TUDO
+
+ativos = [a for a in todos
+          if a["nivel"] > 3]
+# O(n) — percorre sempre tudo</code></pre>
+          <div class="card" style="margin-top:0.5em; border-color:rgba(231,76,60,0.3)">
+            <strong style="color:var(--red)">Limitações</strong>
+            Sem queries · Carrega tudo para memória · Sem múltiplos utilizadores · Sem índices
+          </div>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--green)">✅ Com SQLite</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">conn = sqlite3.connect("agentes.db")
+cur = conn.cursor()
+
+cur.execute("""
+    SELECT * FROM agentes
+    WHERE nivel > 3
+""")
+# Só os que interessam!</code></pre>
+          <div class="card" style="margin-top:0.5em; border-color:rgba(46,204,113,0.3)">
+            <strong style="color:var(--green)">Vantagens</strong>
+            Queries SQL · Índices (O(log n)) · Um ficheiro .db · Incluído no Python
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 3 — O que é SQLite ──────────────────────────────────── -->
+    <section>
+      <h2>O que é SQLite?</h2>
+      <p class="subtitle">Uma base de dados num único ficheiro</p>
+      <div class="two-col" style="margin-top:0.5em; align-items:start">
+        <div>
+          <div class="card" style="margin-bottom:0.5em">
+            <strong>📁 Um ficheiro</strong>
+            Toda a base de dados está em <code>agentes.db</code> — podes copiar, enviar, fazer backup.
+          </div>
+          <div class="card" style="margin-bottom:0.5em">
+            <strong>🐍 Incluído no Python</strong>
+            <code>import sqlite3</code> — sem instalação, sem servidor.
+          </div>
+          <div class="card">
+            <strong>🌍 O mais usado do mundo</strong>
+            Está em telemóveis, browsers, aviões, carros…
+          </div>
+        </div>
+        <div>
+          <div style="text-align:center; margin-bottom:0.5em">
+            <img src="img/aula10_sqlite_concept.jpeg" alt="SQLite concept diagram" style="max-height:200px; border-radius:8px;">
+          </div>
+          <div class="card" style="border-color:rgba(244,163,64,0.3)">
+            <strong style="color:var(--accent)">SQL — Structured Query Language</strong>
+            Linguagem para falar com bases de dados. Standard desde 1970 — o mesmo em SQLite, MySQL, PostgreSQL.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 4 — Conexão e cursor ───────────────────────────────── -->
+    <section>
+      <h2>Ligar à base de dados</h2>
+      <p class="subtitle">Connection + Cursor — o padrão do sqlite3</p>
+      <pre style="font-size:0.56em"><code class="language-python" data-trim">import sqlite3
+
+# Ligar (cria o ficheiro se não existir)
+conn = sqlite3.connect("agentes.db")
+
+# Cursor — executa os comandos SQL
+cur = conn.cursor()
+
+# ... operações ...
+
+# Guardar alterações e fechar
+conn.commit()
+conn.close()</code></pre>
+      <div class="two-col" style="margin-top:0.5em">
+        <div class="card">
+          <strong>🔌 conn — Connection</strong>
+          Representa a ligação ao ficheiro .db.<br>
+          <code>conn.commit()</code> → guarda<br>
+          <code>conn.close()</code> → fecha
+        </div>
+        <div class="card">
+          <strong>🖱️ cur — Cursor</strong>
+          Executa SQL e navega nos resultados.<br>
+          <code>cur.execute(sql)</code> → corre query<br>
+          <code>cur.fetchall()</code> → obtém resultados
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 5 — Context manager ────────────────────────────────── -->
+    <section>
+      <h2>Forma profissional — Context Manager</h2>
+      <p class="subtitle"><code>with</code> garante que a conexão é sempre fechada</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <p style="font-size:0.65em; color:var(--red)">❌ Forma frágil</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">conn = sqlite3.connect("agentes.db")
+cur = conn.cursor()
+cur.execute("SELECT * FROM agentes")
+# E se houver um erro aqui?
+# conn.close() nunca é chamado!
+conn.commit()
+conn.close()</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--green)">✅ Forma correta</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM agentes")
+    resultados = cur.fetchall()
+# conn é fechado automaticamente
+# mesmo que ocorra um erro!</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.5em; font-size:0.65em">
+        💡 O <code>with</code> chama <code>conn.__exit__()</code> no fim — que faz <code>commit()</code> se correu bem, <code>rollback()</code> se houve erro. Aprendemos <code>with open()</code> para ficheiros — é o mesmo princípio.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 6 — CREATE TABLE ───────────────────────────────────── -->
+    <section>
+      <h2>Criar uma tabela — CREATE TABLE</h2>
+      <p class="subtitle">Definir a estrutura dos dados antes de os guardar</p>
+      <pre style="font-size:0.54em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS agentes (
+            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            codename TEXT    NOT NULL UNIQUE,
+            nivel    INTEGER NOT NULL DEFAULT 1,
+            ativo    INTEGER NOT NULL DEFAULT 1
+        )
+    """)</code></pre>
+      <div class="three-col" style="margin-top:0.5em">
+        <div class="card">
+          <strong>PRIMARY KEY</strong>
+          Identificador único e automático. Nunca repetido.
+        </div>
+        <div class="card">
+          <strong>NOT NULL</strong>
+          Campo obrigatório — não pode ficar vazio.
+        </div>
+        <div class="card">
+          <strong>UNIQUE</strong>
+          Sem duplicados — dois agentes não podem ter o mesmo codename.
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.5em; font-size:0.65em">
+        💡 <code>IF NOT EXISTS</code> — só cria se a tabela ainda não existir. Seguro para chamar sempre ao iniciar o programa.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 7 — INSERT ──────────────────────────────────────────── -->
+    <section>
+      <h2>Adicionar dados — INSERT</h2>
+      <p class="subtitle">Nunca concatenes strings SQL — usa parâmetros</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <p style="font-size:0.65em; color:var(--red)">❌ Perigoso — SQL Injection!</p>
+          <pre style="font-size:0.46em"><code class="language-python" data-trim">nome = input("Codename: ")
+# E se o utilizador escrever:
+# FALCON'); DROP TABLE agentes; --
+sql = f"INSERT INTO agentes (codename) VALUES ('{nome}')"
+conn.execute(sql)  # 💀</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--green)">✅ Seguro — parâmetros</p>
+          <pre style="font-size:0.46em"><code class="language-python" data-trim">nome = input("Codename: ")
+conn.execute(
+    "INSERT INTO agentes (codename, nivel, ativo) "
+    "VALUES (?, ?, ?)",
+    (nome, 3, 1)      # ← tuple de valores
+)
+# sqlite3 trata da sanitização</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.5em; border-color:rgba(244,163,64,0.4)">
+        <strong style="color:var(--accent)">⚠️ SQL Injection — o ataque mais comum da web</strong>
+        O <code>?</code> é um placeholder — o sqlite3 garante que o valor é sempre tratado como dado, nunca como código SQL. <strong>Sempre usar parâmetros.</strong>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 8 — SELECT ──────────────────────────────────────────── -->
+    <section>
+      <h2>Consultar dados — SELECT</h2>
+      <p class="subtitle">Buscar exatamente o que precisamos</p>
+      <pre style="font-size:0.52em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    cur = conn.cursor()
+
+    # Todos os agentes
+    cur.execute("SELECT * FROM agentes")
+    todos = cur.fetchall()          # lista de tuplos
+
+    # Só os ativos com nível > 3
+    cur.execute(
+        "SELECT codename, nivel FROM agentes WHERE ativo = 1 AND nivel > ?",
+        (3,)
+    )
+    elite = cur.fetchall()
+
+    # Um agente específico
+    cur.execute("SELECT * FROM agentes WHERE codename = ?", ("FALCON",))
+    agente = cur.fetchone()         # um tuplo ou None</code></pre>
+      <div class="three-col" style="margin-top:0.4em">
+        <div class="card"><strong>fetchall()</strong>Todos os resultados → lista de tuplos</div>
+        <div class="card"><strong>fetchone()</strong>Primeiro resultado → tuplo ou <code>None</code></div>
+        <div class="card"><strong>fetchmany(n)</strong>Próximos n resultados → lista</div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 9 — UPDATE e DELETE ────────────────────────────────── -->
+    <section>
+      <h2>Alterar e apagar — UPDATE · DELETE</h2>
+      <p class="subtitle">Modificar dados existentes com segurança</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <p style="font-size:0.65em; color:#7FD1D9">UPDATE — atualizar</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    # Promover agente
+    conn.execute(
+        "UPDATE agentes SET nivel = ? WHERE codename = ?",
+        (5, "FALCON")
+    )
+    print(f"Linhas afetadas: "
+          f"{conn.execute('SELECT changes()').fetchone()[0]}")</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:#7FD1D9">DELETE — apagar</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">with sqlite3.connect("agentes.db") as conn:
+    # Desativar (nunca apagar dados!)
+    conn.execute(
+        "UPDATE agentes SET ativo = 0 WHERE codename = ?",
+        ("VIPER",)
+    )
+    # Apagar mesmo (cuidado!)
+    # conn.execute(
+    #     "DELETE FROM agentes WHERE id = ?", (2,)
+    # )</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.4em; font-size:0.65em; border-color:rgba(244,163,64,0.3)">
+        💡 Boa prática: em vez de <code>DELETE</code>, usar um campo <code>ativo = 0</code> (soft delete). Assim os dados históricos não se perdem.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 10 — row_factory ────────────────────────────────────── -->
+    <section>
+      <h2>Resultados como dicionários</h2>
+      <p class="subtitle"><code>row_factory</code> — aceder por nome em vez de índice</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <p style="font-size:0.65em; color:var(--red)">❌ Sem row_factory</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">cur.execute("SELECT * FROM agentes")
+for linha in cur.fetchall():
+    # linha é um tuplo
+    print(linha[1])   # codename?
+    print(linha[2])   # nivel?
+    # frágil — ordem importa!</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--green)">✅ Com row_factory</p>
+          <pre style="font-size:0.48em"><code class="language-python" data-trim">conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+cur.execute("SELECT * FROM agentes")
+for row in cur.fetchall():
+    # row acede por nome
+    print(row["codename"])
+    print(row["nivel"])
+    # legível e robusto!</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.5em; font-size:0.65em">
+        <code>sqlite3.Row</code> comporta-se como um dicionário mas também aceita índices. Define-se na <strong>conexão</strong>, antes do cursor.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 11 — Migrar JSON → SQLite ──────────────────────────── -->
+    <section>
+      <h2>Migrar do JSON para SQLite</h2>
+      <p class="subtitle">Importar os agentes existentes para a base de dados</p>
+      <pre style="font-size:0.50em"><code class="language-python" data-trim">import json, sqlite3
+
+def migrar(json_path, db_path):
+    with open(json_path, "r", encoding="utf-8") as f:
+        agentes = json.load(f)
+
+    with sqlite3.connect(db_path) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS agentes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                codename TEXT NOT NULL UNIQUE,
+                nivel INTEGER NOT NULL DEFAULT 1,
+                ativo INTEGER NOT NULL DEFAULT 1
+            )
+        """)
+        conn.executemany(
+            "INSERT OR IGNORE INTO agentes (codename, nivel, ativo) VALUES (?, ?, ?)",
+            [(a["codename"], a["nivel"], 1 if a["ativo"] else 0) for a in agentes]
+        )
+    print(f"✅ {len(agentes)} agentes migrados para {db_path}")
+
+migrar("dados/aula9/agentes.json", "dados/aula10/agentes.db")</code></pre>
+      <div class="card" style="font-size:0.65em">
+        💡 <code>executemany()</code> — insere múltiplas linhas de uma vez, muito mais eficiente que um loop de <code>execute()</code>.
+        <code>INSERT OR IGNORE</code> — salta duplicados sem erro.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 12 — Simulador v3.0 ────────────────────────────────── -->
+    <section>
+      <h2>Simulador v3.0 — com SQLite</h2>
+      <p class="subtitle">Tudo o que aprendemos numa arquitetura limpa</p>
+      <pre style="font-size:0.46em"><code class="language-python" data-trim">"""
+Ficheiro: simulador.py  |  UC: UC00606  |  Aula: 10
+"""
+import sqlite3, configparser
+
+DB = "dados/aula10/agentes.db"
+
+def inicializar():
+    with sqlite3.connect(DB) as conn:
+        conn.execute("""CREATE TABLE IF NOT EXISTS agentes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            codename TEXT NOT NULL UNIQUE,
+            nivel INTEGER NOT NULL DEFAULT 1,
+            ativo INTEGER NOT NULL DEFAULT 1)""")
+
+def listar():
+    with sqlite3.connect(DB) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute("SELECT * FROM agentes WHERE ativo=1 ORDER BY nivel DESC").fetchall()
+    for r in rows:
+        print(f"  [{r['id']:>2}] {r['codename']:<12} nível {r['nivel']}")
+
+def adicionar(codename, nivel):
+    with sqlite3.connect(DB) as conn:
+        conn.execute("INSERT INTO agentes (codename, nivel) VALUES (?,?)", (codename, nivel))
+    print(f"✅ Agente {codename} adicionado")
+
+def pesquisar(codename):
+    with sqlite3.connect(DB) as conn:
+        conn.row_factory = sqlite3.Row
+        r = conn.execute("SELECT * FROM agentes WHERE codename=?", (codename,)).fetchone()
+    return dict(r) if r else None</code></pre>
+    </section>
+
+    <!-- ─── SLIDE 13 — Tabela comparação ─────────────────────────────── -->
+    <section>
+      <h2>JSON vs SQLite — quando usar cada um?</h2>
+      <table class="table-compare" style="margin-top:0.5em">
+        <tr>
+          <th>Critério</th>
+          <th>JSON</th>
+          <th>SQLite</th>
+        </tr>
+        <tr>
+          <td>Configuração</td>
+          <td class="ok">✅ Nenhuma</td>
+          <td class="ok">✅ Nenhuma</td>
+        </tr>
+        <tr>
+          <td>Queries complexas</td>
+          <td class="nok">❌ Manual (loops)</td>
+          <td class="ok">✅ SQL</td>
+        </tr>
+        <tr>
+          <td>Velocidade com muitos dados</td>
+          <td class="nok">❌ O(n) sempre</td>
+          <td class="ok">✅ Índices O(log n)</td>
+        </tr>
+        <tr>
+          <td>Legível por humanos</td>
+          <td class="ok">✅ Sim</td>
+          <td class="nok">❌ Binário</td>
+        </tr>
+        <tr>
+          <td>Ideal para</td>
+          <td>Config, dados simples, APIs</td>
+          <td>Apps com dados relacionais</td>
+        </tr>
+      </table>
+      <div class="card" style="margin-top:0.6em; font-size:0.65em">
+        💡 Regra prática: se precisas de <strong>filtrar, ordenar ou relacionar</strong> dados → SQLite. Se é só ler/escrever um objeto → JSON.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 14 — Resumo ─────────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1 style="font-size:1.6em">O que ficou hoje</h1>
+      <div style="text-align:left; font-size:0.65em; display:grid; grid-template-columns:1fr 1fr; gap:0.8em; margin-top:0.5em">
+        <div class="card">
+          <strong>🔌 Conexão</strong>
+          <code>sqlite3.connect()</code> · <code>with</code> context manager<br>
+          Connection + Cursor
+        </div>
+        <div class="card">
+          <strong>🏗️ Estrutura</strong>
+          <code>CREATE TABLE IF NOT EXISTS</code><br>
+          Tipos: INTEGER · TEXT · REAL · BLOB
+        </div>
+        <div class="card">
+          <strong>📝 CRUD</strong>
+          INSERT · SELECT · UPDATE · DELETE<br>
+          <code>?</code> para parâmetros seguros
+        </div>
+        <div class="card">
+          <strong>🔒 Segurança</strong>
+          SQL Injection — nunca concatenar strings<br>
+          Sempre usar parâmetros <code>(?, ?)</code>
+        </div>
+      </div>
+      <p style="margin-top:0.8em; font-size:0.6em">
+        📺 Quer saber mais?
+        <a href="https://www.youtube.com/watch?v=byHcYRpMgI4" target="_blank"
+           style="color:#F4A340; text-decoration:none; border-bottom:1px solid rgba(244,163,64,0.4)">
+          Ver vídeo no YouTube →
+        </a>
+      </p>
+      <p class="footnote" style="margin-top:0.4em">UC00606 · Aula 10 · makercraft.pt/UC00606</p>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight ]
+  });
+</script>
+</body>
+</html>
