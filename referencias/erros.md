@@ -1,4 +1,6 @@
-# Erros e Exceções em Python — Referência Rápida
+# 📖 Erros e Exceções em Python — Referência Rápida
+
+> [← Voltar à página principal](../README.md)
 
 ## Estrutura base
 
