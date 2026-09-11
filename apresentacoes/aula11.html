@@ -406,6 +406,50 @@ def main():
       </p>
     </section>
 
+    <!-- ═══ SLIDE 12 — Simulador v4.0: o que mudou ═══ -->
+    <section>
+      <h2>Simulador v4.0 — o que mudou</h2>
+      <p class="subtitle">Cada função tem o seu escudo</p>
+      <div class="three-col" style="margin-top:0.6em">
+        <div>
+          <div class="card" style="font-size:0.62em; margin-bottom:0.4em">
+            <strong>migrar_json()</strong>
+            <code>FileNotFoundError</code> · <code>json.JSONDecodeError</code> · <code>ValueError</code> · <code>KeyError</code><br>
+            JSON ausente ou corrompido → BD vazia sem crash
+          </div>
+          <div class="card" style="font-size:0.62em">
+            <strong>pedir_nivel()</strong>
+            <code>ValueError</code><br>
+            Loop infinito até receber 1–5 válido
+          </div>
+        </div>
+        <div>
+          <div class="card" style="font-size:0.62em; margin-bottom:0.4em">
+            <strong>adicionar() · promover() · desativar()</strong>
+            <code>sqlite3.IntegrityError</code> · <code>sqlite3.OperationalError</code><br>
+            Duplicados e falhas de BD com mensagem amigável
+          </div>
+          <div class="card" style="font-size:0.62em">
+            <strong>exportar()</strong>
+            <code>PermissionError</code> · <code>OSError</code><br>
+            Gera <code>relatorio_agentes.txt</code> com timestamp
+          </div>
+        </div>
+        <div>
+          <div class="card" style="font-size:0.62em; margin-bottom:0.4em">
+            <strong>resumo()</strong>
+            <code>sqlite3.OperationalError</code><br>
+            Total · ativos · média de nível ao sair
+          </div>
+          <div class="card" style="font-size:0.62em">
+            <strong>main()</strong>
+            <code>EOFError</code> · <code>KeyboardInterrupt</code><br>
+            Trata Ctrl+C e EOF — nunca crasha no loop principal
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
