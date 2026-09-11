@@ -281,6 +281,69 @@ Nível (1-5): 2
   </p>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     MAPA DE EXCEÇÕES — Simulador v4.0
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span style="font-size:1.3rem">📋</span>
+    <h2>Mapa de Exceções — Simulador v4.0</h2>
+  </div>
+
+  <p>Usa esta tabela como <strong>checklist</strong> antes de entregar o #99. Cada função tem as suas exceções obrigatórias.</p>
+
+  <table style="width:100%; border-collapse:collapse; margin-top:0.8rem; font-size:0.85rem">
+    <thead>
+      <tr style="border-bottom:2px solid var(--teal)">
+        <th style="text-align:left; padding:0.5rem 0.8rem; color:#7FD1D9">Função</th>
+        <th style="text-align:left; padding:0.5rem 0.8rem; color:#7FD1D9">Exceções a tratar</th>
+        <th style="text-align:left; padding:0.5rem 0.8rem; color:#7FD1D9">Porquê</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>migrar_json()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>FileNotFoundError</code> · <code>json.JSONDecodeError</code> · <code>ValueError</code> · <code>KeyError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">JSON ausente ou corrompido</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>pedir_nivel()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>ValueError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">Input não numérico ou fora de 1–5</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>adicionar()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>sqlite3.IntegrityError</code> · <code>sqlite3.OperationalError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">Codename duplicado · BD inacessível</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>promover()</code> · <code>desativar()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>sqlite3.OperationalError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">Tabela não existe</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>exportar()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>PermissionError</code> · <code>OSError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">Sem permissão · disco cheio</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border)">
+        <td style="padding:0.5rem 0.8rem"><code>resumo()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>sqlite3.OperationalError</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">BD vazia ou inexistente</td>
+      </tr>
+      <tr>
+        <td style="padding:0.5rem 0.8rem"><code>main()</code></td>
+        <td style="padding:0.5rem 0.8rem"><code>EOFError</code> · <code>KeyboardInterrupt</code></td>
+        <td style="padding:0.5rem 0.8rem; color:#9fb3c8">Ctrl+C · input fechado</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip" style="margin-top:0.8rem">
+    ✅ <strong>Critério de entrega:</strong> testa cada linha desta tabela antes de submeter — força o erro e confirma que o programa responde com mensagem amigável em vez de crashar.
+  </div>
+</div>
+
 <footer>
   UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026 · makercraft.pt/UC00606
 </footer>
