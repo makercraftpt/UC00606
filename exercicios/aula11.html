@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Aula 11 — Código à Prova de Balas · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A; --teal: #1C7293; --accent: #F4A340;
+    --green: #27ae60; --orange: #e67e22; --red: #c0392b;
+    --bg: #10192a; --surface: #162032; --text: #e2e8f0;
+    --code-bg: #1e2a38; --border: rgba(28,114,147,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; line-height: 1.6; }
+  header { border-bottom: 2px solid var(--teal); padding-bottom: 1rem; margin-bottom: 2rem; }
+  header h1 { color: #fff; font-size: 1.6rem; }
+  header p { color: #7FD1D9; font-size: 0.9rem; margin-top: 0.2rem; }
+  .ex { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+  .ex-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+  .star-1 { color: var(--green); font-size: 1.3rem; }
+  .star-2 { color: var(--orange); font-size: 1.3rem; }
+  .star-3 { color: var(--red); font-size: 1.3rem; }
+  .ex-num { font-size: 0.75rem; color: #9fb3c8; }
+  .ex h2 { color: #fff; font-size: 1.15rem; }
+  .ex p { margin: 0.5rem 0; font-size: 0.92rem; }
+  pre { background: var(--code-bg); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; overflow-x: auto; font-size: 0.82rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .tag { display: inline-block; border-radius: 5px; padding: 1px 8px; font-size: 0.72rem; margin: 2px; }
+  .tag-blue { background: rgba(28,114,147,0.3); color: #7FD1D9; border: 1px solid rgba(28,114,147,0.4); }
+  .tag-orange { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.3); }
+  .tip { background: rgba(28,114,147,0.1); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  .warn { background: rgba(244,163,64,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.83rem; }
+  ol { margin: 0.5rem 0 0.5rem 1.5rem; font-size: 0.92rem; line-height: 2; }
+  footer { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; color: #4a6080; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aula 11 — Código à Prova de Balas</h1>
+  <p>UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #95 — ★  (esqueleto com blanks)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-1">★</span><span class="star-1">☆☆</span>
+    <span class="ex-num">#95</span>
+    <h2>Calculadora Robusta</h2>
+  </div>
+
+  <p>Completa a calculadora para que nunca faça crash, independentemente do que o utilizador introduza.</p>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex95_calculadora_robusta.py
+UC        : UC00606
+Aula      : 11
+Autor     :
+Data      : 11/09/2026
+Descrição : Calculadora que trata todos os erros de input.
+Como usar : python ex95_calculadora_robusta.py
+"""
+
+def pedir_numero(mensagem):
+    """Pede um número ao utilizador até receber um válido."""
+    while True:
+        try:
+            return float(___(mensagem))   # ← pede input
+        except ___:                        # ← que exceção apanhar?
+            print("❌ Introduz um número válido.")
+
+def calcular(a, op, b):
+    """Realiza a operação. Devolve resultado ou None se inválido."""
+    try:
+        if op == "+": return a + b
+        if op == "-": return a - b
+        if op == "*": return a * b
+        if op == "/": return a / b        # ← pode dar erro aqui!
+        raise ___(f"Operador '{op}' desconhecido")
+    except ___:                            # ← divisão por zero
+        print("❌ Não é possível dividir por zero.")
+        return None
+
+def main():
+    print("=== Calculadora Robusta ===")
+    while True:
+        a  = pedir_numero("Primeiro número: ")
+        op = input("Operador (+, -, *, /) ou 'sair': ").strip()
+        if op == "sair":
+            print("Até logo!")
+            break
+        b      = pedir_numero("Segundo número: ")
+        result = calcular(a, op, b)
+        if result is not ___:             # ← condição correta?
+            print(f"Resultado: {result}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    💡 <strong>Dicas:</strong><br>
+    • <code>float(input(...))</code> lança <code>ValueError</code> se o texto não for número.<br>
+    • Divisão por zero lança <code>ZeroDivisionError</code>.<br>
+    • <code>raise ValueError("mensagem")</code> para operadores inválidos.
+  </div>
+
+  <p><strong>Output esperado (exemplo):</strong></p>
+  <pre><code>=== Calculadora Robusta ===
+Primeiro número: abc
+❌ Introduz um número válido.
+Primeiro número: 10
+Operador (+, -, *, /) ou 'sair': /
+Segundo número: 0
+❌ Não é possível dividir por zero.
+Primeiro número: 10
+Operador (+, -, *, /) ou 'sair': /
+Segundo número: 4
+Resultado: 2.5</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">try / except</span>
+    <span class="tag tag-blue">ValueError</span>
+    <span class="tag tag-blue">ZeroDivisionError</span>
+    <span class="tag tag-blue">raise</span>
+    <span class="tag tag-orange">robustez</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #97 — ★★  (estrutura dada, lógica a completar)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-2">★★</span><span class="star-2">☆</span>
+    <span class="ex-num">#97</span>
+    <h2>Gestor de Agentes Robusto</h2>
+  </div>
+
+  <p>Implementa as funções de gestão de agentes com tratamento completo de erros — inputs inválidos, duplicados e falhas de base de dados.</p>
+
+  <div class="tip" style="margin-bottom:0.8rem">
+    🔧 <strong>Pré-requisito:</strong> tens o ficheiro <code>dados/aula10/agentes.db</code> do exercício #90 da aula anterior. Se não tens, corre primeiro o ex90.
+  </div>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex97_gestor_robusto.py
+UC        : UC00606
+Aula      : 11
+Autor     :
+Data      : 11/09/2026
+Descrição : Gestão de agentes com tratamento completo de erros.
+Como usar : python ex97_gestor_robusto.py
+"""
+import sqlite3
+
+DB = "dados/aula10/agentes.db"
+
+def pedir_nivel():
+    """Pede nível 1-5 ao utilizador com validação robusta."""
+    # TODO: loop while True com try/except ValueError
+    # validar que 1 <= n <= 5, senão raise ValueError
+    pass
+
+def adicionar(codename):
+    """Adiciona agente com nível pedido ao utilizador.
+    Retorna True se sucesso, False se duplicado."""
+    # TODO:
+    # - pedir nivel com pedir_nivel()
+    # - INSERT na DB com try/except sqlite3.IntegrityError
+    # - retornar True/False conforme resultado
+    pass
+
+def listar():
+    """Lista todos os agentes ativos, ordenados por nível DESC."""
+    # TODO: SELECT com try/except sqlite3.OperationalError
+    # usar conn.row_factory = sqlite3.Row
+    # se a tabela não existir, mostrar mensagem amigável
+    pass
+
+def desativar(codename):
+    """Faz soft delete. Retorna True se encontrado, False se não existe."""
+    # TODO: UPDATE agentes SET ativo = 0 WHERE codename = ?
+    # usar cur.rowcount para saber se foi encontrado
+    pass
+
+def main():
+    while True:
+        print("\n[1] Listar  [2] Adicionar  [3] Desativar  [0] Sair")
+        op = input("Opção: ").strip()
+        if op == "0":
+            break
+        elif op == "1":
+            listar()
+        elif op == "2":
+            cod = input("Codename: ").strip().upper()
+            adicionar(cod)
+        elif op == "3":
+            cod = input("Codename a desativar: ").strip().upper()
+            ok = desativar(cod)
+            print("✅ Desativado." if ok else "❌ Não encontrado.")
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="warn">
+    ⚠️ <strong>Atenção:</strong> trata os seguintes erros obrigatoriamente:<br>
+    • Input de nível inválido (texto ou fora de 1-5)<br>
+    • Tentativa de adicionar codename duplicado (<code>sqlite3.IntegrityError</code>)<br>
+    • Tabela não existente (<code>sqlite3.OperationalError</code>)
+  </div>
+
+  <p><strong>Output esperado (exemplo):</strong></p>
+  <pre><code>[1] Listar  [2] Adicionar  [3] Desativar  [0] Sair
+Opção: 2
+Codename: EAGLE
+Nível (1-5): 9
+❌ Nível deve ser entre 1 e 5.
+Nível (1-5): 3
+✅ EAGLE adicionado.
+
+Opção: 2
+Codename: EAGLE
+Nível (1-5): 2
+❌ Codename 'EAGLE' já existe.</code></pre>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">sqlite3.IntegrityError</span>
+    <span class="tag tag-blue">sqlite3.OperationalError</span>
+    <span class="tag tag-blue">raise ValueError</span>
+    <span class="tag tag-blue">rowcount</span>
+    <span class="tag tag-orange">validação</span>
+  </p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EXERCÍCIO #99 — ★★★  (só enunciado)
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-3">★★★</span>
+    <span class="ex-num">#99</span>
+    <h2>Simulador v4.0 — Arquitetura à Prova de Balas</h2>
+  </div>
+
+  <p>Constrói a versão 4.0 do Simulador integrando tudo o que aprendeste: SQLite, ficheiros, JSON e tratamento completo de erros em todas as camadas.</p>
+
+  <ol>
+    <li>Ao iniciar, migrar automaticamente de JSON para SQLite se <code>agentes.db</code> ainda não existir — com <code>try/except</code> em caso de ficheiro JSON corrompido ou ausente</li>
+    <li>Todos os inputs do utilizador validados com <code>try/except</code> e <code>raise</code> — nunca deixar o programa crasha por input inválido</li>
+    <li>Menu completo: Listar · Adicionar · Promover · Desativar · Exportar · Sair</li>
+    <li>Opção <strong>Exportar</strong>: gera um ficheiro <code>relatorio_agentes.txt</code> com a lista atual e timestamp — com <code>try/except PermissionError</code> e <code>OSError</code></li>
+    <li>Ao sair: mostrar resumo (total, ativos, média de nível) — com <code>try/except</code> se a DB estiver vazia</li>
+    <li>Zero crashes — testa com inputs absurdos, ficheiros ausentes e DB corrompida</li>
+  </ol>
+
+  <div class="warn">
+    ⚠️ <strong>Critério de qualidade:</strong> não deve ser possível fazer o programa crashar com nenhuma combinação de inputs. Testa tu próprio antes de entregar.
+  </div>
+
+  <div class="tip">
+    💡 <strong>Estrutura sugerida:</strong><br>
+    <code>inicializar_db()</code> · <code>migrar_json()</code> · <code>pedir_nivel()</code> · <code>listar()</code> · <code>adicionar()</code> ·
+    <code>promover()</code> · <code>desativar()</code> · <code>exportar()</code> · <code>resumo()</code> · <code>main()</code>
+  </div>
+
+  <p style="margin-top:0.6rem">
+    <span class="tag tag-blue">try / except / finally</span>
+    <span class="tag tag-blue">raise</span>
+    <span class="tag tag-blue">sqlite3</span>
+    <span class="tag tag-blue">json</span>
+    <span class="tag tag-blue">ficheiros</span>
+    <span class="tag tag-orange">integração total</span>
+    <span class="tag tag-orange">robustez</span>
+  </p>
+</div>
+
+<footer>
+  UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026 · makercraft.pt/UC00606
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

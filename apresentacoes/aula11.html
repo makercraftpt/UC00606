@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 11 — Código à Prova de Balas · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --teal: #1C7293;
+    --accent: #F4A340;
+    --green: #2ecc71;
+    --red: #e74c3c;
+  }
+  .reveal { background: var(--navy); }
+  .reveal h1, .reveal h2 { color: #fff; text-transform: none; }
+  .reveal h1 { font-size: 1.8em; }
+  .reveal h2 { font-size: 1.2em; border-bottom: 2px solid var(--teal); padding-bottom: 0.2em; margin-bottom: 0.4em; }
+  .reveal p, .reveal li { color: #c8d8e8; font-size: 0.8em; }
+  .subtitle { color: #7FD1D9 !important; font-size: 0.75em !important; margin-top: -0.2em !important; }
+  .footnote { color: #4a6080 !important; font-size: 0.5em !important; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .reveal .hljs { background: #0d1520; border-radius: 8px; padding: 0.8em; }
+
+  .title-slide { text-align: center; }
+  .title-slide h1 { font-size: 2em; color: #fff; }
+  .title-slide .tagline { color: var(--accent); font-size: 0.85em; margin-top: 0.3em; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; text-align: left; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; text-align: left; }
+
+  .card {
+    background: rgba(28,114,147,0.15);
+    border: 1px solid rgba(28,114,147,0.35);
+    border-radius: 10px;
+    padding: 0.7em 0.9em;
+    font-size: 0.68em;
+    color: #c8d8e8;
+  }
+  .card strong { color: #fff; display: block; margin-bottom: 0.2em; }
+  .card code { color: #7FD1D9; font-size: 0.9em; }
+
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.6em;
+    font-weight: bold;
+    margin: 2px;
+  }
+  .badge-green { background: rgba(46,204,113,0.2); color: var(--green); border: 1px solid rgba(46,204,113,0.4); }
+  .badge-red { background: rgba(231,76,60,0.2); color: var(--red); border: 1px solid rgba(231,76,60,0.4); }
+  .badge-accent { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.4); }
+
+  .table-compare { width: 100%; border-collapse: collapse; font-size: 0.62em; }
+  .table-compare th { background: rgba(28,114,147,0.4); color: #fff; padding: 0.4em 0.6em; text-align: left; }
+  .table-compare td { padding: 0.35em 0.6em; border-bottom: 1px solid rgba(255,255,255,0.07); color: #c8d8e8; }
+  .table-compare tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .ok { color: var(--green); }
+  .warn { color: var(--accent); }
+  .bad { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ─── SLIDE 1 — Título ──────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1>Código à Prova de Balas</h1>
+      <p class="tagline">try / except / else / finally</p>
+      <p class="subtitle" style="margin-top:0.8em">Aula 11 · UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</p>
+      <p class="footnote" style="margin-top:1.2em">Python 3 · PyCharm · 11/09/2026</p>
+    </section>
+
+    <!-- ─── SLIDE 2 — Os 3 tipos de erros ────────────────────────── -->
+    <section>
+      <h2>Os 3 tipos de erros</h2>
+      <p class="subtitle">Nem todos são iguais — cada um exige uma solução diferente</p>
+      <div class="three-col" style="margin-top:0.4em">
+        <div class="card" style="border-color:rgba(231,76,60,0.4)">
+          <strong style="color:var(--red)">🔴 SyntaxError</strong>
+          Python não consegue sequer ler o código.<br><br>
+          <code>if x = 5:</code> → erro imediato<br><br>
+          <span style="font-size:0.85em; color:#9fb3c8">Detetado antes de correr. Corrige-se no editor.</span>
+        </div>
+        <div class="card" style="border-color:rgba(244,163,64,0.4)">
+          <strong style="color:var(--accent)">🟡 RuntimeError</strong>
+          O código é válido mas falha durante a execução.<br><br>
+          <code>int("abc")</code> → ValueError<br><code>1/0</code> → ZeroDivisionError<br><br>
+          <span style="font-size:0.85em; color:#9fb3c8">É aqui que o <code>try/except</code> atua.</span>
+        </div>
+        <div class="card" style="border-color:rgba(127,209,217,0.4)">
+          <strong style="color:#7FD1D9">🔵 Erro Lógico</strong>
+          O programa corre sem erros mas dá resultados errados.<br><br>
+          Calcular média a dividir por N em vez de len(lista)<br><br>
+          <span style="font-size:0.85em; color:#9fb3c8">Só o debugging (e os testes) o detetam.</span>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.3em; font-size:0.62em">
+        💡 <code>try/except</code> trata <strong>RuntimeErrors</strong>. SyntaxErrors impedem o programa de correr. Erros lógicos exigem testes e debugging.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 3 — try/except básico ──────────────────────────── -->
+    <section>
+      <h2>try / except — a estrutura base</h2>
+      <p class="subtitle">Envolver o código perigoso e reagir ao erro</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <p style="font-size:0.65em; color:var(--red)">❌ Sem tratamento</p>
+          <pre style="font-size:0.43em"><code class="language-python" data-trim">nivel = int(input("Nível do agente: "))
+# Se o utilizador escrever "cinco":
+# ValueError: invalid literal for int()
+# → programa crasha!</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:var(--green)">✅ Com try/except</p>
+          <pre style="font-size:0.43em"><code class="language-python" data-trim">try:
+    nivel = int(input("Nível do agente: "))
+    print(f"Nível {nivel} registado.")
+except ValueError:
+    print("❌ Introduz um número entre 1 e 5.")</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.3em; font-size:0.63em">
+        💡 O código dentro do <code>try</code> é o que pode falhar. O <code>except</code> só corre se ocorrer o erro especificado — nunca os dois ao mesmo tempo.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 4 — Exceções específicas ───────────────────────── -->
+    <section>
+      <h2>Exceções específicas</h2>
+      <p class="subtitle">Captura o erro certo — não uses a rede demasiado larga</p>
+      <pre style="font-size:0.44em"><code class="language-python" data-trim">import json
+
+def carregar_agentes(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"❌ Ficheiro '{path}' não encontrado.")
+        return []
+    except json.JSONDecodeError:
+        print("❌ Ficheiro corrompido — JSON inválido.")
+        return []
+    except PermissionError:
+        print("❌ Sem permissão para ler o ficheiro.")
+        return []
+    except Exception as e:
+        print(f"❌ Erro inesperado: {e}")
+        return []</code></pre>
+      <div class="two-col" style="margin-top:0.25em">
+        <div class="card" style="font-size:0.6em">
+          <strong>Exceções mais comuns</strong>
+          <code>ValueError</code> · <code>TypeError</code> · <code>FileNotFoundError</code><br>
+          <code>ZeroDivisionError</code> · <code>IndexError</code> · <code>KeyError</code><br>
+          <code>PermissionError</code> · <code>json.JSONDecodeError</code><br>
+          <code>sqlite3.IntegrityError</code> · <code>sqlite3.OperationalError</code>
+        </div>
+        <div class="card" style="font-size:0.6em; border-color:rgba(231,76,60,0.3)">
+          <strong style="color:var(--red)">❌ Nunca fazer isto</strong>
+          <code>except:</code> — captura TUDO (até Ctrl+C)<br>
+          <code>except Exception: pass</code> — silencia o erro<br><br>
+          <span style="color:#9fb3c8">Esconde bugs e torna o debugging impossível.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 5 — else e finally ─────────────────────────────── -->
+    <section>
+      <h2>else e finally</h2>
+      <p class="subtitle">Controlo total sobre o fluxo de erros</p>
+      <pre style="font-size:0.45em"><code class="language-python" data-trim">try:
+    nivel = int(input("Nível (1-5): "))
+except ValueError:
+    print("❌ Número inválido.")
+else:
+    # corre SÓ SE não houve exceção
+    print(f"✅ Nível {nivel} aceite.")
+finally:
+    # corre SEMPRE — com ou sem erro
+    print("─── fim da operação ───")</code></pre>
+      <div class="three-col" style="margin-top:0.3em">
+        <div class="card" style="font-size:0.62em; border-color:rgba(231,76,60,0.35)">
+          <strong style="color:var(--red)">try</strong>
+          Código que pode falhar. Se falhar, salta imediatamente para o <code>except</code>.
+        </div>
+        <div class="card" style="font-size:0.62em; border-color:rgba(244,163,64,0.35)">
+          <strong style="color:var(--accent)">except</strong>
+          Só corre se ocorreu o erro especificado. Pode haver vários <code>except</code>.
+        </div>
+        <div class="card" style="font-size:0.62em; border-color:rgba(46,204,113,0.35)">
+          <strong style="color:var(--green)">else / finally</strong>
+          <code>else</code> → sem erro.<br><code>finally</code> → sempre (fechar ficheiros, DB, etc.)
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 6 — raise ───────────────────────────────────────── -->
+    <section>
+      <h2>raise — lançar exceções</h2>
+      <p class="subtitle">Validar dados e comunicar erros com precisão</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <p style="font-size:0.65em; color:#7FD1D9">Validar com raise</p>
+          <pre style="font-size:0.43em"><code class="language-python" data-trim">def definir_nivel(n):
+    if not isinstance(n, int):
+        raise TypeError("Nível deve ser inteiro")
+    if n < 1 or n > 5:
+        raise ValueError(f"Nível {n} inválido (1-5)")
+    return n
+
+try:
+    definir_nivel(7)
+except ValueError as e:
+    print(f"❌ {e}")</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.65em; color:#7FD1D9">re-raise — propagar o erro</p>
+          <pre style="font-size:0.43em"><code class="language-python" data-trim">def guardar_agente(codename, nivel):
+    try:
+        definir_nivel(nivel)
+        # ... guardar na DB ...
+    except ValueError:
+        print("❌ Nível inválido — agente não guardado")
+        raise   # propaga o erro para cima</code></pre>
+          <div class="card" style="font-size:0.6em; margin-top:0.4em">
+            💡 <code>raise</code> sem argumentos dentro de um <code>except</code> re-lança a mesma exceção — útil para logging antes de propagar.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 7 — try/except em SQLite ───────────────────────── -->
+    <section>
+      <h2>try / except com SQLite</h2>
+      <p class="subtitle">Tratar duplicados e erros de base de dados sem crashes</p>
+      <pre style="font-size:0.44em"><code class="language-python" data-trim">import sqlite3
+
+def adicionar_agente(codename, nivel):
+    if not 1 <= nivel <= 5:
+        raise ValueError(f"Nível {nivel} inválido (1-5)")
+    try:
+        with sqlite3.connect("agentes.db") as conn:
+            conn.execute(
+                "INSERT INTO agentes(codename,nivel,ativo) VALUES(?,?,1)",
+                (codename, nivel))
+        print(f"✅ Agente {codename} adicionado.")
+        return True
+    except sqlite3.IntegrityError:
+        print(f"❌ Codename '{codename}' já existe.")
+        return False
+    except sqlite3.OperationalError as e:
+        print(f"❌ Erro na base de dados: {e}")
+        return False</code></pre>
+      <div class="card" style="margin-top:0.25em; font-size:0.62em">
+        💡 <code>IntegrityError</code> → viola UNIQUE ou NOT NULL. <code>OperationalError</code> → tabela não existe, disco cheio, etc.
+        O <code>with sqlite3.connect()</code> faz <code>rollback</code> automaticamente se houver exceção.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 8 — Boas práticas ───────────────────────────────── -->
+    <section>
+      <h2>Boas práticas</h2>
+      <p class="subtitle">O que separa código frágil de código robusto</p>
+      <table class="table-compare" style="margin-top:0.4em">
+        <tr><th>❌ Evitar</th><th>✅ Fazer</th></tr>
+        <tr>
+          <td><code>except:</code> — captura tudo, inclusive Ctrl+C</td>
+          <td>Capturar exceções específicas: <code>except ValueError:</code></td>
+        </tr>
+        <tr>
+          <td><code>except Exception: pass</code> — silencia o erro</td>
+          <td>Sempre dar feedback: <code>print(f"❌ {e}")</code></td>
+        </tr>
+        <tr>
+          <td>try/except em torno de 50 linhas</td>
+          <td>Blocos try pequenos — só o que pode falhar</td>
+        </tr>
+        <tr>
+          <td>Mostrar stack trace ao utilizador</td>
+          <td>Mensagem simples para o utilizador, log técnico para o programador</td>
+        </tr>
+        <tr>
+          <td>Deixar o programa crasha em produção</td>
+          <td>Valores de retorno seguros (<code>return []</code>, <code>return None</code>)</td>
+        </tr>
+      </table>
+      <div class="card" style="margin-top:0.3em; font-size:0.62em">
+        💡 Regra de ouro: o utilizador vê uma mensagem amigável. O programador vê o erro real (no log ou no terminal de desenvolvimento).
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 9 — Debugging no PyCharm ───────────────────────── -->
+    <section>
+      <h2>Debugging no PyCharm</h2>
+      <p class="subtitle">Encontrar erros lógicos com breakpoints</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div class="card" style="font-size:0.65em">
+          <strong>🔴 Breakpoints</strong>
+          Clica na margem esquerda ao lado do número da linha → ponto vermelho.<br>
+          O programa para nessa linha e podes inspecionar as variáveis.
+        </div>
+        <div class="card" style="font-size:0.65em">
+          <strong>⌨️ Atalhos essenciais</strong>
+          <code>F7</code> — Step Into (entra na função)<br>
+          <code>F8</code> — Step Over (próxima linha)<br>
+          <code>F9</code> — Resume (continua até próximo breakpoint)<br>
+          <code>Shift+F9</code> — Correr em modo Debug
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:0.5em">
+        <div class="card" style="font-size:0.65em">
+          <strong>🔍 Variables panel</strong>
+          No painel "Variables" vês o valor de todas as variáveis no momento em que o programa parou. Passa o rato numa variável no editor para ver o valor inline.
+        </div>
+        <div class="card" style="font-size:0.65em">
+          <strong>⚡ Evaluate Expression</strong>
+          <code>Alt+F8</code> — abre uma consola onde podes correr código Python no contexto actual.<br>
+          Ex: testar <code>len(agentes)</code> ou <code>agentes[0]</code> sem alterar o código.
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 10 — Simulador v4.0 ─────────────────────────────── -->
+    <section>
+      <h2>Simulador v4.0 — Arquitetura Robusta</h2>
+      <p class="subtitle">try/except em cada camada — zero crashes</p>
+      <pre style="font-size:0.41em"><code class="language-python" data-trim">import sqlite3, json
+
+DB = "dados/aula11/agentes.db"
+
+def pedir_nivel():
+    """Pede o nível ao utilizador com validação robusta."""
+    while True:
+        try:
+            n = int(input("Nível (1-5): "))
+            if not 1 <= n <= 5:
+                raise ValueError
+            return n
+        except ValueError:
+            print("❌ Introduz um número entre 1 e 5.")
+
+def adicionar(codename, nivel):
+    """Adiciona agente com tratamento de duplicados."""
+    try:
+        with sqlite3.connect(DB) as conn:
+            conn.execute(
+                "INSERT INTO agentes(codename,nivel,ativo) VALUES(?,?,1)",
+                (codename.upper(), nivel))
+        print(f"✅ {codename.upper()} adicionado.")
+    except sqlite3.IntegrityError:
+        print(f"❌ Codename '{codename.upper()}' já existe.")
+
+def main():
+    while True:
+        op = input("\n[1] Adicionar  [0] Sair: ").strip()
+        if op == "0": break
+        if op == "1":
+            cod = input("Codename: ").strip()
+            niv = pedir_nivel()
+            adicionar(cod, niv)</code></pre>
+    </section>
+
+    <!-- ─── SLIDE 11 — Resumo ─────────────────────────────────────── -->
+    <section>
+      <h2>Resumo</h2>
+      <p class="subtitle">O que aprendemos hoje</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>🔴🟡🔵 3 tipos de erros</strong>
+            Sintaxe (antes de correr) · Runtime (try/except) · Lógico (debugging)
+          </div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>try / except / else / finally</strong>
+            Envolver o perigoso · capturar específico · código limpo · fechar sempre
+          </div>
+          <div class="card" style="font-size:0.65em">
+            <strong>raise</strong>
+            Validar dados e comunicar erros com precisão dentro das funções
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>SQLite + try/except</strong>
+            <code>IntegrityError</code> para duplicados · <code>OperationalError</code> para erros de BD
+          </div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>Boas práticas</strong>
+            Nunca silenciar erros · blocos try pequenos · mensagem amigável ao utilizador
+          </div>
+          <div class="card" style="font-size:0.65em">
+            <strong>Debugging no PyCharm</strong>
+            Breakpoints · F7/F8/F9 · Variables panel · Evaluate Expression
+          </div>
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.5em">
+        🎬 Mais sobre exceções: <a href="https://www.youtube.com/watch?v=NIWwJbo-9_8" target="_blank" style="color:var(--teal)">youtube.com — Python Exception Handling</a>
+      </p>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    width: 960,
+    height: 700,
+    plugins: [RevealHighlight]
+  });
+</script>
+</body>
+</html>
