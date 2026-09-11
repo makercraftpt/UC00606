@@ -52,6 +52,7 @@ Cábulas rápidas por tema — **guarda estas páginas nos favoritos**.
 | [Dividir e Juntar Strings](referencias/split.md) | `split`, `rsplit`, `partition`, `join` |
 | [Expressões Regulares (regex)](referencias/regex.md) | Sintaxe completa, padrões prontos, regex noutras linguagens |
 | [Erros e Exceções](referencias/erros.md) | `try`, `except`, `finally`, `raise`, exceções comuns, SQLite, ficheiros |
+| [Ficheiros, Datas e Sistema](referencias/ficheiros_sistema.md) | `open()`, `os.path`, `os.makedirs`, `datetime`, timestamps |
 | 🤖 [Aprender com IA](referencias/aprender_com_ia.md) | O método das 5 fases — ideia, estratégia, tentativa, teste, validação |
 
 ---
