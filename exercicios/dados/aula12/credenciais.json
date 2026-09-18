@@ -1,0 +1,36 @@
+{
+  "agencia": "ETP Sico",
+  "atualizado": "2026-09-14",
+  "agentes": [
+    {
+      "codename": "FALCAO",
+      "nivel": 4,
+      "password_sha256": "e80658dd82da762825f04f1705be106aa556512a3775eb49120d6b48fc8e954a",
+      "ativo": true
+    },
+    {
+      "codename": "LOBO",
+      "nivel": 3,
+      "password_sha256": "ad53813ded21551543725c555bc140ac4ef3f4dc3455db8b4dc11e21c91f46a5",
+      "ativo": true
+    },
+    {
+      "codename": "CORVO",
+      "nivel": 5,
+      "password_sha256": "07584377c16f2db52c405b911caa7ee882b3dc0aba283fcb0d6ff80ef77b812f",
+      "ativo": true
+    },
+    {
+      "codename": "VIPERA",
+      "nivel": 2,
+      "password_sha256": "b16f2b2658e73b88506ef8df93af7fa2be0edde4ef206e71b907f529adce14a9",
+      "ativo": true
+    },
+    {
+      "codename": "AGUIA",
+      "nivel": 4,
+      "password_sha256": "e4f3ab7f0d7e5922dc50d1d8172ec8f2f11ab1a67d995d23300b81992d9f5a0b",
+      "ativo": true
+    }
+  ]
+}

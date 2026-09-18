@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 12 — Missão Final: Revisão Geral · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --teal: #1C7293;
+    --accent: #F4A340;
+    --green: #2ecc71;
+    --red: #e74c3c;
+  }
+  .reveal { background: var(--navy); }
+  .reveal h1, .reveal h2 { color: #fff; text-transform: none; }
+  .reveal h1 { font-size: 1.8em; }
+  .reveal h2 { font-size: 1.2em; border-bottom: 2px solid var(--teal); padding-bottom: 0.2em; margin-bottom: 0.4em; }
+  .reveal p, .reveal li { color: #c8d8e8; font-size: 0.8em; }
+  .subtitle { color: #7FD1D9 !important; font-size: 0.75em !important; margin-top: -0.2em !important; }
+  .footnote { color: #4a6080 !important; font-size: 0.5em !important; }
+  .reveal pre { width: 100%; box-shadow: none; }
+  .reveal code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .reveal .hljs { background: #0d1520; border-radius: 8px; padding: 0.8em; }
+
+  .title-slide { text-align: center; }
+  .title-slide h1 { font-size: 2em; color: #fff; }
+  .title-slide .tagline { color: var(--accent); font-size: 0.85em; margin-top: 0.3em; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; text-align: left; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; text-align: left; }
+
+  .card {
+    background: rgba(28,114,147,0.15);
+    border: 1px solid rgba(28,114,147,0.35);
+    border-radius: 10px;
+    padding: 0.7em 0.9em;
+    font-size: 0.68em;
+    color: #c8d8e8;
+  }
+  .card strong { color: #fff; display: block; margin-bottom: 0.2em; }
+  .card code { color: #7FD1D9; font-size: 0.9em; }
+
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.6em;
+    font-weight: bold;
+    margin: 2px;
+  }
+  .badge-green { background: rgba(46,204,113,0.2); color: var(--green); border: 1px solid rgba(46,204,113,0.4); }
+  .badge-red { background: rgba(231,76,60,0.2); color: var(--red); border: 1px solid rgba(231,76,60,0.4); }
+  .badge-accent { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.4); }
+
+  .table-compare { width: 100%; border-collapse: collapse; font-size: 0.62em; }
+  .table-compare th { background: rgba(28,114,147,0.4); color: #fff; padding: 0.4em 0.6em; text-align: left; }
+  .table-compare td { padding: 0.35em 0.6em; border-bottom: 1px solid rgba(255,255,255,0.07); color: #c8d8e8; }
+  .table-compare tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .ok { color: var(--green); }
+  .warn { color: var(--accent); }
+  .bad { color: var(--red); }
+
+  .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4em; font-size: 0.55em; text-align: center; }
+  .timeline div { background: rgba(28,114,147,0.15); border: 1px solid rgba(28,114,147,0.35); border-radius: 8px; padding: 0.5em 0.3em; color: #c8d8e8; }
+  .timeline div strong { color: var(--accent); display: block; font-size: 1.1em; }
+  .timeline div.done { border-color: rgba(46,204,113,0.4); }
+  .timeline div.now { border-color: rgba(244,163,64,0.6); background: rgba(244,163,64,0.12); }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ─── SLIDE 1 — Título ──────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1>Missão Final</h1>
+      <p class="tagline">Revisão geral · Aulas 7 a 11</p>
+      <p class="subtitle" style="margin-top:0.8em">Aula 12 · UC00606 · Linguagem Estruturada · ETP Sicó · 2025/2026</p>
+      <p class="footnote" style="margin-top:1.2em">Python 3 · PyCharm · 18/09/2026</p>
+    </section>
+
+    <!-- ─── SLIDE 2 — O caminho até aqui ─────────────────────────── -->
+    <section>
+      <h2>O caminho até aqui</h2>
+      <p class="subtitle">Doze aulas, um simulador que foi crescendo</p>
+      <div class="timeline" style="margin-top:0.6em">
+        <div class="done"><strong>1–2</strong>Variáveis<br>input · f-strings</div>
+        <div class="done"><strong>3</strong>Seleção<br>if / elif / else</div>
+        <div class="done"><strong>4</strong>Ciclos<br>while</div>
+        <div class="done"><strong>5</strong>for + listas<br>Funções</div>
+        <div class="done"><strong>6</strong>Avaliação 1<br>Nível Cadete</div>
+        <div class="done"><strong>7</strong>Strings<br>regex</div>
+      </div>
+      <div class="timeline" style="margin-top:0.4em">
+        <div class="done"><strong>8</strong>Ficheiros<br>txt · CSV</div>
+        <div class="done"><strong>9</strong>JSON · dict<br>hashlib</div>
+        <div class="done"><strong>10</strong>SQLite<br>CRUD</div>
+        <div class="done"><strong>11</strong>try/except<br>debugging</div>
+        <div class="now"><strong>12</strong>HOJE<br>Missão Final</div>
+        <div style="border-style:dashed; opacity:0.6"><strong>🎓</strong>Próximas UCs<br>do CET</div>
+      </div>
+      <div class="card" style="margin-top:0.5em; font-size:0.62em">
+        💡 O Simulador passou de <code>v0.1</code> (um print) a <code>v4.0</code> (SQLite + JSON + ficheiros + zero crashes).
+        A missão de hoje é a auditoria que junta tudo isso.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 3 — Aula 7: Strings ────────────────────────────── -->
+    <section>
+      <h2>Aula 7 — Strings</h2>
+      <p class="subtitle">Os métodos que vais usar hoje</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <pre style="font-size:0.42em"><code class="language-python" data-trim>linha = "  FAILED | ip=41.203.7.88  "
+
+linha.strip()          # tira espaços nas pontas
+linha.upper()          # MAIÚSCULAS
+linha.lower()          # minúsculas
+linha.split("|")       # divide numa lista
+"|".join(["a", "b"])   # junta: 'a|b'
+linha.replace("=", ": ")
+"FAILED" in linha      # True/False
+linha.startswith("#")  # ignorar cabeçalhos</code></pre>
+        </div>
+        <div>
+          <pre style="font-size:0.42em"><code class="language-python" data-trim>ip = "192.168.10.27"
+
+ip[0:3]     # '192'
+ip[-2:]     # '27'
+ip[::-1]    # invertido
+
+# f-strings com alinhamento
+print(f"{ip:16} {14:3} falhas")
+# '192.168.10.27     14 falhas'</code></pre>
+          <div class="card" style="font-size:0.6em; margin-top:0.4em">
+            ⚠️ Strings são <strong>imutáveis</strong>: <code>texto.strip()</code> devolve
+            uma nova string — se não guardares o resultado, não aconteceu nada.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 4 — Regex ──────────────────────────────────────── -->
+    <section>
+      <h2>Aula 7 — Regex (<code>import re</code>)</h2>
+      <p class="subtitle">Saber estes cinco símbolos resolve 90% dos casos</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <table class="table-compare">
+            <tr><th>Padrão</th><th>Significa</th></tr>
+            <tr><td><code>\d</code></td><td>um dígito (0-9)</td></tr>
+            <tr><td><code>\w</code></td><td>letra, dígito ou <code>_</code></td></tr>
+            <tr><td><code>\.</code></td><td>um ponto literal</td></tr>
+            <tr><td><code>{1,3}</code></td><td>entre 1 e 3 repetições</td></tr>
+            <tr><td><code>+</code></td><td>uma ou mais</td></tr>
+            <tr><td><code>[^ ]</code></td><td>tudo menos espaço</td></tr>
+          </table>
+        </div>
+        <div>
+          <pre style="font-size:0.4em"><code class="language-python" data-trim>import re
+
+IP    = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
+DATA  = r"\d{4}-\d{2}-\d{2}"
+HORA  = r"\d{2}:\d{2}:\d{2}"
+EMAIL = r"[\w.+-]+@[\w-]+\.[\w.]+"
+
+linha = "2026-09-14 08:26:08 | FAILED | ip=41.203.7.88"
+
+re.findall(IP, linha)   # ['41.203.7.88']  → TODOS
+re.search(IP, linha)    # objeto ou None   → o 1º
+re.search(IP, linha).group()  # '41.203.7.88'</code></pre>
+          <div class="card" style="font-size:0.6em; margin-top:0.3em">
+            💡 <code>findall</code> devolve <strong>lista</strong> (pode estar vazia).
+            <code>search</code> devolve <strong>None</strong> se não encontrar — testa antes de <code>.group()</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 5 — Aula 8: Ficheiros ──────────────────────────── -->
+    <section>
+      <h2>Aula 8 — Ficheiros e CSV</h2>
+      <p class="subtitle">Ler, escrever, acrescentar — sempre com <code>with</code></p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <pre style="font-size:0.4em"><code class="language-python" data-trim># LER linha a linha
+with open("log.txt", "r", encoding="utf-8") as f:
+    for linha in f:
+        print(linha.strip())
+
+# LER tudo para uma lista
+with open("log.txt", "r", encoding="utf-8") as f:
+    linhas = f.readlines()
+
+# ESCREVER (apaga o que existia!)
+with open("out.txt", "w", encoding="utf-8") as f:
+    f.write("texto\n")
+
+# ACRESCENTAR (append — não apaga)
+with open("auditoria.log", "a", encoding="utf-8") as f:
+    f.write("2026-09-18 | OK\n")</code></pre>
+        </div>
+        <div>
+          <pre style="font-size:0.4em"><code class="language-python" data-trim>import csv
+
+# ESCREVER CSV
+with open("suspeitos.csv", "w", newline="",
+          encoding="utf-8") as f:
+    w = csv.writer(f)
+    w.writerow(["ip", "tentativas"])   # 1 linha
+    w.writerows(lista_de_tuplos)       # várias
+
+# LER CSV como dicionários
+with open("suspeitos.csv", newline="",
+          encoding="utf-8") as f:
+    for linha in csv.DictReader(f):
+        print(linha["ip"], linha["tentativas"])</code></pre>
+          <div class="card" style="font-size:0.58em; margin-top:0.3em">
+            ⚠️ <code>"w"</code> apaga o ficheiro todo · <code>"a"</code> acrescenta ao fim ·
+            <code>newline=""</code> no CSV evita linhas em branco no Windows ·
+            valores lidos do CSV são <strong>sempre texto</strong> → <code>int(...)</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 6 — Aula 9: dict, JSON, hashlib ────────────────── -->
+    <section>
+      <h2>Aula 9 — dict, JSON e hashlib</h2>
+      <p class="subtitle">Contar, guardar estruturado e nunca guardar passwords</p>
+      <div class="three-col" style="margin-top:0.3em">
+        <div>
+          <p style="font-size:0.6em; color:#7FD1D9">Contar com dict</p>
+          <pre style="font-size:0.38em"><code class="language-python" data-trim>contagem = {}
+for ip in ips:
+    contagem[ip] = \
+        contagem.get(ip, 0) + 1
+
+# ordenar por valor desc
+pares = sorted(
+    contagem.items(),
+    key=lambda p: p[1],
+    reverse=True)</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.6em; color:#7FD1D9">JSON</p>
+          <pre style="font-size:0.38em"><code class="language-python" data-trim>import json
+
+# ler
+with open("d.json", "r",
+          encoding="utf-8") as f:
+    dados = json.load(f)
+
+# escrever
+with open("d.json", "w",
+          encoding="utf-8") as f:
+    json.dump(dados, f, indent=2,
+              ensure_ascii=False)</code></pre>
+        </div>
+        <div>
+          <p style="font-size:0.6em; color:#7FD1D9">hashlib</p>
+          <pre style="font-size:0.38em"><code class="language-python" data-trim>import hashlib
+
+h = hashlib.sha256(
+    pwd.encode()).hexdigest()
+
+# verificar:
+if h == guardado:
+    print("OK")</code></pre>
+          <div class="card" style="font-size:0.55em; margin-top:0.3em">
+            O hash é de <strong>sentido único</strong>: comparam-se hashes, nunca passwords.
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.4em; font-size:0.6em">
+        💡 <strong>Big-O na prática:</strong> procurar numa <code>list</code> é O(n) — percorre tudo.
+        Procurar num <code>dict</code> ou <code>set</code> é O(1) — vai direto. Com 10 000 IPs, isso é a diferença
+        entre esperar e não esperar.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 7 — Aula 10: SQLite ────────────────────────────── -->
+    <section>
+      <h2>Aula 10 — SQLite</h2>
+      <p class="subtitle">CRUD completo e parâmetros seguros</p>
+      <pre style="font-size:0.42em"><code class="language-python" data-trim>import sqlite3
+
+with sqlite3.connect("incidentes.db") as conn:
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS incidentes (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            ip         TEXT    NOT NULL UNIQUE,
+            tentativas INTEGER NOT NULL,
+            registado  TEXT    NOT NULL
+        )
+    """)
+    conn.execute("INSERT INTO incidentes (ip, tentativas, registado) VALUES (?, ?, ?)",
+                 (ip, n, agora))                       # ← parâmetros seguros
+
+    conn.row_factory = sqlite3.Row                     # resultados como dicionários
+    linhas = conn.execute(
+        "SELECT * FROM incidentes WHERE ip LIKE ? ORDER BY tentativas DESC",
+        (f"%{termo}%",)).fetchall()
+    for l in linhas:
+        print(l["ip"], l["tentativas"])</code></pre>
+      <div class="two-col" style="margin-top:0.25em">
+        <div class="card" style="font-size:0.6em; border-color:rgba(231,76,60,0.35)">
+          <strong style="color:var(--red)">❌ SQL Injection</strong>
+          <code>f"... WHERE ip = '{ip}'"</code><br>
+          Um input com <code>' OR 1=1 --</code> abre a base de dados toda.
+        </div>
+        <div class="card" style="font-size:0.6em; border-color:rgba(46,204,113,0.35)">
+          <strong style="color:var(--green)">✅ Parâmetros</strong>
+          <code>"... WHERE ip = ?", (ip,)</code><br>
+          Atenção à vírgula: <code>(ip,)</code> é um tuplo, <code>(ip)</code> não é.
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 8 — Aula 11: try/except ────────────────────────── -->
+    <section>
+      <h2>Aula 11 — try / except / finally</h2>
+      <p class="subtitle">Zero crashes é um critério de avaliação, não um extra</p>
+      <div class="two-col" style="margin-top:0.3em">
+        <div>
+          <pre style="font-size:0.4em"><code class="language-python" data-trim>def pedir_inteiro(msg, minimo=1, maximo=5):
+    """Insiste até receber um número válido."""
+    while True:
+        try:
+            v = int(input(msg))
+            if not minimo <= v <= maximo:
+                raise ValueError
+            return v
+        except ValueError:
+            print(f"Introduz {minimo}-{maximo}.")</code></pre>
+        </div>
+        <div>
+          <table class="table-compare">
+            <tr><th>Situação</th><th>Exceção</th></tr>
+            <tr><td>Ficheiro não existe</td><td><code>FileNotFoundError</code></td></tr>
+            <tr><td>JSON corrompido</td><td><code>json.JSONDecodeError</code></td></tr>
+            <tr><td><code>int("abc")</code></td><td><code>ValueError</code></td></tr>
+            <tr><td>Chave em falta</td><td><code>KeyError</code></td></tr>
+            <tr><td>IP duplicado (UNIQUE)</td><td><code>sqlite3.IntegrityError</code></td></tr>
+            <tr><td>Tabela não existe</td><td><code>sqlite3.OperationalError</code></td></tr>
+            <tr><td>Sem permissão / disco</td><td><code>PermissionError</code> · <code>OSError</code></td></tr>
+            <tr><td><kbd>Ctrl+C</kbd> no menu</td><td><code>KeyboardInterrupt</code></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0.35em; font-size:0.6em">
+        ❌ <code>except:</code> e <code>except Exception: pass</code> escondem bugs —
+        ✅ captura a exceção específica e dá sempre feedback ao utilizador.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 9 — Erros que custam pontos ────────────────────── -->
+    <section>
+      <h2>Os erros que mais custam pontos</h2>
+      <p class="subtitle">Todos estes já apareceram nas vossas entregas</p>
+      <table class="table-compare" style="margin-top:0.3em">
+        <tr><th>❌ O erro</th><th>✅ A correção</th></tr>
+        <tr><td>Esquecer <code>\.</code> no regex do IP — <code>\d.\d.\d.\d</code> aceita qualquer caracter</td><td><code>r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"</code></td></tr>
+        <tr><td>Abrir o ficheiro em <code>"w"</code> quando se queria acrescentar</td><td><code>"a"</code> para logs e auditoria</td></tr>
+        <tr><td>Comparar texto do CSV com número: <code>"14" &gt; 5</code></td><td><code>int(linha["tentativas"]) &gt; 5</code></td></tr>
+        <tr><td><code>contagem[ip] += 1</code> numa chave que ainda não existe</td><td><code>contagem.get(ip, 0) + 1</code></td></tr>
+        <tr><td>SQL com f-string</td><td>Parâmetros <code>?</code> e tuplo <code>(valor,)</code></td></tr>
+        <tr><td>Guardar a password em claro no JSON</td><td>Guardar só <code>sha256(...).hexdigest()</code></td></tr>
+        <tr><td><code>except:</code> vazio que engole tudo</td><td>Exceção específica + <code>print</code> da mensagem</td></tr>
+        <tr><td>Ficheiro sem cabeçalho de identificação</td><td>Docstring no topo: ficheiro, UC, aula, autor, data</td></tr>
+      </table>
+    </section>
+
+    <!-- ─── SLIDE 10 — Qual ferramenta para qual problema ────────── -->
+    <section>
+      <h2>Qual ferramenta para qual problema?</h2>
+      <p class="subtitle">A pergunta que deves fazer antes de escrever código</p>
+      <table class="table-compare" style="margin-top:0.4em">
+        <tr><th>Preciso de…</th><th>Uso</th><th>Aula</th></tr>
+        <tr><td>encontrar um padrão dentro de texto</td><td><code>re.findall()</code> / <code>re.search()</code></td><td>7</td></tr>
+        <tr><td>separar campos com um separador fixo</td><td><code>split("|")</code> — mais simples que regex</td><td>7</td></tr>
+        <tr><td>guardar linhas de texto ou um relatório</td><td><code>open(...)</code> + <code>write()</code></td><td>8</td></tr>
+        <tr><td>guardar uma tabela para Excel</td><td><code>csv.writer</code> / <code>csv.DictReader</code></td><td>8</td></tr>
+        <tr><td>guardar estrutura com listas e dicionários</td><td><code>json.dump()</code> / <code>json.load()</code></td><td>9</td></tr>
+        <tr><td>contar ocorrências</td><td><code>dict</code> com <code>.get(k, 0) + 1</code></td><td>9</td></tr>
+        <tr><td>verificar uma password</td><td><code>hashlib.sha256</code> — comparar hashes</td><td>9</td></tr>
+        <tr><td>pesquisar, filtrar e ordenar muitos registos</td><td><code>sqlite3</code> + <code>SELECT ... ORDER BY</code></td><td>10</td></tr>
+        <tr><td>garantir que o programa não morre</td><td><code>try / except</code> específico</td><td>11</td></tr>
+      </table>
+    </section>
+
+    <!-- ─── SLIDE 11 — Como funciona hoje ────────────────────────── -->
+    <section>
+      <h2>Como funciona hoje</h2>
+      <p class="subtitle">Operação Sicó · remoto e assíncrono</p>
+      <div class="three-col" style="margin-top:0.5em">
+        <div class="card" style="font-size:0.65em">
+          <strong>1. Quiz de aquecimento</strong>
+          15 perguntas · ~20 min<br>
+          Feedback imediato a cada resposta.<br>
+          <span class="badge badge-accent">vale 10%</span>
+        </div>
+        <div class="card" style="font-size:0.65em">
+          <strong>2. Missão Final</strong>
+          3 desafios progressivos · 120 min a contar de quando abres o link.<br>
+          <span class="badge badge-accent">vale 90%</span>
+        </div>
+        <div class="card" style="font-size:0.65em">
+          <strong>3. Entrega</strong>
+          <code>ex1_*.py</code> · <code>ex2_*.py</code> · <code>ex3_*.py</code><br>
+          Quem entrega, fica livre.
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:0.6em">
+        <div class="card" style="font-size:0.63em; border-color:rgba(46,204,113,0.35)">
+          <strong style="color:var(--green)">✅ Consulta permitida</strong>
+          Documentação oficial · as tuas fichas · o repositório da UC · os teus exercícios antigos · PyCharm
+        </div>
+        <div class="card" style="font-size:0.63em; border-color:rgba(231,76,60,0.35)">
+          <strong style="color:var(--red)">❌ Não permitido</strong>
+          Falar com colegas · entregar código que não consegues explicar.
+          Depois da entrega há verificação oral por amostragem.
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 12 — Os 3 desafios ─────────────────────────────── -->
+    <section>
+      <h2>Os 3 desafios</h2>
+      <p class="subtitle">Encadeados pela história, pontuados em separado</p>
+      <table class="table-compare" style="margin-top:0.4em">
+        <tr><th></th><th>Desafio</th><th>O que treina</th><th>Tempo</th><th>Pontos</th></tr>
+        <tr>
+          <td class="ok">★</td>
+          <td><strong>Triagem de Logs</strong><br><span style="font-size:0.9em; color:#9fb3c8">esqueleto quase completo</span></td>
+          <td>regex · ficheiros · dict · CSV</td>
+          <td>35 min</td><td>30</td>
+        </tr>
+        <tr>
+          <td class="warn">★★</td>
+          <td><strong>Cofre de Credenciais</strong><br><span style="font-size:0.9em; color:#9fb3c8">funções definidas, lógica por fazer</span></td>
+          <td>JSON · hashlib · try/except · append</td>
+          <td>45 min</td><td>40 <span style="color:var(--accent)">(+5)</span></td>
+        </tr>
+        <tr>
+          <td class="bad">★★★</td>
+          <td><strong>Base de Dados de Incidentes</strong><br><span style="font-size:0.9em; color:#9fb3c8">só enunciado, sem esqueleto</span></td>
+          <td>SQLite · parâmetros seguros · menu robusto</td>
+          <td>40 min</td><td>30</td>
+        </tr>
+      </table>
+      <div class="card" style="margin-top:0.4em; font-size:0.63em">
+        💡 Mesmo que não chegues ao ★★★, o que fizeres conta. Fazer o ★ bem feito já vale
+        30 dos 100 pontos — e o bónus do ★★ pode compensar o que faltar.
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 13 — Antes de começar ──────────────────────────── -->
+    <section>
+      <h2>Antes de começares a escrever código</h2>
+      <p class="subtitle">Cinco minutos aqui poupam trinta depois</p>
+      <div class="two-col" style="margin-top:0.4em">
+        <div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>1. Lê o enunciado até ao fim</strong>
+            Inclui o output esperado e a tabela de cotação — está lá escrito o que dá pontos.
+          </div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>2. Confirma os dados</strong>
+            Abre o <code>logs_servidor.txt</code> e olha para uma linha. Qual é o separador? Onde está o IP?
+          </div>
+          <div class="card" style="font-size:0.65em">
+            <strong>3. Escreve primeiro o esqueleto</strong>
+            Funções com <code>pass</code> e a ordem do <code>main()</code>. Só depois preenches.
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>4. Testa a cada passo</strong>
+            Corre depois de cada função — não escrevas 80 linhas antes do primeiro <code>Run</code>.
+          </div>
+          <div class="card" style="margin-bottom:0.4em; font-size:0.65em">
+            <strong>5. Tenta partir o teu programa</strong>
+            Escreve "abc" onde se pede um número. Apaga o ficheiro de dados. Faz <kbd>Ctrl+C</kbd>.
+          </div>
+          <div class="card" style="font-size:0.65em; border-color:rgba(244,163,64,0.4)">
+            <strong style="color:var(--accent)">6. Entrega o que tens</strong>
+            Código incompleto que corre vale mais do que código completo que não arranca.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SLIDE 14 — Final ─────────────────────────────────────── -->
+    <section class="title-slide">
+      <h1>Boa missão, agentes 🛡️</h1>
+      <p class="tagline">Operação Sicó · 120 minutos</p>
+      <p class="subtitle" style="margin-top:0.8em">
+        Doze aulas, do primeiro <code>print()</code> a uma base de dados com auditoria.
+      </p>
+      <p class="footnote" style="margin-top:1em">
+        Cábulas por tema: <a href="https://makercraft.pt/UC00606/" target="_blank" style="color:var(--teal)">makercraft.pt/UC00606</a>
+      </p>
+    </section>
+
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    width: 960,
+    height: 700,
+    plugins: [RevealHighlight]
+  });
+</script>
+</body>
+</html>

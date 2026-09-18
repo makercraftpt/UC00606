@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missão Final — Operação Sicó · UC00606</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root {
+    --navy: #0B1F3A; --teal: #1C7293; --accent: #F4A340;
+    --green: #27ae60; --orange: #e67e22; --red: #c0392b;
+    --bg: #10192a; --surface: #162032; --text: #e2e8f0;
+    --code-bg: #1e2a38; --border: rgba(28,114,147,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; line-height: 1.6; max-width: 1100px; margin: 0 auto; }
+  header { border-bottom: 2px solid var(--teal); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  header h1 { color: #fff; font-size: 1.7rem; }
+  header p { color: #7FD1D9; font-size: 0.9rem; margin-top: 0.2rem; }
+  .ex { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+  .ex-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .star-1 { color: var(--green); font-size: 1.3rem; }
+  .star-2 { color: var(--orange); font-size: 1.3rem; }
+  .star-3 { color: var(--red); font-size: 1.3rem; }
+  .ex-num { font-size: 0.75rem; color: #9fb3c8; }
+  .ex h2 { color: #fff; font-size: 1.15rem; }
+  .pts { margin-left: auto; font-size: 0.8rem; color: var(--accent); font-weight: bold; white-space: nowrap; }
+  .ex p, .ex li { margin: 0.5rem 0; font-size: 0.92rem; }
+  pre { background: var(--code-bg); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; overflow-x: auto; font-size: 0.82rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; }
+  .tag { display: inline-block; border-radius: 5px; padding: 1px 8px; font-size: 0.72rem; margin: 2px; }
+  .tag-blue { background: rgba(28,114,147,0.3); color: #7FD1D9; border: 1px solid rgba(28,114,147,0.4); }
+  .tag-orange { background: rgba(244,163,64,0.2); color: var(--accent); border: 1px solid rgba(244,163,64,0.3); }
+  .tip { background: rgba(28,114,147,0.1); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.85rem; }
+  .warn { background: rgba(244,163,64,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.85rem; }
+  .danger { background: rgba(192,57,43,0.12); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.85rem; }
+  ol, ul { margin: 0.5rem 0 0.5rem 1.5rem; font-size: 0.92rem; }
+  ol li { line-height: 1.9; }
+  table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.86rem; }
+  th { text-align: left; padding: 0.5rem 0.8rem; color: #7FD1D9; border-bottom: 2px solid var(--teal); }
+  td { padding: 0.45rem 0.8rem; border-bottom: 1px solid var(--border); }
+  .regras { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 760px) { .regras { grid-template-columns: 1fr; } body { padding: 1rem; } }
+  .box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; }
+  .box strong { color: #fff; display: block; margin-bottom: 0.3rem; }
+  .big { font-size: 1.05rem; color: var(--accent); font-weight: bold; }
+  footer { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; color: #4a6080; font-size: 0.8rem; }
+  a { color: #7FD1D9; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛡️ Missão Final — Operação Sicó</h1>
+  <p>UC00606 · Linguagem Estruturada · Aula 12 · Avaliação 2 · ETP Sicó · 18/09/2026</p>
+</header>
+
+<div class="ex">
+  <div class="ex-header">
+    <span style="font-size:1.3rem">📡</span>
+    <h2>Briefing</h2>
+  </div>
+  <p>
+    O servidor <code>SICO-SRV01</code> passou a noite sob ataque. A direção da agência pediu uma auditoria
+    completa e tu és o analista de serviço. Tens três tarefas encadeadas: <strong>triar os logs</strong>,
+    <strong>validar o cofre de credenciais</strong> e <strong>montar a base de dados de incidentes</strong>.
+  </p>
+  <p>
+    Cada desafio usa o resultado do anterior — mas <strong>todos são pontuados em separado</strong>.
+    Se não terminares um, avança para o seguinte: o que fizeres conta sempre.
+  </p>
+
+  <div class="warn">
+    ⏱️ <strong>Tens 120 minutos</strong> a partir do momento em que abres esta página.
+    Sugestão de gestão de tempo: 35 min + 45 min + 40 min.
+  </div>
+
+  <div class="regras" style="margin-top:1rem">
+    <div class="box">
+      <strong>✅ Podes usar</strong>
+      Documentação oficial do Python · as tuas fichas e o repositório da UC ·
+      o teu PyCharm · os exercícios que já fizeste
+    </div>
+    <div class="box" style="border-color:rgba(192,57,43,0.4)">
+      <strong style="color:var(--red)">❌ Não podes</strong>
+      Falar com colegas · copiar código que não consegues explicar ·
+      entregar código gerado por IA sem o compreender
+    </div>
+  </div>
+
+  <div class="danger" style="margin-top:1rem">
+    🎙️ <strong>Verificação oral:</strong> depois da entrega, alguns agentes serão chamados
+    para explicar 2 ou 3 linhas do próprio código em chamada rápida. Se não conseguires
+    explicar o que escreveste, essa parte não conta.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MATERIAL
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span style="font-size:1.3rem">📦</span>
+    <h2>Material de partida</h2>
+  </div>
+  <p>Cria uma pasta <code>MissaoFinal/</code> no PyCharm e coloca lá dentro uma subpasta <code>dados/</code> com:</p>
+  <table>
+    <tr><th>Ficheiro</th><th>O que é</th><th>Usado no</th></tr>
+    <tr><td><code>dados/logs_servidor.txt</code></td><td>Registo de acessos do servidor (INFO / WARN / FAILED)</td><td>Desafio 1</td></tr>
+    <tr><td><code>dados/credenciais.json</code></td><td>Agentes com <code>nivel</code> e <code>password_sha256</code></td><td>Desafio 2</td></tr>
+  </table>
+  <div class="tip">
+    💡 Os nomes dos ficheiros que <strong>entregas</strong> têm de começar por <code>ex1</code>, <code>ex2</code> e <code>ex3</code>
+    (ex.: <code>ex1_triagem.py</code>). Todos com o cabeçalho de identificação no topo — nome, data e descrição.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DESAFIO 1 — ★
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-1">★</span><span class="star-1">☆☆</span>
+    <span class="ex-num">Desafio 1</span>
+    <h2>Triagem de Logs</h2>
+    <span class="pts">30 pts · ~35 min</span>
+  </div>
+
+  <p>
+    Lê <code>dados/logs_servidor.txt</code>, encontra os IPs que falharam autenticação
+    (linhas <code>FAILED</code>), conta quantas vezes cada um falhou e grava os
+    <strong>suspeitos</strong> (5 ou mais tentativas) num CSV.
+  </p>
+
+  <p><strong>Aulas em jogo:</strong>
+    <span class="tag tag-blue">Aula 7 — regex</span>
+    <span class="tag tag-blue">Aula 8 — ficheiros e CSV</span>
+    <span class="tag tag-blue">Aula 9 — dict</span>
+  </p>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex1_triagem.py
+UC        : UC00606
+Aula      : 12 — Missão Final
+Autor     :
+Data      : 18/09/2026
+Descrição : Triagem dos logs do SICO-SRV01 — IPs com autenticações falhadas.
+Como usar : python ex1_triagem.py
+"""
+import csv
+import re
+
+FICHEIRO_LOG = "dados/logs_servidor.txt"
+FICHEIRO_CSV = "suspeitos.csv"
+LIMITE = 5
+
+PADRAO_IP = r"___"                 # ← (1) padrão regex de um endereço IPv4
+
+
+def ler_linhas(caminho):
+    """Devolve a lista de linhas do ficheiro (lista vazia se não existir)."""
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            return f.___()             # ← (2) método que devolve TODAS as linhas
+    except ___:                        # ← (3) que exceção se o ficheiro não existe?
+        print(f"[ERRO] Ficheiro '{caminho}' não encontrado.")
+        return []
+
+
+def contar_falhas(linhas):
+    """Conta tentativas FAILED por IP. Devolve dict {ip: nº de falhas}."""
+    contagem = {}
+    for linha in linhas:
+        if linha.startswith("#"):      # ignora o cabeçalho do ficheiro
+            continue
+        if "___" not in linha:         # ← (4) só as linhas de falha interessam
+            continue
+        ips = re.___(PADRAO_IP, linha) # ← (5) queres TODOS os IPs da linha
+        if not ips:
+            continue
+        ip = ips[0]
+        contagem[ip] = contagem.___(ip, 0) + 1   # ← (6) somar sem dar KeyError
+    return contagem
+
+
+def gravar_csv(suspeitos, caminho):
+    """Grava [(ip, tentativas), ...] em CSV, com cabeçalho."""
+    with open(caminho, "w", newline="", encoding="utf-8") as f:
+        escritor = csv.writer(f)
+        escritor.writerow(["ip", "tentativas"])
+        escritor.___(suspeitos)        # ← (7) escrever várias linhas de uma vez
+
+
+def main():
+    linhas = ler_linhas(FICHEIRO_LOG)
+    if not linhas:
+        return
+
+    contagem  = contar_falhas(linhas)
+    suspeitos = [(ip, n) for ip, n in contagem.items() if n ___ LIMITE]  # ← (8) 5 ou mais
+    suspeitos.sort(key=lambda par: par[1], reverse=True)
+
+    print("=== TRIAGEM DE LOGS — SICO-SRV01 ===")
+    print(f"Linhas analisadas : {len(linhas)}")
+    print(f"IPs com falhas    : {len(contagem)}")
+    print(f"IPs suspeitos     : {len(suspeitos)} (>= {LIMITE} tentativas)\n")
+
+    for ip, n in suspeitos:
+        print(f"  {ip:16} {n:3} tentativas falhadas")
+
+    gravar_csv(suspeitos, FICHEIRO_CSV)
+    print(f"\nFicheiro '{FICHEIRO_CSV}' gravado com {len(suspeitos)} registos.")
+
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    💡 <strong>Pistas:</strong><br>
+    • Um IPv4 são quatro grupos de 1 a 3 dígitos separados por pontos — atenção que o ponto,
+      em regex, precisa de <code>\.</code><br>
+    • <code>dicionario.get(chave, 0)</code> devolve 0 quando a chave ainda não existe.<br>
+    • O <code>LIMITE = 5</code> significa <em>5 ou mais</em>, não <em>mais de 5</em>.
+  </div>
+
+  <p><strong>Output esperado:</strong></p>
+  <pre><code>=== TRIAGEM DE LOGS — SICO-SRV01 ===
+Linhas analisadas : 95
+IPs com falhas    : 8
+IPs suspeitos     : 5 (>= 5 tentativas)
+
+  41.203.7.88       14 tentativas falhadas
+  185.242.66.9       9 tentativas falhadas
+  103.77.12.104      7 tentativas falhadas
+  45.155.205.233     6 tentativas falhadas
+  78.153.140.17      5 tentativas falhadas
+
+Ficheiro 'suspeitos.csv' gravado com 5 registos.</code></pre>
+
+  <table>
+    <tr><th>Cotação</th><th>Pts</th></tr>
+    <tr><td>Ficheiro lido com <code>with open(...)</code> e <code>try/except</code></td><td>6</td></tr>
+    <tr><td>Padrão regex de IP correto e <code>re.findall()</code> bem usado</td><td>8</td></tr>
+    <tr><td>Contagem por IP com dicionário</td><td>8</td></tr>
+    <tr><td>Filtro <code>&gt;= 5</code> e ordenação decrescente</td><td>4</td></tr>
+    <tr><td><code>suspeitos.csv</code> gerado com cabeçalho</td><td>4</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DESAFIO 2 — ★★
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-2">★★</span><span class="star-2">☆</span>
+    <span class="ex-num">Desafio 2</span>
+    <h2>Cofre de Credenciais</h2>
+    <span class="pts">40 pts (+5 bónus) · ~45 min</span>
+  </div>
+
+  <p>
+    O cofre guarda apenas o <strong>SHA-256</strong> de cada password — nunca a password.
+    Implementa o acesso ao cofre: pede o codename, pede a password, compara hashes,
+    bloqueia após 3 falhas e <strong>registra tudo</strong> em <code>auditoria.log</code>.
+  </p>
+
+  <p><strong>Aulas em jogo:</strong>
+    <span class="tag tag-blue">Aula 9 — JSON + hashlib</span>
+    <span class="tag tag-blue">Aula 8 — escrita em ficheiro</span>
+    <span class="tag tag-blue">Aula 11 — try/except</span>
+  </p>
+
+  <pre><code class="language-python">"""
+Ficheiro  : ex2_cofre.py
+UC        : UC00606
+Aula      : 12 — Missão Final
+Autor     :
+Data      : 18/09/2026
+Descrição : Cofre de credenciais — validação por SHA-256 com auditoria.
+Como usar : python ex2_cofre.py
+"""
+import hashlib
+import json
+import re
+from datetime import datetime
+
+FICHEIRO_JSON = "dados/credenciais.json"
+FICHEIRO_AUDITORIA = "auditoria.log"
+MAX_TENTATIVAS = 3
+
+
+def carregar_agentes(caminho):
+    """Lê o JSON e devolve a lista de agentes. Lista vazia em caso de erro.
+    TODO: try/except para — ficheiro inexistente, JSON corrompido e
+          chave 'agentes' ausente. Mensagem amigável em cada caso."""
+    pass
+
+
+def registar(mensagem):
+    """Acrescenta uma linha com data/hora ao auditoria.log.
+    TODO: modo de abertura "a" (append), timestamp com datetime.now(),
+          formato:  2026-09-18 10:42:01 | OK | FALCAO | tentativa 1"""
+    pass
+
+
+def procurar_agente(agentes, codename):
+    """Devolve o dicionário do agente ou None se não existir.
+    TODO: percorrer a lista e comparar codenames em maiúsculas."""
+    pass
+
+
+def verificar_password(agente, password):
+    """True se o SHA-256 da password coincidir com o hash guardado.
+    TODO: hashlib.sha256(password.encode()).hexdigest()"""
+    pass
+
+
+def forca_password(password):
+    """BÓNUS (+5): devolve "FRACA", "MEDIA" ou "FORTE".
+    TODO: 1 ponto por cada critério cumprido —
+          >= 12 caracteres · maiúscula · minúscula · dígito · símbolo
+          0-2 = FRACA · 3-4 = MEDIA · 5 = FORTE   (usa regex)"""
+    pass
+
+
+def main():
+    agentes = carregar_agentes(FICHEIRO_JSON)
+    if not agentes:
+        return
+
+    print("=== COFRE DE CREDENCIAIS — ETP SICÓ ===")
+    codename = input("Codename: ").strip().upper()
+    agente = procurar_agente(agentes, codename)
+
+    # TODO: se o agente não existir → "Acesso negado." (NÃO reveles que o
+    #       codename não existe), registar a tentativa e terminar.
+
+    # TODO: ciclo de até MAX_TENTATIVAS —
+    #       password certa  → autorizado, mostra codename e nível, registar OK
+    #       password errada → mostra tentativas restantes, registar FALHA
+    #       3 falhas        → "Conta bloqueada", registar BLOQUEIO
+
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+  <div class="tip">
+    🔑 <strong>Credencial de teste:</strong> codename <code>FALCAO</code>, password
+    <code>Sico_Falcao!2026</code>. Usa-a para confirmar que a verificação funciona —
+    as passwords dos outros agentes não te são dadas (e não precisas delas:
+    no cofre só existem os <em>hashes</em>).
+  </div>
+
+  <div class="warn">
+    ⚠️ <strong>Obrigatório tratar:</strong> ficheiro JSON ausente · JSON corrompido ·
+    codename inexistente · password errada. O programa <strong>não pode crashar</strong> em nenhum destes casos.
+  </div>
+
+  <p><strong>Output esperado (exemplo):</strong></p>
+  <pre><code>=== COFRE DE CREDENCIAIS — ETP SICÓ ===
+Codename: falcao
+Password: xxx
+Password incorreta. Tentativas restantes: 2
+Password: Sico_Falcao!2026
+
+Acesso autorizado. Bem-vindo, FALCAO (nível 4).
+Força da password: FORTE
+
+--- auditoria.log ---
+2026-09-18 10:41:55 | FALHA | FALCAO | tentativa 1
+2026-09-18 10:42:11 | OK | FALCAO | tentativa 2</code></pre>
+
+  <table>
+    <tr><th>Cotação</th><th>Pts</th></tr>
+    <tr><td>JSON carregado com <code>try/except</code> (ausente + corrompido)</td><td>8</td></tr>
+    <tr><td>Hash SHA-256 calculado e comparado corretamente</td><td>8</td></tr>
+    <tr><td>Ciclo de 3 tentativas com contador e bloqueio</td><td>10</td></tr>
+    <tr><td><code>auditoria.log</code> em modo append com data/hora</td><td>8</td></tr>
+    <tr><td>Mensagens amigáveis (sem <em>stack traces</em>, sem revelar codenames)</td><td>6</td></tr>
+    <tr><td><strong>Bónus:</strong> <code>forca_password()</code> com regex</td><td>+5</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DESAFIO 3 — ★★★
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span class="star-3">★★★</span>
+    <span class="ex-num">Desafio 3</span>
+    <h2>Base de Dados de Incidentes</h2>
+    <span class="pts">30 pts · ~40 min</span>
+  </div>
+
+  <p>
+    Sem esqueleto. Só o enunciado — como no mundo real.
+    Constrói <code>ex3_incidentes.py</code>: uma base de dados SQLite que recebe os suspeitos
+    do Desafio 1 e permite consultá-los sem nunca crashar.
+  </p>
+
+  <p><strong>Aulas em jogo:</strong>
+    <span class="tag tag-blue">Aula 10 — SQLite</span>
+    <span class="tag tag-blue">Aula 11 — try/except</span>
+    <span class="tag tag-blue">Aula 8 — CSV e ficheiros</span>
+    <span class="tag tag-blue">Aula 5 — funções</span>
+  </p>
+
+  <ol>
+    <li>Criar <code>incidentes.db</code> com a tabela <code>incidentes</code>:
+      <code>id</code> (chave primária autoincremento), <code>ip</code> (texto, <strong>UNIQUE</strong>),
+      <code>tentativas</code> (inteiro), <code>registado</code> (data/hora)</li>
+    <li>Importar o <code>suspeitos.csv</code> do Desafio 1 — duplicados são ignorados
+      com <code>sqlite3.IntegrityError</code>, não com um crash</li>
+    <li>Menu: <code>[1] Listar</code> · <code>[2] Pesquisar IP</code> · <code>[3] Adicionar</code> ·
+      <code>[4] Exportar relatório</code> · <code>[0] Sair</code></li>
+    <li>Todas as consultas com <strong>parâmetros seguros</strong> (<code>?</code>) — nunca com f-strings dentro do SQL</li>
+    <li>Listagem ordenada por <code>tentativas DESC</code>, usando <code>conn.row_factory = sqlite3.Row</code></li>
+    <li><strong>Exportar</strong> gera <code>relatorio_incidentes.txt</code> com data/hora, nº de IPs,
+      total de tentativas e a lista completa</li>
+    <li><strong>Zero crashes:</strong> CSV ausente, tabela inexistente, IP duplicado,
+      número inválido em "tentativas", <kbd>Ctrl+C</kbd> — tudo tratado</li>
+  </ol>
+
+  <div class="danger">
+    🧨 <strong>Critério de qualidade:</strong> vou tentar partir o teu programa.
+    Testa-o primeiro tu — apaga o CSV, escreve "abc" onde se pede um número,
+    insere o mesmo IP duas vezes, faz <kbd>Ctrl+C</kbd> no menu.
+  </div>
+
+  <div class="tip">
+    💡 <strong>Estrutura sugerida:</strong>
+    <code>inicializar_db()</code> · <code>importar_csv()</code> · <code>listar()</code> ·
+    <code>pesquisar()</code> · <code>adicionar()</code> · <code>pedir_inteiro()</code> ·
+    <code>exportar()</code> · <code>main()</code>
+  </div>
+
+  <table>
+    <tr><th>Cotação</th><th>Pts</th></tr>
+    <tr><td>Tabela criada com <code>UNIQUE</code> no IP</td><td>5</td></tr>
+    <tr><td>Importação do CSV com tratamento de duplicados</td><td>6</td></tr>
+    <tr><td>Consultas com parâmetros <code>?</code> (sem SQL injection)</td><td>5</td></tr>
+    <tr><td>Menu completo e funcional</td><td>6</td></tr>
+    <tr><td><code>try/except</code> em todas as operações de BD</td><td>4</td></tr>
+    <tr><td><code>relatorio_incidentes.txt</code> gerado</td><td>4</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ENTREGA
+════════════════════════════════════════════════════════════════ -->
+<div class="ex">
+  <div class="ex-header">
+    <span style="font-size:1.3rem">📤</span>
+    <h2>Entrega e avaliação</h2>
+  </div>
+
+  <p class="big">120 minutos a contar da abertura desta página.</p>
+
+  <p><strong>O que entregas:</strong> os ficheiros <code>ex1_*.py</code>, <code>ex2_*.py</code> e
+  <code>ex3_*.py</code> (os que conseguires), cada um com o cabeçalho de identificação preenchido.
+  Não envies a base de dados nem os ficheiros gerados — só o código.</p>
+
+  <p><strong>Como entregas:</strong> por <strong>Microsoft Teams</strong> — mensagem no canal da UC dirigida ao professor, com os ficheiros <code>.py</code> em anexo. Assunto/primeira linha: <em>Missão Final — o teu nome</em>.</p>
+
+  <table>
+    <tr><th>Componente</th><th>Peso</th></tr>
+    <tr><td>Quiz de aquecimento (15 perguntas)</td><td>10 %</td></tr>
+    <tr><td>Missão Final — 3 desafios (100 pts + 5 bónus)</td><td>90 %</td></tr>
+  </table>
+
+  <div class="tip">
+    ✅ <strong>Nota final</strong> = 0,9 × (pontos da missão / 100) + 0,1 × (acertos do quiz / 15).
+    O bónus do Desafio 2 pode levar a missão acima de 100 pts — serve para compensar pontos perdidos noutro desafio.
+  </div>
+
+  <div class="warn">
+    🏁 Quem entregar antes do fim dos 120 minutos fica livre para seguir o dia —
+    não há nada a esperar por mais ninguém.
+  </div>
+
+  <p style="margin-top:1rem">Boa missão, agentes. 🛡️</p>
+</div>
+
+<footer>
+  UC00606 · Linguagem Estruturada · Aula 12 — Avaliação 2 · ETP Sicó · 2025/2026 · makercraft.pt/UC00606
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+</script>
+</body>
+</html>

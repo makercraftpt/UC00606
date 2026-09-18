@@ -32,7 +32,7 @@
 | [Semana 9](apresentacoes/aula9.html) | Big-O, hash tables, `dict`/`set`, `hashlib`, JSON, `.ini` e variáveis de ambiente | ✅ Disponível |
 | [Semana 10](apresentacoes/aula10.html) | Base de dados em ficheiro — SQLite | ✅ Disponível |
 | [Semana 11](apresentacoes/aula11.html) | Código à Prova de Balas — `try / except / finally` | ✅ Disponível |
-| Semana 12 | Revisões + Avaliação 2 + Aplicações práticas com IA | 🔒 Em breve |
+| [Semana 12](semanas/semana12.md) | Missão Final — revisão das Aulas 7–11 + Avaliação 2 (Operação Sicó) | ✅ Disponível |
 
 ---
 
@@ -76,6 +76,7 @@ Guias sobre ferramentas de apoio ao desenvolvimento — **essenciais para planea
 - [Aula 9 — Como os Dados São Encontrados Rápido (slides interativos)](apresentacoes/aula9.html)
 - [Aula 10 — Do JSON à Base de Dados (slides interativos)](apresentacoes/aula10.html)
 - [Aula 11 — Código à Prova de Balas (slides interativos)](apresentacoes/aula11.html)
+- [Aula 12 — Missão Final: Revisão Geral (slides interativos)](apresentacoes/aula12.html)
 
 ---
 
@@ -93,6 +94,7 @@ As fichas de exercícios estão disponíveis em PDF na pasta `exercicios/`.
 - [Fichas Aula 9 — Como os Dados São Encontrados Rápido](exercicios/aula9.html)
 - [Fichas Aula 10 — Do JSON à Base de Dados](exercicios/aula10.html)
 - [Fichas Aula 11 — Código à Prova de Balas](exercicios/aula11.html)
+- [Aula 12 — Missão Final: Operação Sicó (Avaliação 2)](exercicios/aula12.html) — material de partida: [logs_servidor.txt](exercicios/dados/aula12/logs_servidor.txt) · [credenciais.json](exercicios/dados/aula12/credenciais.json)
 
 ---
 
